@@ -20,11 +20,11 @@ dependencies {
     compile files('lib/furszy-non-blocking-client-0.0.1.jar')
     compile 'commons-validator:commons-validator:1.6'
     compile 'org.json:json:20170516'
+    compile files('lib/phorej-core.jar')
     compile 'com.lambdaworks:scrypt:1.4.0'
     testCompile 'org.slf4j:slf4j-api:1.7.20'
     testCompile 'junit:junit:4.12'
     testCompile 'org.slf4j:slf4j-simple:1.7.5'
-    compile files('lib/phorej-core.jar')
 }
 
 sourceCompatibility = "1.7"
