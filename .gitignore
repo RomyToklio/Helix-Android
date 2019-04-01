@@ -13,3 +13,7 @@ gradlew.bat
 gradlew
 gradle.properties
 .idea
+android.keystore
+*.apk
+*.log
+*.jks
