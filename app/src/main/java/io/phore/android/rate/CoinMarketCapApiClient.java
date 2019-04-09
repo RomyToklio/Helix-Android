@@ -1,4 +1,4 @@
-package io.phore.android.rate;
+package io.helix.android.rate;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import io.phore.android.rate.db.PhoreRate;
+import io.helix.android.rate.db.helixRate;
 
 /**
  * Created by furszy on 7/5/17.
@@ -30,14 +30,14 @@ public class CoinMarketCapApiClient {
 
     private static final String URL = "https://api.coinmarketcap.com/v1/";
 
-    public class PhoreMarket {
+    public class helixMarket {
         public BigDecimal priceUsd;
         public BigDecimal priceBtc;
         public BigDecimal marketCapUsd;
         public BigDecimal totalSupply;
         public int rank;
 
-        public PhoreMarket(BigDecimal priceUsd, BigDecimal priceBtc, BigDecimal marketCapUsd, BigDecimal totalSupply, int rank) {
+        public helixMarket(BigDecimal priceUsd, BigDecimal priceBtc, BigDecimal marketCapUsd, BigDecimal totalSupply, int rank) {
             this.priceUsd = priceUsd;
             this.priceBtc = priceBtc;
             this.marketCapUsd = marketCapUsd;
@@ -46,10 +46,10 @@ public class CoinMarketCapApiClient {
         }
     }
 
-    public PhoreMarket getPhorePrice() throws RequestPhoreRateException {
+    public helixMarket gethelixPrice() throws RequesthelixRateException {
         try {
-            PhoreMarket phoreMarket = null;
-            String url = this.URL + "ticker/phore/";
+            helixMarket helixMarket = null;
+            String url = this.URL + "ticker/helix/";
             HttpResponse httpResponse = get(url);
             // receive response as inputStream
             InputStream inputStream = httpResponse.getEntity().getContent();
@@ -59,7 +59,7 @@ public class CoinMarketCapApiClient {
             if (httpResponse.getStatusLine().getStatusCode()==200){
                 JSONArray jsonArray = new JSONArray(result);
                 JSONObject jsonObject = jsonArray.getJSONObject(0);
-                phoreMarket = new PhoreMarket(
+                helixMarket = new helixMarket(
                         new BigDecimal(jsonObject.getString("price_usd")),
                         new BigDecimal(jsonObject.getString("price_btc")),
                         new BigDecimal(jsonObject.getString("market_cap_usd")),
@@ -67,16 +67,16 @@ public class CoinMarketCapApiClient {
                         jsonObject.getInt("rank")
                 );
             }
-            return phoreMarket;
+            return helixMarket;
         } catch (ClientProtocolException e) {
             e.printStackTrace();
-            throw new RequestPhoreRateException(e);
+            throw new RequesthelixRateException(e);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RequestPhoreRateException(e);
+            throw new RequesthelixRateException(e);
         } catch (JSONException e) {
             e.printStackTrace();
-            throw new RequestPhoreRateException(e);
+            throw new RequesthelixRateException(e);
         }
     }
 
@@ -115,9 +115,9 @@ public class CoinMarketCapApiClient {
         /**
          * {"code":"BTC","name":"Bitcoin","rate":1}
          * @return
-         * @throws RequestPhoreRateException
+         * @throws RequesthelixRateException
          */
-        public <T> List<T> getRates(RatesConvertor<T> ratesConvertor) throws RequestPhoreRateException{
+        public <T> List<T> getRates(RatesConvertor<T> ratesConvertor) throws RequesthelixRateException{
             try {
                 HttpResponse httpResponse = get(URL);
                 // receive response as inputStream
@@ -139,13 +139,13 @@ public class CoinMarketCapApiClient {
                 return ret;
             } catch (ClientProtocolException e) {
                 e.printStackTrace();
-                throw new RequestPhoreRateException(e);
+                throw new RequesthelixRateException(e);
             } catch (IOException e) {
                 e.printStackTrace();
-                throw new RequestPhoreRateException(e);
+                throw new RequesthelixRateException(e);
             } catch (JSONException e) {
                 e.printStackTrace();
-                throw new RequestPhoreRateException(e);
+                throw new RequesthelixRateException(e);
             }
         }
 

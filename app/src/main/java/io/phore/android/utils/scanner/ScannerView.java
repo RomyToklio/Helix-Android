@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.phore.android.utils.scanner;
+package io.helix.android.utils.scanner;
 
 
 import java.util.HashMap;
@@ -24,7 +24,7 @@ import java.util.Map;
 
 import com.google.zxing.ResultPoint;
 
-import io.phore.android.R;
+import io.helix.android.R;
 
 import android.content.Context;
 import android.content.res.Resources;

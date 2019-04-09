@@ -1,4 +1,4 @@
-package io.phore.android.ui.words_restore_activity;
+package io.helix.android.ui.words_restore_activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,20 +18,20 @@ import android.widget.Toast;
 
 import com.google.common.collect.Lists;
 
-import org.phorej.crypto.MnemonicException;
+import org.helixj.crypto.MnemonicException;
 
 import java.io.IOException;
 import java.util.List;
 
-import io.phore.android.R;
-import io.phore.android.module.PhoreContext;
-import io.phore.android.ui.base.BaseActivity;
-import io.phore.android.ui.base.dialogs.SimpleTwoButtonsDialog;
-import io.phore.android.ui.wallet_activity.WalletActivity;
-import io.phore.android.utils.CrashReporter;
-import io.phore.android.utils.DialogsUtil;
+import io.helix.android.R;
+import io.helix.android.module.helixContext;
+import io.helix.android.ui.base.BaseActivity;
+import io.helix.android.ui.base.dialogs.SimpleTwoButtonsDialog;
+import io.helix.android.ui.wallet_activity.WalletActivity;
+import io.helix.android.utils.CrashReporter;
+import io.helix.android.utils.DialogsUtil;
 
-import static io.phore.android.module.PhoreContext.PHORE_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME;
+import static io.helix.android.module.helixContext.helix_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME;
 
 /**
  * Created by Neoperol on 7/19/17.
@@ -162,11 +162,11 @@ public class RestoreWordsActivity extends BaseActivity {
                                 dialog.dismiss();
                                 try {
 
-                                    phoreModule.checkMnemonic(mnemonic);
+                                    helixModule.checkMnemonic(mnemonic);
 
                                     boolean isBip32 = check_bip32.isChecked();
 
-                                    phoreModule.restoreWallet(mnemonic, PHORE_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME,!isBip32);
+                                    helixModule.restoreWallet(mnemonic, helix_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME,!isBip32);
 
                                     Toast.makeText(RestoreWordsActivity.this, R.string.restore_mnemonic, Toast.LENGTH_LONG).show();
 
@@ -174,7 +174,7 @@ public class RestoreWordsActivity extends BaseActivity {
                                     finish();
                                 } catch (IOException e) {
                                     e.printStackTrace();
-                                    CrashReporter.saveBackgroundTrace(e, phoreApplication.getPackageInfo());
+                                    CrashReporter.saveBackgroundTrace(e, helixApplication.getPackageInfo());
                                     // todo: show an error message here..
                                     Toast.makeText(RestoreWordsActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                                 }catch (MnemonicException e){
@@ -182,7 +182,7 @@ public class RestoreWordsActivity extends BaseActivity {
                                     Toast.makeText(RestoreWordsActivity.this, R.string.invalid_mnemonic_code, Toast.LENGTH_LONG).show();
                                 }catch (Exception e){
                                     e.printStackTrace();
-                                    CrashReporter.saveBackgroundTrace(e,phoreApplication.getPackageInfo());
+                                    CrashReporter.saveBackgroundTrace(e,helixApplication.getPackageInfo());
                                     // todo: show an error message here..
                                     Toast.makeText(RestoreWordsActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
                                 }
@@ -301,7 +301,7 @@ public class RestoreWordsActivity extends BaseActivity {
                 txtWord24 = (EditText) view.findViewById(R.id.text_word24);
                 txt_bip32_message = (TextView) root.findViewById(R.id.txt_bip32_message);
                 check_bip32 = (CheckBox) root.findViewById(R.id.check_bip32);
-                txt_bip32_message.setText(getString(R.string.restore_bip32_warning, PhoreContext.ENABLE_BIP44_APP_VERSION));
+                txt_bip32_message.setText(getString(R.string.restore_bip32_warning, helixContext.ENABLE_BIP44_APP_VERSION));
 
             }
 

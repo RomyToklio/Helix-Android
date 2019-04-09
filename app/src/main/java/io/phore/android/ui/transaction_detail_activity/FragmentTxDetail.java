@@ -1,4 +1,4 @@
-package io.phore.android.ui.transaction_detail_activity;
+package io.helix.android.ui.transaction_detail_activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,30 +11,30 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.phorej.core.Coin;
-import org.phorej.core.Transaction;
-import org.phorej.core.TransactionInput;
-import org.phorej.core.TransactionOutPoint;
-import org.phorej.core.TransactionOutput;
-import org.phorej.script.Script;
+import org.helixj.core.Coin;
+import org.helixj.core.Transaction;
+import org.helixj.core.TransactionInput;
+import org.helixj.core.TransactionOutPoint;
+import org.helixj.core.TransactionOutput;
+import org.helixj.script.Script;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.phore.android.R;
-import io.phore.android.contacts.AddressLabel;
-import io.phore.android.ui.base.BaseFragment;
-import io.phore.android.ui.base.tools.adapter.BaseRecyclerAdapter;
-import io.phore.android.ui.base.tools.adapter.BaseRecyclerViewHolder;
-import io.phore.android.ui.base.tools.adapter.ListItemListeners;
-import io.phore.android.ui.wallet_activity.TransactionWrapper;
-import io.phore.android.utils.DialogsUtil;
+import io.helix.android.R;
+import io.helix.android.contacts.AddressLabel;
+import io.helix.android.ui.base.BaseFragment;
+import io.helix.android.ui.base.tools.adapter.BaseRecyclerAdapter;
+import io.helix.android.ui.base.tools.adapter.BaseRecyclerViewHolder;
+import io.helix.android.ui.base.tools.adapter.ListItemListeners;
+import io.helix.android.ui.wallet_activity.TransactionWrapper;
+import io.helix.android.utils.DialogsUtil;
 import wallet.exceptions.TxNotFoundException;
 
-import static io.phore.android.ui.transaction_send_activity.custom.inputs.InputsActivity.INTENT_NO_TOTAL_AMOUNT;
-import static io.phore.android.ui.transaction_send_activity.custom.inputs.InputsFragment.INTENT_EXTRA_UNSPENT_WRAPPERS;
+import static io.helix.android.ui.transaction_send_activity.custom.inputs.InputsActivity.INTENT_NO_TOTAL_AMOUNT;
+import static io.helix.android.ui.transaction_send_activity.custom.inputs.InputsFragment.INTENT_EXTRA_UNSPENT_WRAPPERS;
 
 /**
  * Created by furszy on 8/7/17.
@@ -72,10 +72,10 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
         if (intent!=null){
             transactionWrapper = (TransactionWrapper) intent.getSerializableExtra(TX_WRAPPER);
             if (intent.hasExtra(IS_DETAIL)){
-                transactionWrapper.setTransaction(phoreModule.getTx(transactionWrapper.getTxId()));
+                transactionWrapper.setTransaction(helixModule.getTx(transactionWrapper.getTxId()));
                 isTxDetail = true;
             }else {
-                transactionWrapper.setTransaction(new Transaction(phoreModule.getConf().getNetworkParams(),intent.getByteArrayExtra(TX)));
+                transactionWrapper.setTransaction(new Transaction(helixModule.getConf().getNetworkParams(),intent.getByteArrayExtra(TX)));
                 if (intent.hasExtra(TX_MEMO)){
                     transactionWrapper.getTransaction().setMemo(intent.getStringExtra(TX_MEMO));
                 }
@@ -130,7 +130,7 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
                 Coin inputsSum = Coin.ZERO;
                 for (TransactionInput input : transactionWrapper.getTransaction().getInputs()) {
                     TransactionOutPoint unspent = input.getOutpoint();
-                    inputsSum = inputsSum.plus(phoreModule.getUnspentValue(unspent.getHash(), (int) unspent.getIndex()));
+                    inputsSum = inputsSum.plus(helixModule.getUnspentValue(unspent.getHash(), (int) unspent.getIndex()));
                 }
                 fee = inputsSum.subtract(transactionWrapper.getTransaction().getOutputSum());
             }catch (Exception e){
@@ -166,14 +166,14 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
                         label = addressLabel.getName();
                     } else
                         //label = addressLabel.getAddresses().get(0);
-                        label = transactionOutput.getScriptPubKey().getToAddress(phoreModule.getConf().getNetworkParams(),true).toBase58();
+                        label = transactionOutput.getScriptPubKey().getToAddress(helixModule.getConf().getNetworkParams(),true).toBase58();
                 }else {
-                    label = transactionOutput.getScriptPubKey().getToAddress(phoreModule.getConf().getNetworkParams(),true).toBase58();
+                    label = transactionOutput.getScriptPubKey().getToAddress(helixModule.getConf().getNetworkParams(),true).toBase58();
                 }
             }else {
                 Script script = transactionOutput.getScriptPubKey();
                 if (script.isPayToScriptHash() || script.isSentToRawPubKey() || script.isSentToAddress()) {
-                    label = script.getToAddress(phoreModule.getConf().getNetworkParams(), true).toBase58();
+                    label = script.getToAddress(helixModule.getConf().getNetworkParams(), true).toBase58();
                 }else {
                     label = script.toString();
                 }
@@ -203,7 +203,7 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
 
             @Override
             public void onLongItemClickListener(OutputUtil data, int position) {
-                if (phoreModule.chechAddress(data.getLabel())) {
+                if (helixModule.chechAddress(data.getLabel())) {
                     DialogsUtil.showCreateAddressLabelDialog(getActivity(),data.getLabel());
                 }
             }
@@ -236,7 +236,7 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
                 Intent intent = new Intent(getActivity(), InputsDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putBoolean(INTENT_NO_TOTAL_AMOUNT, true);
-                bundle.putSerializable(INTENT_EXTRA_UNSPENT_WRAPPERS, (Serializable) phoreModule.convertFrom(transactionWrapper.getTransaction().getInputs()));
+                bundle.putSerializable(INTENT_EXTRA_UNSPENT_WRAPPERS, (Serializable) helixModule.convertFrom(transactionWrapper.getTransaction().getInputs()));
                 intent.putExtras(bundle);
                 startActivity(intent);
             } catch (TxNotFoundException e) {

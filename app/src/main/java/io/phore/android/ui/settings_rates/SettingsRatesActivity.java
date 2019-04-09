@@ -1,11 +1,11 @@
-package io.phore.android.ui.settings_rates;
+package io.helix.android.ui.settings_rates;
 
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.BaseActivity;
+import io.helix.android.R;
+import io.helix.android.ui.base.BaseActivity;
 
 /**
  * Created by Neoperol on 6/8/17.

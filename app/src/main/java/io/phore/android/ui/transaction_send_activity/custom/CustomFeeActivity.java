@@ -1,4 +1,4 @@
-package io.phore.android.ui.transaction_send_activity.custom;
+package io.helix.android.ui.transaction_send_activity.custom;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,15 +7,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.BaseActivity;
-import io.phore.android.utils.DialogsUtil;
+import io.helix.android.R;
+import io.helix.android.ui.base.BaseActivity;
+import io.helix.android.utils.DialogsUtil;
 
-import static io.phore.android.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_CLEAR;
-import static io.phore.android.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_FEE;
-import static io.phore.android.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_IS_FEE_PER_KB;
-import static io.phore.android.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_IS_MINIMUM_FEE;
-import static io.phore.android.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_IS_TOTAL_FEE;
+import static io.helix.android.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_CLEAR;
+import static io.helix.android.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_FEE;
+import static io.helix.android.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_IS_FEE_PER_KB;
+import static io.helix.android.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_IS_MINIMUM_FEE;
+import static io.helix.android.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_IS_TOTAL_FEE;
 
 /**
  * Created by furszy on 8/3/17.

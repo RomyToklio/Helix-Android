@@ -1,25 +1,25 @@
-package io.phore.android.module;
+package io.helix.android.module;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
-import org.phorej.core.Address;
-import org.phorej.core.Coin;
-import org.phorej.core.InsufficientMoneyException;
-import org.phorej.core.Peer;
-import org.phorej.core.ScriptException;
-import org.phorej.core.Sha256Hash;
-import org.phorej.core.Transaction;
-import org.phorej.core.TransactionConfidence;
-import org.phorej.core.TransactionInput;
-import org.phorej.core.TransactionOutput;
-import org.phorej.core.listeners.TransactionConfidenceEventListener;
-import org.phorej.crypto.DeterministicKey;
-import org.phorej.crypto.MnemonicException;
-import org.phorej.script.Script;
-import org.phorej.wallet.DeterministicKeyChain;
-import org.phorej.wallet.SendRequest;
-import org.phorej.wallet.Wallet;
-import org.phorej.wallet.listeners.WalletCoinsReceivedEventListener;
+import org.helixj.core.Address;
+import org.helixj.core.Coin;
+import org.helixj.core.InsufficientMoneyException;
+import org.helixj.core.Peer;
+import org.helixj.core.ScriptException;
+import org.helixj.core.Sha256Hash;
+import org.helixj.core.Transaction;
+import org.helixj.core.TransactionConfidence;
+import org.helixj.core.TransactionInput;
+import org.helixj.core.TransactionOutput;
+import org.helixj.core.listeners.TransactionConfidenceEventListener;
+import org.helixj.crypto.DeterministicKey;
+import org.helixj.crypto.MnemonicException;
+import org.helixj.script.Script;
+import org.helixj.wallet.DeterministicKeyChain;
+import org.helixj.wallet.SendRequest;
+import org.helixj.wallet.Wallet;
+import org.helixj.wallet.listeners.WalletCoinsReceivedEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,14 +42,14 @@ import java.util.concurrent.TimeoutException;
 import chain.BlockchainManager;
 import global.ContextWrapper;
 import global.WalletConfiguration;
-import phoremore.PhorePeergroup;
-import io.phore.android.contacts.AddressLabel;
-import io.phore.android.contacts.ContactsStore;
-import io.phore.android.module.wallet.WalletBackupHelper;
-import io.phore.android.rate.db.PhoreRate;
-import io.phore.android.rate.db.RateDb;
-import io.phore.android.ui.transaction_send_activity.custom.inputs.InputWrapper;
-import io.phore.android.ui.wallet_activity.TransactionWrapper;
+import helixmore.helixPeergroup;
+import io.helix.android.contacts.AddressLabel;
+import io.helix.android.contacts.ContactsStore;
+import io.helix.android.module.wallet.WalletBackupHelper;
+import io.helix.android.rate.db.helixRate;
+import io.helix.android.rate.db.RateDb;
+import io.helix.android.ui.transaction_send_activity.custom.inputs.InputWrapper;
+import io.helix.android.ui.wallet_activity.TransactionWrapper;
 import store.AddressBalance;
 import wallet.exceptions.InsufficientInputsException;
 import wallet.exceptions.TxNotFoundException;
@@ -59,15 +59,15 @@ import wallet.WalletManager;
  * Created by mati on 18/04/17.
  */
 
-public class PhoreModuleImp implements PhoreModule {
+public class helixModuleImp implements helixModule {
 
-    private static final Logger logger = LoggerFactory.getLogger(PhoreModuleImp.class);
+    private static final Logger logger = LoggerFactory.getLogger(helixModuleImp.class);
 
     private ContextWrapper context;
     private WalletConfiguration walletConfiguration;
     private WalletManager walletManager;
     private BlockchainManager blockchainManager;
-    private PhorePeergroup peergroup;
+    private helixPeergroup peergroup;
     private ContactsStore contactsStore;
     private RateDb rateDb;
 
@@ -75,7 +75,7 @@ public class PhoreModuleImp implements PhoreModule {
     private long availableBalance = 0;
     private BigDecimal phrInUsdHardcoded = new BigDecimal("1.5");
 
-    public PhoreModuleImp(ContextWrapper contextWrapper, WalletConfiguration walletConfiguration,ContactsStore contactsStore,RateDb rateDb) {
+    public helixModuleImp(ContextWrapper contextWrapper, WalletConfiguration walletConfiguration,ContactsStore contactsStore,RateDb rateDb) {
         this.context = contextWrapper;
         this.walletConfiguration = walletConfiguration;
         this.contactsStore = contactsStore;
@@ -229,7 +229,7 @@ public class PhoreModuleImp implements PhoreModule {
             for (TransactionInput input : transaction.getInputs()) {
                 unspent.add(input.getConnectedOutput());
             }
-            sendRequest.coinSelector = new io.phore.android.module.wallet.DefaultCoinSelector(unspent);
+            sendRequest.coinSelector = new io.helix.android.module.wallet.DefaultCoinSelector(unspent);
         }
         sendRequest.signInputs = true;
         sendRequest.shuffleOutputs = false; // don't shuffle outputs to know the contact
@@ -433,7 +433,7 @@ public class PhoreModuleImp implements PhoreModule {
         walletManager.removeTransactionConfidenceChange(transactionConfidenceEventListener);
     }
 
-    public PhoreRate getRate(String coin) {
+    public helixRate getRate(String coin) {
         return rateDb.getRate(coin);
     }
 
@@ -605,12 +605,12 @@ public class PhoreModuleImp implements PhoreModule {
     }
 
     @Override
-    public List<PhoreRate> listRates() {
+    public List<helixRate> listRates() {
         return rateDb.list();
     }
 
 
-    public void saveRate(PhoreRate phoreRate){
-        rateDb.insertOrUpdateIfExist(phoreRate);
+    public void saveRate(helixRate helixRate){
+        rateDb.insertOrUpdateIfExist(helixRate);
     }
 }

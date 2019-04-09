@@ -1,10 +1,10 @@
-package io.phore.android.utils;
+package io.helix.android.utils;
 
 import android.content.SharedPreferences;
 
-import phoremore.PhorePeerData;
+import helixmore.helixPeerData;
 
-import static io.phore.android.module.PhoreContext.DEFAULT_RATE_COIN;
+import static io.helix.android.module.helixContext.DEFAULT_RATE_COIN;
 
 /**
  * Created by furszy on 6/8/17.
@@ -46,17 +46,17 @@ public class AppConf extends Configurations {
         return getString(PINCODE,null);
     }
 
-    public void saveTrustedNode(PhorePeerData phorePeerData){
-        save(TRUSTED_NODE_HOST,phorePeerData.getHost());
-        save(TRUSTED_NODE_TCP,phorePeerData.getTcpPort());
-        save(TRUSTED_NODE_SSL,phorePeerData.getSslPort());
+    public void saveTrustedNode(helixPeerData helixPeerData){
+        save(TRUSTED_NODE_HOST,helixPeerData.getHost());
+        save(TRUSTED_NODE_TCP,helixPeerData.getTcpPort());
+        save(TRUSTED_NODE_SSL,helixPeerData.getSslPort());
     }
-    public PhorePeerData getTrustedNode(){
+    public helixPeerData getTrustedNode(){
         String host = getString(TRUSTED_NODE_HOST,null);
         if (host!=null){
             int tcp = getInt(TRUSTED_NODE_TCP,-1);
             int ssl = getInt(TRUSTED_NODE_TCP,-1);
-            return new PhorePeerData(host,tcp,ssl);
+            return new helixPeerData(host,tcp,ssl);
         }else
             return null;
     }

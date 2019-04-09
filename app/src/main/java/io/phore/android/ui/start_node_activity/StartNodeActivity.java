@@ -1,4 +1,4 @@
-package io.phore.android.ui.start_node_activity;
+package io.helix.android.ui.start_node_activity;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -18,15 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import global.PhoreGlobalData;
-import phoremore.PhorePeer;
-import phoremore.PhorePeerData;
-import io.phore.android.R;
-import io.phore.android.ui.base.BaseActivity;
-import io.phore.android.ui.pincode_activity.PincodeActivity;
-import io.phore.android.ui.wallet_activity.WalletActivity;
-import io.phore.android.utils.DialogBuilder;
-import io.phore.android.utils.DialogsUtil;
+import global.helixGlobalData;
+import helixmore.helixPeer;
+import helixmore.helixPeerData;
+import io.helix.android.R;
+import io.helix.android.ui.base.BaseActivity;
+import io.helix.android.ui.pincode_activity.PincodeActivity;
+import io.helix.android.ui.wallet_activity.WalletActivity;
+import io.helix.android.utils.DialogBuilder;
+import io.helix.android.utils.DialogsUtil;
 
 /**
  * Created by Neoperol on 6/27/17.
@@ -40,7 +40,7 @@ public class StartNodeActivity extends BaseActivity {
     private ArrayAdapter<String> adapter;
     private List<String> hosts = new ArrayList<>();
 
-    private static final List<PhorePeerData> trustedNodes = PhoreGlobalData.listTrustedHosts();
+    private static final List<helixPeerData> trustedNodes = helixGlobalData.listTrustedHosts();
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
@@ -56,13 +56,13 @@ public class StartNodeActivity extends BaseActivity {
             public void onClick(View view) {
                 DialogBuilder dialogBuilder = DialogsUtil.buildtrustedNodeDialog(StartNodeActivity.this, new DialogsUtil.TrustedNodeDialogListener() {
                     @Override
-                    public void onNodeSelected(PhorePeerData phorePeerData) {
-                        if(!trustedNodes.contains(phorePeerData)) {
+                    public void onNodeSelected(helixPeerData helixPeerData) {
+                        if(!trustedNodes.contains(helixPeerData)) {
                             dropdown.setAdapter(null);
                             adapter.clear();
                             hosts = new ArrayList<String>();
-                            trustedNodes.add(phorePeerData);
-                            for (PhorePeerData trustedNode : trustedNodes) {
+                            trustedNodes.add(helixPeerData);
+                            for (helixPeerData trustedNode : trustedNodes) {
                                 hosts.add(trustedNode.getHost());
                             }
                             adapter.addAll(hosts);
@@ -82,17 +82,17 @@ public class StartNodeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 int selected = dropdown.getSelectedItemPosition();
-                PhorePeerData selectedNode = trustedNodes.get(selected);
-                boolean isStarted = phoreApplication.getAppConf().getTrustedNode()!=null;
-                phoreApplication.setTrustedServer(selectedNode);
+                helixPeerData selectedNode = trustedNodes.get(selected);
+                boolean isStarted = helixApplication.getAppConf().getTrustedNode()!=null;
+                helixApplication.setTrustedServer(selectedNode);
 
                 if (isStarted){
-                    phoreApplication.stopBlockchain();
+                    helixApplication.stopBlockchain();
                     // now that everything is good, start the service
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            phoreApplication.startPhoreService();
+                            helixApplication.starthelixService();
                         }
                     }, TimeUnit.SECONDS.toMillis(5));
                 }
@@ -104,14 +104,14 @@ public class StartNodeActivity extends BaseActivity {
         dropdown = (Spinner)findViewById(R.id.spinner);
 
         // add connected node if it's not on the list
-        PhorePeerData phorePeer = phoreApplication.getAppConf().getTrustedNode();
-        trustedNodes.add(phorePeer);
+        helixPeerData helixPeer = helixApplication.getAppConf().getTrustedNode();
+        trustedNodes.add(helixPeer);
 
         int selectionPos = 0;
 
         for (int i=0;i<trustedNodes.size();i++){
-            PhorePeerData trustedNode = trustedNodes.get(i);
-            if (phorePeer!=null && phorePeer.getHost().equals(trustedNode)){
+            helixPeerData trustedNode = trustedNodes.get(i);
+            if (helixPeer!=null && helixPeer.getHost().equals(trustedNode)){
                 selectionPos = i;
             }
             hosts.add(trustedNode.getHost());
@@ -140,7 +140,7 @@ public class StartNodeActivity extends BaseActivity {
 
     private void goNext() {
         Class clazz = null;
-        if (phoreApplication.getAppConf().getPincode()==null){
+        if (helixApplication.getAppConf().getPincode()==null){
             clazz = PincodeActivity.class;
         }else {
             clazz = WalletActivity.class;

@@ -89,7 +89,7 @@
                 android:layout_gravity="end"
                 android:gravity="end"
                 android:layout_height="wrap_content"
-                android:text="0.00203 PHR"
+                android:text="0.00203 HLIX"
                 android:textColor="#404040"
                 android:textSize="18sp" />
 

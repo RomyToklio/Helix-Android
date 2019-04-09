@@ -1,14 +1,14 @@
 /*
-package org.phoremore;
+package org.helixmore;
 
-import org.phore.core.Address;
-import org.phore.core.Coin;
-import org.phore.utils.MonetaryFormat;
+import org.helix.core.Address;
+import org.helix.core.Coin;
+import org.helix.utils.MonetaryFormat;
 import org.furszy.client.exceptions.ConnectionFailureException;
 import org.junit.Test;
-import org.phoremore.imp.AddressStoreImp;
-import org.phoremore.imp.ContextWrapperImp;
-import org.phoremore.imp.WalletConfigurationsImp;
+import org.helixmore.imp.AddressStoreImp;
+import org.helixmore.imp.ContextWrapperImp;
+import org.helixmore.imp.WalletConfigurationsImp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,10 +21,10 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import global.WalletConfiguration;
-import phoremore.NetworkConf;
-import phoremore.PhorePeer;
-import phoremore.PhorePeergroup;
-import phoremore.listeners.AddressListener;
+import helixmore.NetworkConf;
+import helixmore.helixPeer;
+import helixmore.helixPeergroup;
+import helixmore.listeners.AddressListener;
 import store.AddressStore;
 import store.CantInsertAddressException;
 import wallet.WalletManager;
@@ -39,15 +39,15 @@ public class PeergroupTest {
 
 
     @Test
-    public void connectPhorePeergroupTest() throws IOException, ConnectionFailureException, InterruptedException {
+    public void connecthelixPeergroupTest() throws IOException, ConnectionFailureException, InterruptedException {
         ContextWrapperImp contextWrapperImp = new ContextWrapperImp();
         WalletConfiguration walletConfiguration = new WalletConfigurationsImp();
         NetworkConf networkConf = new NetworkConf("localhost",50001);
         WalletManager walletManager = new WalletManager(contextWrapperImp,walletConfiguration);
         walletManager.init();
         AddressStore addressStore = new AddressStoreImp();
-        PhorePeergroup phoremorePeergroup = new PhorePeergroup(networkConf,walletManager,addressStore);
-        phoremorePeergroup.start();
+        helixPeergroup helixmorePeergroup = new helixPeergroup(networkConf,walletManager,addressStore);
+        helixmorePeergroup.start();
         while (true){
             try {
                 TimeUnit.SECONDS.sleep(3);
@@ -55,11 +55,11 @@ public class PeergroupTest {
                 e.printStackTrace();
             }
         }
-        //assert phoremorePeergroup.isRunning():"PhorePeergroup is not running..";
+        //assert helixmorePeergroup.isRunning():"helixPeergroup is not running..";
     }
 
     @Test
-    public void pushAddressPhorePeergroupTest() throws IOException, CantInsertAddressException, ConnectionFailureException, InterruptedException {
+    public void pushAddresshelixPeergroupTest() throws IOException, CantInsertAddressException, ConnectionFailureException, InterruptedException {
         ContextWrapperImp contextWrapperImp = new ContextWrapperImp();
         WalletConfiguration walletConfiguration = new WalletConfigurationsImp();
         NetworkConf networkConf = new NetworkConf("localhost",50001);
@@ -68,8 +68,8 @@ public class PeergroupTest {
         WalletManager walletManager = new WalletManager(contextWrapperImp,walletConfiguration);
         walletManager.init();
         AddressStore addressStore = new AddressStoreImp();
-        PhorePeergroup phoremorePeergroup = new PhorePeergroup(networkConf,walletManager,addressStore);
-        phoremorePeergroup.addAddressListener(new AddressListener() {
+        helixPeergroup helixmorePeergroup = new helixPeergroup(networkConf,walletManager,addressStore);
+        helixmorePeergroup.addAddressListener(new AddressListener() {
             @Override
             public void onBalanceChange(String address, long confirmed, long unconfirmed,int numConfirmations) {
                 System.out.println("onBalanceChange, address: "+address+
@@ -78,18 +78,18 @@ public class PeergroupTest {
                         "\n Amount of confirmations: "+numConfirmations);
             }
         });
-        phoremorePeergroup.start();
-        while (!phoremorePeergroup.isRunning()){
+        helixmorePeergroup.start();
+        while (!helixmorePeergroup.isRunning()){
             try {
                 TimeUnit.SECONDS.sleep(3);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        assert phoremorePeergroup.isRunning():"PhorePeergroup is not running..";
+        assert helixmorePeergroup.isRunning():"helixPeergroup is not running..";
         // subscribe address
         Address address = Address.fromBase58(walletConfiguration.getNetworkParams(),"yCRaSQvLd5a9VFFv9dzns2zNMJhWyymtAd");
-        phoremorePeergroup.addWatchedAddress(address);
+        helixmorePeergroup.addWatchedAddress(address);
         while (true){
             try {
                 TimeUnit.SECONDS.sleep(3);

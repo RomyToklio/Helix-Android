@@ -1,4 +1,4 @@
-package io.phore.android.ui.transaction_send_activity.custom.outputs;
+package io.helix.android.ui.transaction_send_activity.custom.outputs;
 
 /**
  * Created by furszy on 8/9/17.

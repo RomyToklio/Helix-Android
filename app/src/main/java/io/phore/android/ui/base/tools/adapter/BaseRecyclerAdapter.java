@@ -1,4 +1,4 @@
-package io.phore.android.ui.base.tools.adapter;
+package io.helix.android.ui.base.tools.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

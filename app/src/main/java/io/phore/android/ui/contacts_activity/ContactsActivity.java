@@ -1,4 +1,4 @@
-package io.phore.android.ui.contacts_activity;
+package io.helix.android.ui.contacts_activity;
 
 import android.content.Intent;
 import android.os.Build;
@@ -19,14 +19,14 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import io.phore.android.R;
-import io.phore.android.contacts.AddressLabel;
-import io.phore.android.ui.address_add_activity.AddContactActivity;
-import io.phore.android.ui.base.BaseDrawerActivity;
-import io.phore.android.ui.base.dialogs.SimpleTwoButtonsDialog;
-import io.phore.android.ui.base.tools.adapter.ListItemListeners;
-import io.phore.android.utils.DialogsUtil;
-import io.phore.android.utils.NavigationUtils;
+import io.helix.android.R;
+import io.helix.android.contacts.AddressLabel;
+import io.helix.android.ui.address_add_activity.AddContactActivity;
+import io.helix.android.ui.base.BaseDrawerActivity;
+import io.helix.android.ui.base.dialogs.SimpleTwoButtonsDialog;
+import io.helix.android.ui.base.tools.adapter.ListItemListeners;
+import io.helix.android.utils.DialogsUtil;
+import io.helix.android.utils.NavigationUtils;
 
 /**
  * Created by Neoperol on 5/11/17.
@@ -91,7 +91,7 @@ public class ContactsActivity extends BaseDrawerActivity implements ListItemList
         executor.submit(new Runnable() {
             @Override
             public void run() {
-                addressLabels = phoreModule.getContacts();
+                addressLabels = helixModule.getContacts();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -139,7 +139,7 @@ public class ContactsActivity extends BaseDrawerActivity implements ListItemList
         SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener listener = new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
             @Override
             public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
-                phoreModule.deleteAddressLabel(data);
+                helixModule.deleteAddressLabel(data);
                 load();
                 Toast.makeText(ContactsActivity.this,R.string.address_label_deleted,Toast.LENGTH_LONG).show();
                 dialog.dismiss();

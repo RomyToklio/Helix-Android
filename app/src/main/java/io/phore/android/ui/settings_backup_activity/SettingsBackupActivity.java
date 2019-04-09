@@ -1,4 +1,4 @@
-package io.phore.android.ui.settings_backup_activity;
+package io.helix.android.ui.settings_backup_activity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -19,13 +19,13 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 
-import io.phore.android.R;
-import io.phore.android.module.PhoreContext;
-import io.phore.android.module.wallet.WalletBackupHelper;
-import io.phore.android.ui.backup_mnemonic_activity.MnemonicActivity;
-import io.phore.android.ui.base.BaseActivity;
-import io.phore.android.ui.base.dialogs.SimpleTextDialog;
-import io.phore.android.utils.DialogsUtil;
+import io.helix.android.R;
+import io.helix.android.module.helixContext;
+import io.helix.android.module.wallet.WalletBackupHelper;
+import io.helix.android.ui.backup_mnemonic_activity.MnemonicActivity;
+import io.helix.android.ui.base.BaseActivity;
+import io.helix.android.ui.base.dialogs.SimpleTextDialog;
+import io.helix.android.utils.DialogsUtil;
 
 /**
  * Created by Neoperol on 5/18/17.
@@ -66,7 +66,7 @@ public class SettingsBackupActivity extends BaseActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                org.phorej.core.Context.propagate(PhoreContext.CONTEXT);
+                org.helixj.core.Context.propagate(helixContext.CONTEXT);
                 backup();
                 runOnUiThread(new Runnable() {
                     @Override
@@ -90,7 +90,7 @@ public class SettingsBackupActivity extends BaseActivity {
 
         switch (item.getItemId()) {
             case 0:
-                if (phoreModule.isWalletWatchOnly()){
+                if (helixModule.isWalletWatchOnly()){
                     Toast.makeText(this,R.string.error_watch_only_mode,Toast.LENGTH_SHORT).show();
                     return true;
                 }
@@ -113,10 +113,10 @@ public class SettingsBackupActivity extends BaseActivity {
                 return;
             }
             File backupFile = new WalletBackupHelper().determineBackupFile(null);
-            boolean result = phoreModule.backupWallet(backupFile, firstPassword);
+            boolean result = helixModule.backupWallet(backupFile, firstPassword);
 
             if (result){
-                phoreApplication.getAppConf().setHasBackup(true);
+                helixApplication.getAppConf().setHasBackup(true);
                 showSuccedBackupDialog(backupFile.getAbsolutePath());
             }else {
                 backupRes = R.string.backup_fail;

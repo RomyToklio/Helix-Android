@@ -1,4 +1,4 @@
-package io.phore.android.ui.settings_activity;
+package io.helix.android.ui.settings_activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -20,29 +20,29 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import chain.BlockchainState;
-import io.phore.android.BuildConfig;
-import io.phore.android.R;
-import io.phore.android.module.PhoreContext;
-import io.phore.android.ui.base.BaseDrawerActivity;
-import io.phore.android.ui.base.dialogs.SimpleTwoButtonsDialog;
-import io.phore.android.ui.export_account.ExportKeyActivity;
-import io.phore.android.ui.import_watch_only.SettingsWatchOnly;
-import io.phore.android.ui.restore_activity.RestoreActivity;
-import io.phore.android.ui.settings_backup_activity.SettingsBackupActivity;
-import io.phore.android.ui.settings_network_activity.SettingsNetworkActivity;
-import io.phore.android.ui.settings_pincode_activity.SettingsPincodeActivity;
-import io.phore.android.ui.settings_rates.SettingsRatesActivity;
-import io.phore.android.ui.start_node_activity.StartNodeActivity;
-import io.phore.android.utils.CrashReporter;
-import io.phore.android.utils.DialogsUtil;
-import io.phore.android.utils.IntentsUtils;
-import io.phore.android.utils.NavigationUtils;
-import io.phore.android.utils.ReportIssueDialogBuilder;
+import io.helix.android.BuildConfig;
+import io.helix.android.R;
+import io.helix.android.module.helixContext;
+import io.helix.android.ui.base.BaseDrawerActivity;
+import io.helix.android.ui.base.dialogs.SimpleTwoButtonsDialog;
+import io.helix.android.ui.export_account.ExportKeyActivity;
+import io.helix.android.ui.import_watch_only.SettingsWatchOnly;
+import io.helix.android.ui.restore_activity.RestoreActivity;
+import io.helix.android.ui.settings_backup_activity.SettingsBackupActivity;
+import io.helix.android.ui.settings_network_activity.SettingsNetworkActivity;
+import io.helix.android.ui.settings_pincode_activity.SettingsPincodeActivity;
+import io.helix.android.ui.settings_rates.SettingsRatesActivity;
+import io.helix.android.ui.start_node_activity.StartNodeActivity;
+import io.helix.android.utils.CrashReporter;
+import io.helix.android.utils.DialogsUtil;
+import io.helix.android.utils.IntentsUtils;
+import io.helix.android.utils.NavigationUtils;
+import io.helix.android.utils.ReportIssueDialogBuilder;
 
-import static io.phore.android.service.IntentsConstants.INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE;
-import static io.phore.android.service.IntentsConstants.INTENT_BROADCAST_DATA_PEER_CONNECTED;
-import static io.phore.android.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
-import static io.phore.android.service.IntentsConstants.INTENT_EXTRA_BLOCKCHAIN_STATE;
+import static io.helix.android.service.IntentsConstants.INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE;
+import static io.helix.android.service.IntentsConstants.INTENT_BROADCAST_DATA_PEER_CONNECTED;
+import static io.helix.android.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
+import static io.helix.android.service.IntentsConstants.INTENT_EXTRA_BLOCKCHAIN_STATE;
 
 /**
  * Created by Neoperol on 5/11/17.
@@ -72,7 +72,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         txt_network_info = (TextView) findViewById(R.id.txt_network_info);
 
         textAbout = (TextView)findViewById(R.id.text_about);
-        String text = "(c) Phore Community";
+        String text = "(c) helix Community";
         textAbout.setText(Html.fromHtml(text));
         // Open Backup Wallet
         buttonBackup = (Button) findViewById(R.id.btn_backup_wallet);
@@ -123,11 +123,11 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
     private void updateNetworkStatus() {
         txt_network_info.setText(
                 Html.fromHtml(
-                        "Network<br><font color=#55476c>"+phoreModule.getConf().getNetworkParams().getId()+
+                        "Network<br><font color=#55476c>"+helixModule.getConf().getNetworkParams().getId()+
                                 "</font><br>" +
-                                "Height<br><font color=#55476c>"+phoreModule.getChainHeight()+"</font><br>" +
+                                "Height<br><font color=#55476c>"+helixModule.getChainHeight()+"</font><br>" +
                                 "Protocol Version<br><font color=#55476c>"+
-                                phoreModule.getProtocolVersion()+"</font>"
+                                helixModule.getProtocolVersion()+"</font>"
 
                 )
         );
@@ -177,7 +177,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
                 new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
                     @Override
                     public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
-                        phoreApplication.stopBlockchain();
+                        helixApplication.stopBlockchain();
                         Toast.makeText(SettingsActivity.this,R.string.reseting_blockchain,Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                     }
@@ -196,21 +196,21 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
     private void launchReportDialog() {
         ReportIssueDialogBuilder dialog = new ReportIssueDialogBuilder(
                 this,
-                "io.phore.android.myfileprovider",
+                "io.helix.android.myfileprovider",
                 R.string.report_issuea_dialog_title,
                 R.string.report_issue_dialog_message_issue)
         {
             @Nullable
             @Override
             protected CharSequence subject() {
-                return PhoreContext.REPORT_SUBJECT_ISSUE+" "+phoreApplication.getVersionName();
+                return helixContext.REPORT_SUBJECT_ISSUE+" "+helixApplication.getVersionName();
             }
 
             @Nullable
             @Override
             protected CharSequence collectApplicationInfo() throws IOException {
                 final StringBuilder applicationInfo = new StringBuilder();
-                CrashReporter.appendApplicationInfo(applicationInfo, phoreApplication);
+                CrashReporter.appendApplicationInfo(applicationInfo, helixApplication);
                 return applicationInfo;
             }
 
@@ -231,7 +231,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
             @Nullable
             @Override
             protected CharSequence collectWalletDump() throws IOException {
-                return phoreModule.getWallet().toString(false,true,true,null);
+                return helixModule.getWallet().toString(false,true,true,null);
             }
         };
         dialog.show();

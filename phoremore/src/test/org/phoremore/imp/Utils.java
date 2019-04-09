@@ -1,12 +1,12 @@
-package org.phoremore.imp;
+package org.helixmore.imp;
 
-import org.phore.core.ECKey;
-import org.phore.params.TestNet3Params;
+import org.helix.core.ECKey;
+import org.helix.params.TestNet3Params;
 import org.junit.Test;
 import org.spongycastle.math.ec.ECPoint;
 import org.spongycastle.util.encoders.Hex;
 
-import static org.phore.core.ECKey.CURVE;
+import static org.helix.core.ECKey.CURVE;
 
 /**
  * Created by furszy on 8/13/17.

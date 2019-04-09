@@ -1,12 +1,12 @@
-package io.phore.android.module.wallet;
+package io.helix.android.module.wallet;
 
 import java.io.File;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-import io.phore.android.PhoreApplication;
-import io.phore.android.module.PhoreContext;
+import io.helix.android.helixApplication;
+import io.helix.android.module.helixContext;
 import global.utils.Iso8601Format;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -18,16 +18,16 @@ import static com.google.common.base.Preconditions.checkState;
 public class WalletBackupHelper {
 
     public File determineBackupFile(String extraData) {
-        PhoreContext.Files.EXTERNAL_WALLET_BACKUP_DIR.mkdirs();
-        checkState(PhoreContext.Files.EXTERNAL_WALLET_BACKUP_DIR.isDirectory(), "%s is not a directory", PhoreContext.Files.EXTERNAL_WALLET_BACKUP_DIR);
+        helixContext.Files.EXTERNAL_WALLET_BACKUP_DIR.mkdirs();
+        checkState(helixContext.Files.EXTERNAL_WALLET_BACKUP_DIR.isDirectory(), "%s is not a directory", helixContext.Files.EXTERNAL_WALLET_BACKUP_DIR);
 
         final DateFormat dateFormat = Iso8601Format.newDateFormat();
         dateFormat.setTimeZone(TimeZone.getDefault());
 
-        String appName = PhoreApplication.getInstance().getVersionName();
+        String appName = helixApplication.getInstance().getVersionName();
 
         for (int i = 0; true; i++) {
-            final StringBuilder filename = new StringBuilder(PhoreContext.Files.getExternalWalletBackupFileName(appName));
+            final StringBuilder filename = new StringBuilder(helixContext.Files.getExternalWalletBackupFileName(appName));
             filename.append('-');
             filename.append(dateFormat.format(new Date()));
             if (extraData!=null){
@@ -36,7 +36,7 @@ public class WalletBackupHelper {
             if (i > 0)
                 filename.append(" (").append(i).append(')');
 
-            final File file = new File(PhoreContext.Files.EXTERNAL_WALLET_BACKUP_DIR, filename.toString());
+            final File file = new File(helixContext.Files.EXTERNAL_WALLET_BACKUP_DIR, filename.toString());
             if (!file.exists())
                 return file;
         }

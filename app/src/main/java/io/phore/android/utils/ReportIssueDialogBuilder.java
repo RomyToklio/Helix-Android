@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.phore.android.utils;
+package io.helix.android.utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -46,9 +46,9 @@ import java.io.Writer;
 import java.util.ArrayList;
 
 import global.utils.Io;
-import io.phore.android.R;
+import io.helix.android.R;
 
-import static io.phore.android.utils.AndroidUtils.shareText;
+import static io.helix.android.utils.AndroidUtils.shareText;
 
 
 public abstract class ReportIssueDialogBuilder extends DialogBuilder implements OnClickListener {

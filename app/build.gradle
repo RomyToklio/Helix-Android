@@ -5,7 +5,7 @@ android {
     buildToolsVersion '25.0.2'
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
-        applicationId "io.phore.android"
+        applicationId "io.helix.android"
         minSdkVersion 21
         targetSdkVersion 25
         versionCode 3
@@ -79,8 +79,8 @@ dependencies {
     compile 'com.snappydb:snappydb-lib:0.5.2'
     compile 'ch.acra:acra:4.9.2'
     //compile 'com.bugsee:bugsee-android:+'
-    compile files('lib/phorej-core.jar')
-    compile project(':phoremore')
+    compile files('lib/helixj-core.jar')
+    compile project(':helixmore')
     compile 'org.slf4j:slf4j-api:1.7.20'
     compile 'org.slf4j:slf4j-simple:1.7.5'
     compile 'junit:junit:4.12'

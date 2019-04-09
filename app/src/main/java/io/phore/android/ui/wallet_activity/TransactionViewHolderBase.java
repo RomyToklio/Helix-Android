@@ -1,4 +1,4 @@
-package io.phore.android.ui.wallet_activity;
+package io.helix.android.ui.wallet_activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.tools.adapter.BaseRecyclerViewHolder;
-import io.phore.android.ui.transaction_detail_activity.TransactionDetailActivity;
+import io.helix.android.R;
+import io.helix.android.ui.base.tools.adapter.BaseRecyclerViewHolder;
+import io.helix.android.ui.transaction_detail_activity.TransactionDetailActivity;
 
 /**
  * Created by Neoperol on 5/3/17.

@@ -1,17 +1,17 @@
-package io.phore.android.module;
+package io.helix.android.module;
 
-import org.phorej.core.Address;
-import org.phorej.core.Coin;
-import org.phorej.core.InsufficientMoneyException;
-import org.phorej.core.Peer;
-import org.phorej.core.Sha256Hash;
-import org.phorej.core.Transaction;
-import org.phorej.core.TransactionInput;
-import org.phorej.core.TransactionOutput;
-import org.phorej.crypto.DeterministicKey;
-import org.phorej.crypto.MnemonicException;
-import org.phorej.wallet.DeterministicKeyChain;
-import org.phorej.wallet.Wallet;
+import org.helixj.core.Address;
+import org.helixj.core.Coin;
+import org.helixj.core.InsufficientMoneyException;
+import org.helixj.core.Peer;
+import org.helixj.core.Sha256Hash;
+import org.helixj.core.Transaction;
+import org.helixj.core.TransactionInput;
+import org.helixj.core.TransactionOutput;
+import org.helixj.crypto.DeterministicKey;
+import org.helixj.crypto.MnemonicException;
+import org.helixj.wallet.DeterministicKeyChain;
+import org.helixj.wallet.Wallet;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,10 +21,10 @@ import java.util.List;
 import java.util.Set;
 
 import global.WalletConfiguration;
-import io.phore.android.contacts.AddressLabel;
-import io.phore.android.rate.db.PhoreRate;
-import io.phore.android.ui.transaction_send_activity.custom.inputs.InputWrapper;
-import io.phore.android.ui.wallet_activity.TransactionWrapper;
+import io.helix.android.contacts.AddressLabel;
+import io.helix.android.rate.db.helixRate;
+import io.helix.android.ui.transaction_send_activity.custom.inputs.InputWrapper;
+import io.helix.android.ui.wallet_activity.TransactionWrapper;
 import wallet.exceptions.InsufficientInputsException;
 import wallet.exceptions.TxNotFoundException;
 import wallet.exceptions.CantRestoreEncryptedWallet;
@@ -33,7 +33,7 @@ import wallet.exceptions.CantRestoreEncryptedWallet;
  * Created by mati on 18/04/17.
  */
 
-public interface PhoreModule {
+public interface helixModule {
 
     /**
      * Initialize the module
@@ -114,7 +114,7 @@ public interface PhoreModule {
 
     int getChainHeight();
 
-    PhoreRate getRate(String selectedRateCoin);
+    helixRate getRate(String selectedRateCoin);
 
     /**
      * Don't use this..
@@ -165,6 +165,6 @@ public interface PhoreModule {
 
     boolean upgradeWallet(String upgradeCode) throws UpgradeException;
 
-    List<PhoreRate> listRates();
+    List<helixRate> listRates();
 
 }

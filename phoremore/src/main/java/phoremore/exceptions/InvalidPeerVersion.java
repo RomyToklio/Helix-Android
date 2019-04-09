@@ -1,4 +1,4 @@
-package phoremore.exceptions;
+package helixmore.exceptions;
 
 /**
  * Created by furszy on 6/17/17.

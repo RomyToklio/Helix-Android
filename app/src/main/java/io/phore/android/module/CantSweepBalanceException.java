@@ -1,4 +1,4 @@
-package io.phore.android.module;
+package io.helix.android.module;
 
 import java.util.concurrent.TimeoutException;
 

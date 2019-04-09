@@ -1,18 +1,18 @@
-package io.phore.android.rate;
+package io.helix.android.rate;
 
 /**
  * Created by furszy on 7/5/17.
  */
-public class RequestPhoreRateException extends Exception {
-    public RequestPhoreRateException(String message) {
+public class RequesthelixRateException extends Exception {
+    public RequesthelixRateException(String message) {
         super(message);
     }
 
-    public RequestPhoreRateException(String message, Throwable cause) {
+    public RequesthelixRateException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public RequestPhoreRateException(Exception e) {
+    public RequesthelixRateException(Exception e) {
         super(e);
     }
 }

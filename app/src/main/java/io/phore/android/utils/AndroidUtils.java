@@ -1,4 +1,4 @@
-package io.phore.android.utils;
+package io.helix.android.utils;
 
 import android.app.Activity;
 import android.content.ClipData;
@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
-import io.phore.android.PhoreApplication;
-import io.phore.android.R;
-import io.phore.android.module.PhoreContext;
+import io.helix.android.helixApplication;
+import io.helix.android.R;
+import io.helix.android.module.helixContext;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
@@ -47,7 +47,7 @@ public class AndroidUtils {
             intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, attachments);
         }
 
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{PhoreContext.REPORT_EMAIL});
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{helixContext.REPORT_EMAIL});
         if (subject != null)
             intent.putExtra(Intent.EXTRA_SUBJECT, subject);
 //		ArrayList<CharSequence> str = new ArrayList<CharSequence>();
@@ -59,7 +59,7 @@ public class AndroidUtils {
         try {
             String maiñChooser = context.getString(R.string.report_issue_dialog_mail_intent_chooser);
             if (!(context instanceof Activity)){
-                PhoreApplication.getInstance().getAppConf().saveShowReportScreenOnStart(true);
+                helixApplication.getInstance().getAppConf().saveShowReportScreenOnStart(true);
                 intent.setFlags(FLAG_ACTIVITY_NEW_TASK|FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_SINGLE_TOP);
             }
             context.startActivity(Intent.createChooser(intent, maiñChooser));

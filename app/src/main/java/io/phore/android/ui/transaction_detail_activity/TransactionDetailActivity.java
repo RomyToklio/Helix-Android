@@ -1,4 +1,4 @@
-package io.phore.android.ui.transaction_detail_activity;
+package io.helix.android.ui.transaction_detail_activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,10 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.BaseActivity;
-import io.phore.android.ui.wallet_activity.WalletActivity;
-import io.phore.android.utils.NavigationUtils;
+import io.helix.android.R;
+import io.helix.android.ui.base.BaseActivity;
+import io.helix.android.ui.wallet_activity.WalletActivity;
+import io.helix.android.utils.NavigationUtils;
 
 /**
  * Created by Neoperol on 6/9/17.

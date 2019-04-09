@@ -1,4 +1,4 @@
-package io.phore.android.utils;
+package io.helix.android.utils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
-import io.phore.android.R;
-import io.phore.android.module.PhoreContext;
+import io.helix.android.R;
+import io.helix.android.module.helixContext;
 
 /**
  * Created by furszy on 7/10/17.
@@ -38,7 +38,7 @@ public class IntentsUtils {
             intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, attachments);
         }
 
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{PhoreContext.REPORT_EMAIL});
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{helixContext.REPORT_EMAIL});
         if (subject != null)
             intent.putExtra(Intent.EXTRA_SUBJECT, subject);
 //		ArrayList<CharSequence> str = new ArrayList<CharSequence>();

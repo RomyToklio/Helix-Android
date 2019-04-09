@@ -1,4 +1,4 @@
-package io.phore.android.contacts;
+package io.helix.android.contacts;
 
 /**
  * Created by furszy on 7/1/17.

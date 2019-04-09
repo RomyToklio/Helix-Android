@@ -1,12 +1,12 @@
-package io.phore.android.ui.qr_activity;
+package io.helix.android.ui.qr_activity;
 
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.BaseActivity;
-import io.phore.android.utils.NavigationUtils;
+import io.helix.android.R;
+import io.helix.android.ui.base.BaseActivity;
+import io.helix.android.utils.NavigationUtils;
 
 /**
  * Created by furszy on 6/8/17.

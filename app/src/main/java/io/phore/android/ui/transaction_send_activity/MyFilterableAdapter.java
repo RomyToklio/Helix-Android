@@ -1,4 +1,4 @@
-package io.phore.android.ui.transaction_send_activity;
+package io.helix.android.ui.transaction_send_activity;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,8 +12,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.phore.android.R;
-import io.phore.android.contacts.AddressLabel;
+import io.helix.android.R;
+import io.helix.android.contacts.AddressLabel;
 
 public class MyFilterableAdapter extends BaseAdapter implements Filterable {
     private Context context;

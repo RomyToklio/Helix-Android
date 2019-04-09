@@ -1,11 +1,11 @@
-package io.phore.android.ui.contacts_activity;
+package io.helix.android.ui.contacts_activity;
 
 import android.content.Context;
 import android.view.View;
 
-import io.phore.android.R;
-import io.phore.android.contacts.AddressLabel;
-import io.phore.android.ui.base.tools.adapter.BaseRecyclerAdapter;
+import io.helix.android.R;
+import io.helix.android.contacts.AddressLabel;
+import io.helix.android.ui.base.tools.adapter.BaseRecyclerAdapter;
 
 /**
  * Created by Neoperol on 5/18/17.

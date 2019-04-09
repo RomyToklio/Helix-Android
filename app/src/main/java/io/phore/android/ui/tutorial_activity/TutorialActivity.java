@@ -1,4 +1,4 @@
-package io.phore.android.ui.tutorial_activity;
+package io.helix.android.ui.tutorial_activity;
 
 
 import android.content.Context;
@@ -19,10 +19,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import io.phore.android.R;
-import io.phore.android.ui.pincode_activity.PincodeActivity;
-import io.phore.android.ui.start_node_activity.StartNodeActivity;
-import io.phore.android.ui.wallet_activity.WalletActivity;
+import io.helix.android.R;
+import io.helix.android.ui.pincode_activity.PincodeActivity;
+import io.helix.android.ui.start_node_activity.StartNodeActivity;
+import io.helix.android.ui.wallet_activity.WalletActivity;
 
 /**
  * Created by Neoperol on 7/6/17.

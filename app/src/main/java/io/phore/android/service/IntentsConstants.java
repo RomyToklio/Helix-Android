@@ -1,4 +1,4 @@
-package io.phore.android.service;
+package io.helix.android.service;
 
 /**
  * Created by furszy on 6/19/17.

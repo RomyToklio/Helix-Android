@@ -1,4 +1,4 @@
-package io.phore.android.ui.settings_pincode_activity;
+package io.helix.android.ui.settings_pincode_activity;
 
 import android.os.Bundle;
 import android.view.ViewGroup;
@@ -6,8 +6,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.BaseActivity;
+import io.helix.android.R;
+import io.helix.android.ui.base.BaseActivity;
 
 
 /**
@@ -55,7 +55,7 @@ public class SettingsPincodeActivity extends BaseActivity implements KeyboardFra
             if (lastPos==4){
                 String pincode = String.valueOf(pin[0])+String.valueOf(pin[1])+String.valueOf(pin[2])+String.valueOf(pin[3]);
                 if (reason==OLDER_PIN){
-                    if (pincode.equals(phoreApplication.getAppConf().getPincode())){
+                    if (pincode.equals(helixApplication.getAppConf().getPincode())){
                         clear();
                         reason = NEW_PIN;
                         pincodeMessage.setText(R.string.insert_new_pin);
@@ -64,7 +64,7 @@ public class SettingsPincodeActivity extends BaseActivity implements KeyboardFra
                         Toast.makeText(this,R.string.invalid_pincode,Toast.LENGTH_SHORT).show();
                     }
                 }else {
-                    phoreApplication.getAppConf().savePincode(pincode);
+                    helixApplication.getAppConf().savePincode(pincode);
                     Toast.makeText(this,R.string.pincode_saved,Toast.LENGTH_SHORT).show();
                     onBackPressed();
                 }

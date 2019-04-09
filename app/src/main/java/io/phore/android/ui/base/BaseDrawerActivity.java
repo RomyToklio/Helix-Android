@@ -1,4 +1,4 @@
-package io.phore.android.ui.base;
+package io.helix.android.ui.base;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -22,22 +22,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import chain.BlockchainState;
-import io.phore.android.BuildConfig;
-import io.phore.android.R;
-import io.phore.android.ui.contacts_activity.ContactsActivity;
-import io.phore.android.ui.qr_activity.QrActivity;
-import io.phore.android.ui.settings_activity.SettingsActivity;
-import io.phore.android.ui.transaction_send_activity.SendActivity;
-import io.phore.android.ui.wallet_activity.WalletActivity;
+import io.helix.android.BuildConfig;
+import io.helix.android.R;
+import io.helix.android.ui.contacts_activity.ContactsActivity;
+import io.helix.android.ui.qr_activity.QrActivity;
+import io.helix.android.ui.settings_activity.SettingsActivity;
+import io.helix.android.ui.transaction_send_activity.SendActivity;
+import io.helix.android.ui.wallet_activity.WalletActivity;
 
-import static io.phore.android.module.PhoreContext.OUT_OF_SYNC_TIME;
-import static io.phore.android.service.IntentsConstants.ACTION_NOTIFICATION;
-import static io.phore.android.service.IntentsConstants.INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE;
-import static io.phore.android.service.IntentsConstants.INTENT_BROADCAST_DATA_PEER_CONNECTED;
-import static io.phore.android.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
-import static io.phore.android.service.IntentsConstants.INTENT_EXTRA_BLOCKCHAIN_STATE;
+import static io.helix.android.module.helixContext.OUT_OF_SYNC_TIME;
+import static io.helix.android.service.IntentsConstants.ACTION_NOTIFICATION;
+import static io.helix.android.service.IntentsConstants.INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE;
+import static io.helix.android.service.IntentsConstants.INTENT_BROADCAST_DATA_PEER_CONNECTED;
+import static io.helix.android.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
+import static io.helix.android.service.IntentsConstants.INTENT_EXTRA_BLOCKCHAIN_STATE;
 
-public class BaseDrawerActivity extends PhoreActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class BaseDrawerActivity extends helixActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private NavigationView navigationView;
     private FrameLayout frameLayout;
@@ -101,12 +101,12 @@ public class BaseDrawerActivity extends PhoreActivity implements NavigationView.
 
     private void checkState(){
         long now = System.currentTimeMillis();
-        long lastBlockTime = phoreApplication.getAppConf().getLastBestChainBlockTime();
+        long lastBlockTime = helixApplication.getAppConf().getLastBestChainBlockTime();
         if (lastBlockTime+OUT_OF_SYNC_TIME>now){
             // check if i'm syncing or i'm synched
-            long peerHeight = phoreModule.getConnectedPeerHeight();
+            long peerHeight = helixModule.getConnectedPeerHeight();
             if (peerHeight!=-1){
-                if (phoreModule.getChainHeight()+10>peerHeight) {
+                if (helixModule.getChainHeight()+10>peerHeight) {
                     blockchainState = BlockchainState.SYNC;
                 }else {
                     blockchainState = BlockchainState.SYNCING;
@@ -115,10 +115,10 @@ public class BaseDrawerActivity extends PhoreActivity implements NavigationView.
                 blockchainState = BlockchainState.NOT_CONNECTION;
             }
         }else {
-            if (phoreModule.isAnyPeerConnected()) {
-                long peerHeight = phoreModule.getConnectedPeerHeight();
+            if (helixModule.isAnyPeerConnected()) {
+                long peerHeight = helixModule.getConnectedPeerHeight();
                 if (peerHeight!=-1){
-                    if (phoreModule.getChainHeight()+10>peerHeight) {
+                    if (helixModule.getChainHeight()+10>peerHeight) {
                         blockchainState = BlockchainState.SYNC;
                     }else {
                         blockchainState = BlockchainState.SYNCING;
@@ -203,7 +203,7 @@ public class BaseDrawerActivity extends PhoreActivity implements NavigationView.
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_send) {
-            if (phoreModule.isWalletWatchOnly()) {
+            if (helixModule.isWalletWatchOnly()) {
                 Toast.makeText(this, R.string.error_watch_only_mode, Toast.LENGTH_SHORT).show();
             } else {
                 startActivity(new Intent(this, SendActivity.class));
@@ -258,12 +258,12 @@ public class BaseDrawerActivity extends PhoreActivity implements NavigationView.
     }
 
     private double calculateBlockchainSyncProgress() {
-        long nodeHeight = phoreModule.getConnectedPeerHeight();
+        long nodeHeight = helixModule.getConnectedPeerHeight();
         if (nodeHeight>0){
             // calculate the progress
             // nodeHeight -> 100 %
             // current height -> x %
-            return (phoreModule.getChainHeight()*100) / nodeHeight;
+            return (helixModule.getChainHeight()*100) / nodeHeight;
         }
         return -1;
     }

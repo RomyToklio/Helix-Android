@@ -1,4 +1,4 @@
-package io.phore.android.ui.restore_activity;
+package io.helix.android.ui.restore_activity;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.io.File;
 import java.util.List;
 
-import io.phore.android.R;
+import io.helix.android.R;
 
 public abstract class FileAdapter extends ArrayAdapter<File>
 {

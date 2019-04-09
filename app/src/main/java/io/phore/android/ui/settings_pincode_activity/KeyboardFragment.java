@@ -1,4 +1,4 @@
-package io.phore.android.ui.settings_pincode_activity;
+package io.helix.android.ui.settings_pincode_activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.BaseFragment;
+import io.helix.android.R;
+import io.helix.android.ui.base.BaseFragment;
 
 /**
  * Created by furszy on 7/11/17.

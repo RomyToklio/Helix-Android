@@ -1,4 +1,4 @@
-package io.phore.android.ui.base.tools.adapter;
+package io.helix.android.ui.base.tools.adapter;
 
 
 public interface ListItemListeners<M> {

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.phore.android.utils;
+package io.helix.android.utils;
 
 
 import android.app.AlertDialog;
@@ -28,7 +28,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import io.phore.android.R;
+import io.helix.android.R;
 
 
 /**

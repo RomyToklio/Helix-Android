@@ -1,4 +1,4 @@
-package io.phore.android.ui.base;
+package io.helix.android.ui.base;
 
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -11,13 +11,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
-import io.phore.android.R;
+import io.helix.android.R;
 
 /**
  * Created by mati on 18/04/17.
  */
 
-public abstract class BaseActivity extends PhoreActivity {
+public abstract class BaseActivity extends helixActivity {
 
     protected Toolbar toolbar;
     protected FrameLayout childContainer;

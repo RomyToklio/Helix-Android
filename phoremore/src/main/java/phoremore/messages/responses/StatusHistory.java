@@ -1,9 +1,9 @@
-package phoremore.messages.responses;
+package helixmore.messages.responses;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import phoremore.utility.TxHashHeightWrapper;
+import helixmore.utility.TxHashHeightWrapper;
 
 /**
  * Created by furszy on 9/16/17.

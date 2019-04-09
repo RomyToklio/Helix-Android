@@ -1,4 +1,4 @@
-package io.phore.android.module.store;
+package io.helix.android.module.store;
 
 import android.content.Context;
 

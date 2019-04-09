@@ -1,4 +1,4 @@
-package io.phore.android.contacts;
+package io.helix.android.contacts;
 
 import android.content.ContentValues;
 import android.content.Context;

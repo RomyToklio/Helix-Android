@@ -1,4 +1,4 @@
-package io.phore.android.ui.base;
+package io.helix.android.ui.base;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,25 +9,25 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 
-import io.phore.android.PhoreApplication;
-import io.phore.android.R;
-import io.phore.android.module.PhoreModule;
-import io.phore.android.service.IntentsConstants;
-import io.phore.android.ui.base.dialogs.SimpleTextDialog;
-import io.phore.android.utils.DialogBuilder;
-import io.phore.android.utils.DialogsUtil;
+import io.helix.android.helixApplication;
+import io.helix.android.R;
+import io.helix.android.module.helixModule;
+import io.helix.android.service.IntentsConstants;
+import io.helix.android.ui.base.dialogs.SimpleTextDialog;
+import io.helix.android.utils.DialogBuilder;
+import io.helix.android.utils.DialogsUtil;
 
-import static io.phore.android.service.IntentsConstants.ACTION_STORED_BLOCKCHAIN_ERROR;
-import static io.phore.android.service.IntentsConstants.ACTION_TRUSTED_PEER_CONNECTION_FAIL;
+import static io.helix.android.service.IntentsConstants.ACTION_STORED_BLOCKCHAIN_ERROR;
+import static io.helix.android.service.IntentsConstants.ACTION_TRUSTED_PEER_CONNECTION_FAIL;
 
 /**
  * Created by furszy on 6/8/17.
  */
 
-public class PhoreActivity extends AppCompatActivity {
+public class helixActivity extends AppCompatActivity {
 
-    protected PhoreApplication phoreApplication;
-    protected PhoreModule phoreModule;
+    protected helixApplication helixApplication;
+    protected helixModule helixModule;
 
     protected LocalBroadcastManager localBroadcastManager;
     private static final IntentFilter intentFilter = new IntentFilter(ACTION_TRUSTED_PEER_CONNECTION_FAIL);
@@ -50,8 +50,8 @@ public class PhoreActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        phoreApplication = PhoreApplication.getInstance();
-        phoreModule = phoreApplication.getModule();
+        helixApplication = helixApplication.getInstance();
+        helixModule = helixApplication.getModule();
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
     }
 

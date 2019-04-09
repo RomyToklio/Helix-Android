@@ -1,6 +1,6 @@
-package phoremore.listeners;
+package helixmore.listeners;
 
-import phoremore.PhorePeer;
+import helixmore.helixPeer;
 
 /**
  * Created by furszy on 6/17/17.
@@ -8,9 +8,9 @@ import phoremore.PhorePeer;
 
 public interface PeerListener {
 
-    void onConnected(PhorePeer phoremorePeer);
+    void onConnected(helixPeer helixmorePeer);
 
-    void onDisconnected(PhorePeer phoremorePeer);
+    void onDisconnected(helixPeer helixmorePeer);
 
-    void onExceptionCaught(PhorePeer phoremorePeer, Exception e);
+    void onExceptionCaught(helixPeer helixmorePeer, Exception e);
 }

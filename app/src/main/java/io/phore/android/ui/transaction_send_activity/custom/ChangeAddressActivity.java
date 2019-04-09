@@ -1,4 +1,4 @@
-package io.phore.android.ui.transaction_send_activity.custom;
+package io.helix.android.ui.transaction_send_activity.custom;
 
 import android.content.Intent;
 import android.os.Build;
@@ -13,15 +13,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import org.phorej.core.AddressFormatException;
-import org.phorej.uri.PhoreURI;
+import org.helixj.core.AddressFormatException;
+import org.helixj.uri.helixURI;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.BaseActivity;
-import io.phore.android.utils.DialogsUtil;
-import io.phore.android.utils.scanner.ScanActivity;
+import io.helix.android.R;
+import io.helix.android.ui.base.BaseActivity;
+import io.helix.android.utils.DialogsUtil;
+import io.helix.android.utils.scanner.ScanActivity;
 import static android.Manifest.permission_group.CAMERA;
-import static io.phore.android.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
+import static io.helix.android.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
 
 
 /**
@@ -154,11 +154,11 @@ public class ChangeAddressActivity extends BaseActivity {
                     String address = "";
                     address = data.getStringExtra(INTENT_EXTRA_RESULT);
                     String usedAddress;
-                    if (phoreModule.chechAddress(address)){
+                    if (helixModule.chechAddress(address)){
                         usedAddress = address;
                     }else {
-                        PhoreURI phoreUri = new PhoreURI(address);
-                        usedAddress = phoreUri.getAddress().toBase58();
+                        helixURI helixUri = new helixURI(address);
+                        usedAddress = helixUri.getAddress().toBase58();
                     }
                     edit_address.setText(usedAddress);
                 }catch (Exception e){
@@ -171,7 +171,7 @@ public class ChangeAddressActivity extends BaseActivity {
 
     public String getAndCheckAddress() {
         String address = edit_address.getText().toString();
-        if (!phoreModule.chechAddress(address)){
+        if (!helixModule.chechAddress(address)){
             throw new AddressFormatException();
         }
         return address;

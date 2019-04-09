@@ -1,4 +1,4 @@
-package io.phore.android.rate.db;
+package io.helix.android.rate.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,13 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.math.BigDecimal;
 
-import io.phore.android.contacts.AbstractSqliteDb;
+import io.helix.android.contacts.AbstractSqliteDb;
 
 /**
  * Created by furszy on 7/5/17.
  */
 
-public class RateDb extends AbstractSqliteDb<PhoreRate> {
+public class RateDb extends AbstractSqliteDb<helixRate> {
 
 
     private static final String DATABASE_NAME = "Rates";
@@ -64,7 +64,7 @@ public class RateDb extends AbstractSqliteDb<PhoreRate> {
     }
 
     @Override
-    protected ContentValues buildContent(PhoreRate obj) {
+    protected ContentValues buildContent(helixRate obj) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_COIN,obj.getCode());
         contentValues.put(KEY_VALUE,obj.getRate().toEngineeringString());
@@ -74,23 +74,23 @@ public class RateDb extends AbstractSqliteDb<PhoreRate> {
     }
 
     @Override
-    protected PhoreRate buildFrom(Cursor cursor) {
+    protected helixRate buildFrom(Cursor cursor) {
         String coin = cursor.getString(KEY_POS_COIN);
         BigDecimal value = new BigDecimal(cursor.getString(KEY_POS_VALUE));
         long timestap = cursor.getLong(KEY_POS_TIMESTAMP);
-        return new PhoreRate(coin,value,timestap);
+        return new helixRate(coin,value,timestap);
     }
 
-    public PhoreRate getRate(String coin){
+    public helixRate getRate(String coin){
         return get(KEY_COIN,coin);
     }
 
 
-    public void insertOrUpdateIfExist(PhoreRate phoreRate) {
-        if (getRate(phoreRate.getCode())==null){
-            insert(phoreRate);
+    public void insertOrUpdateIfExist(helixRate helixRate) {
+        if (getRate(helixRate.getCode())==null){
+            insert(helixRate);
         }else {
-            updateByKey(KEY_COIN,phoreRate.getCode(),phoreRate);
+            updateByKey(KEY_COIN,helixRate.getCode(),helixRate);
         }
     }
 }

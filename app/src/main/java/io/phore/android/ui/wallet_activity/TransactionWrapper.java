@@ -1,13 +1,13 @@
-package io.phore.android.ui.wallet_activity;
+package io.helix.android.ui.wallet_activity;
 
-import org.phorej.core.Coin;
-import org.phorej.core.Sha256Hash;
-import org.phorej.core.Transaction;
+import org.helixj.core.Coin;
+import org.helixj.core.Sha256Hash;
+import org.helixj.core.Transaction;
 
 import java.io.Serializable;
 import java.util.Map;
 
-import io.phore.android.contacts.AddressLabel;
+import io.helix.android.contacts.AddressLabel;
 
 /**
  * Created by furszy on 6/29/17.

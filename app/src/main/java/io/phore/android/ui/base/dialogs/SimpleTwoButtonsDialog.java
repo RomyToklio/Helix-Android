@@ -1,4 +1,4 @@
-package io.phore.android.ui.base.dialogs;
+package io.helix.android.ui.base.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import io.phore.android.R;
+import io.helix.android.R;
 
 import static android.view.View.GONE;
 

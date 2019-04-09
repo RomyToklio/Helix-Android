@@ -1,4 +1,4 @@
-package io.phore.android.ui.export_account;
+package io.helix.android.ui.export_account;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -13,16 +13,16 @@ import android.widget.Toast;
 
 import com.google.zxing.WriterException;
 
-import org.phorej.crypto.DeterministicKey;
+import org.helixj.crypto.DeterministicKey;
 
-import io.phore.android.R;
-import io.phore.android.module.PhoreContext;
-import io.phore.android.ui.base.BaseActivity;
-import io.phore.android.utils.AndroidUtils;
-import io.phore.android.utils.CrashReporter;
+import io.helix.android.R;
+import io.helix.android.module.helixContext;
+import io.helix.android.ui.base.BaseActivity;
+import io.helix.android.utils.AndroidUtils;
+import io.helix.android.utils.CrashReporter;
 
 import static android.graphics.Color.WHITE;
-import static io.phore.android.utils.QrUtils.encodeAsBitmap;
+import static io.helix.android.utils.QrUtils.encodeAsBitmap;
 
 /**
  * Created by furszy on 8/29/17.
@@ -52,15 +52,15 @@ public class ExportKeyActivity extends BaseActivity implements View.OnClickListe
             initValues();
         }catch (Exception e){
             e.printStackTrace();
-            CrashReporter.saveBackgroundTrace(e,phoreApplication.getPackageInfo());
+            CrashReporter.saveBackgroundTrace(e,helixApplication.getPackageInfo());
             Toast.makeText(this,R.string.unknown_error_message,Toast.LENGTH_LONG).show();
             onBackPressed();
         }
     }
 
     private void initValues() throws WriterException {
-        DeterministicKey deterministicKey = phoreModule.getWatchingKey();
-        xpubKey = deterministicKey.serializePubB58(PhoreContext.NETWORK_PARAMETERS);
+        DeterministicKey deterministicKey = helixModule.getWatchingKey();
+        xpubKey = deterministicKey.serializePubB58(helixContext.NETWORK_PARAMETERS);
         txt_title.setText(R.string.public_key);
         txt_key.setText(xpubKey);
         txt_key.setOnClickListener(this);

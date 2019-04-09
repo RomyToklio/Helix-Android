@@ -1,4 +1,4 @@
-package io.phore.android.ui.wallet_activity;
+package io.helix.android.ui.wallet_activity;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.phorej.core.Coin;
-import org.phorej.utils.MonetaryFormat;
+import org.helixj.core.Coin;
+import org.helixj.utils.MonetaryFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,17 +18,17 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import io.phore.android.R;
-import io.phore.android.rate.db.PhoreRate;
-import io.phore.android.ui.base.BaseRecyclerFragment;
-import io.phore.android.ui.base.tools.adapter.BaseRecyclerAdapter;
-import io.phore.android.ui.base.tools.adapter.BaseRecyclerViewHolder;
-import io.phore.android.ui.base.tools.adapter.ListItemListeners;
-import io.phore.android.ui.transaction_detail_activity.TransactionDetailActivity;
+import io.helix.android.R;
+import io.helix.android.rate.db.helixRate;
+import io.helix.android.ui.base.BaseRecyclerFragment;
+import io.helix.android.ui.base.tools.adapter.BaseRecyclerAdapter;
+import io.helix.android.ui.base.tools.adapter.BaseRecyclerViewHolder;
+import io.helix.android.ui.base.tools.adapter.ListItemListeners;
+import io.helix.android.ui.transaction_detail_activity.TransactionDetailActivity;
 
-import static io.phore.android.ui.transaction_detail_activity.FragmentTxDetail.IS_DETAIL;
-import static io.phore.android.ui.transaction_detail_activity.FragmentTxDetail.TX_WRAPPER;
-import static io.phore.android.utils.TxUtils.getAddressOrContact;
+import static io.helix.android.ui.transaction_detail_activity.FragmentTxDetail.IS_DETAIL;
+import static io.helix.android.ui.transaction_detail_activity.FragmentTxDetail.TX_WRAPPER;
+import static io.helix.android.utils.TxUtils.getAddressOrContact;
 
 /**
  * Created by furszy on 6/29/17.
@@ -38,7 +38,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
 
     private static final Logger logger = LoggerFactory.getLogger(TransactionsFragmentBase.class);
 
-    private PhoreRate phoreRate;
+    private helixRate helixRate;
     private MonetaryFormat coinFormat = MonetaryFormat.BTC;
     private int scale = 3;
 
@@ -53,7 +53,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
 
     @Override
     protected List<TransactionWrapper> onLoading() {
-        List<TransactionWrapper> list = phoreModule.listTx();
+        List<TransactionWrapper> list = helixModule.listTx();
         Collections.sort(list, new Comparator<TransactionWrapper>(){
             public int compare(TransactionWrapper o1, TransactionWrapper o2){
                 if(o1.getTransaction().getUpdateTime().getTime() == o2.getTransaction().getUpdateTime().getTime())
@@ -90,11 +90,11 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                 }
 
                 String localCurrency = null;
-                if (phoreRate!=null) {
-                    localCurrency = phoreApplication.getCentralFormats().format(
-                                    new BigDecimal(data.getAmount().getValue() * phoreRate.getRate().doubleValue()).movePointLeft(8)
+                if (helixRate!=null) {
+                    localCurrency = helixApplication.getCentralFormats().format(
+                                    new BigDecimal(data.getAmount().getValue() * helixRate.getRate().doubleValue()).movePointLeft(8)
                                     )
-                                    + " " + phoreRate.getCode();
+                                    + " " + helixRate.getCode();
                     holder.amountLocal.setText(localCurrency);
                     holder.amountLocal.setVisibility(View.VISIBLE);
                 }else {
@@ -115,7 +115,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                     holder.imageView.setImageResource(R.drawable.ic_transaction_mining);
                     holder.amount.setTextColor(ContextCompat.getColor(context, R.color.green));
                 }
-                holder.title.setText(getAddressOrContact(phoreModule,data));
+                holder.title.setText(getAddressOrContact(helixModule,data));
 
                 /*if (data.getOutputLabels()!=null && !data.getOutputLabels().isEmpty()){
                     AddressLabel contact = data.getOutputLabels().get(0);
@@ -125,10 +125,10 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                         else
                             holder.title.setText(contact.getAddresses().get(0));
                     }else {
-                        holder.title.setText(data.getTransaction().getOutput(0).getScriptPubKey().getToAddress(phoreModule.getConf().getNetworkParams()).toBase58());
+                        holder.title.setText(data.getTransaction().getOutput(0).getScriptPubKey().getToAddress(helixModule.getConf().getNetworkParams()).toBase58());
                     }
                 }else {
-                    holder.title.setText(data.getTransaction().getOutput(0).getScriptPubKey().getToAddress(phoreModule.getConf().getNetworkParams()).toBase58());
+                    holder.title.setText(data.getTransaction().getOutput(0).getScriptPubKey().getToAddress(helixModule.getConf().getNetworkParams()).toBase58());
                 }*/
                 String memo = data.getTransaction().getMemo();
                 holder.description.setText(memo!=null?memo:"No description");
@@ -156,7 +156,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
     @Override
     public void onResume() {
         super.onResume();
-        phoreRate = phoreModule.getRate(phoreApplication.getAppConf().getSelectedRateCoin());
+        helixRate = helixModule.getRate(helixApplication.getAppConf().getSelectedRateCoin());
     }
 
     /**

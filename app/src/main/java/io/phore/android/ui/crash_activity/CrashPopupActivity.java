@@ -1,4 +1,4 @@
-package io.phore.android.ui.crash_activity;
+package io.helix.android.ui.crash_activity;
 
 import android.content.Context;
 import android.net.Uri;
@@ -27,11 +27,11 @@ import java.io.Writer;
 import java.util.ArrayList;
 
 import global.utils.Io;
-import io.phore.android.PhoreApplication;
-import io.phore.android.R;
-import io.phore.android.utils.CrashReporter;
+import io.helix.android.helixApplication;
+import io.helix.android.R;
+import io.helix.android.utils.CrashReporter;
 
-import static io.phore.android.utils.AndroidUtils.shareText;
+import static io.helix.android.utils.AndroidUtils.shareText;
 
 /**
  * Created by furszy on 8/18/17.
@@ -41,7 +41,7 @@ public class CrashPopupActivity extends AppCompatActivity implements View.OnClic
 
     private Logger log = LoggerFactory.getLogger(CrashPopupActivity.class);
 
-    private String authorities = "io.phore.android.myfileprovider";
+    private String authorities = "io.helix.android.myfileprovider";
 
     private EditText viewDescription;
     private CheckBox viewCollectDeviceInfo;
@@ -53,11 +53,11 @@ public class CrashPopupActivity extends AppCompatActivity implements View.OnClic
     private TextView txt_send;
     private TextView txt_cancel;
 
-    private PhoreApplication phoreApplication;
+    private helixApplication helixApplication;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        phoreApplication = PhoreApplication.getInstance();
+        helixApplication = helixApplication.getInstance();
         setTheme(R.style.AppTheme_Dialog);
         setContentView(R.layout.report_issue_activity_dialog);
         this.setFinishOnTouchOutside(false);
@@ -75,7 +75,7 @@ public class CrashPopupActivity extends AppCompatActivity implements View.OnClic
         txt_send.setOnClickListener(this);
         txt_cancel.setOnClickListener(this);
 
-        phoreApplication.getAppConf().saveShowReportScreenOnStart(false);
+        helixApplication.getAppConf().saveShowReportScreenOnStart(false);
 
         super.onCreate(savedInstanceState);
     }
@@ -224,13 +224,13 @@ public class CrashPopupActivity extends AppCompatActivity implements View.OnClic
     }
 
     protected CharSequence subject(){
-        return "Crash report"+" "+ phoreApplication.getVersionName();
+        return "Crash report"+" "+ helixApplication.getVersionName();
     }
 
     @Nullable
     protected CharSequence collectApplicationInfo() throws IOException{
         final StringBuilder applicationInfo = new StringBuilder();
-        CrashReporter.appendApplicationInfo(applicationInfo, phoreApplication);
+        CrashReporter.appendApplicationInfo(applicationInfo, helixApplication);
         return applicationInfo;
     }
 
@@ -248,6 +248,6 @@ public class CrashPopupActivity extends AppCompatActivity implements View.OnClic
 
     @Nullable
     protected CharSequence collectWalletDump() throws IOException{
-        return phoreApplication.getModule().getWallet().toString(false,true,true,null);
+        return helixApplication.getModule().getWallet().toString(false,true,true,null);
     }
 }

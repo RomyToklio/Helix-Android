@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import phoremore.utility.TxHashHeightWrapper;
+import helixmore.utility.TxHashHeightWrapper;
 
 /**
  * Created by furszy on 6/18/17.

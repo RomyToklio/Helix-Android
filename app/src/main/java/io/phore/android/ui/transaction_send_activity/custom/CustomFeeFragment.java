@@ -1,4 +1,4 @@
-package io.phore.android.ui.transaction_send_activity.custom;
+package io.helix.android.ui.transaction_send_activity.custom;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,11 +14,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import org.phorej.core.Coin;
-import org.phorej.core.Transaction;
+import org.helixj.core.Coin;
+import org.helixj.core.Transaction;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.BaseFragment;
+import io.helix.android.R;
+import io.helix.android.ui.base.BaseFragment;
 
 /**
  * Created by furszy on 8/3/17.

@@ -1,12 +1,12 @@
-package io.phore.android.ui.transaction_send_activity.custom.outputs;
+package io.helix.android.ui.transaction_send_activity.custom.outputs;
 
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.tools.adapter.BaseRecyclerViewHolder;
+import io.helix.android.R;
+import io.helix.android.ui.base.tools.adapter.BaseRecyclerViewHolder;
 
 /**
  * Created by furszy on 8/4/17.

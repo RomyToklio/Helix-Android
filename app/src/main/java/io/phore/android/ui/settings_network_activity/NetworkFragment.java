@@ -1,4 +1,4 @@
-package io.phore.android.ui.settings_network_activity;
+package io.helix.android.ui.settings_network_activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -6,13 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.phorej.core.Peer;
+import org.helixj.core.Peer;
 
 import java.util.List;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.BaseRecyclerFragment;
-import io.phore.android.ui.base.tools.adapter.BaseRecyclerAdapter;
+import io.helix.android.R;
+import io.helix.android.ui.base.BaseRecyclerFragment;
+import io.helix.android.ui.base.tools.adapter.BaseRecyclerAdapter;
 
 /**
  * Created by furszy on 7/2/17.
@@ -30,7 +30,7 @@ public class NetworkFragment extends BaseRecyclerFragment<Peer> {
 
     @Override
     protected List<Peer> onLoading() {
-        return phoreModule.listConnectedPeers();
+        return helixModule.listConnectedPeers();
     }
 
     @Override

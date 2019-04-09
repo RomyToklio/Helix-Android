@@ -1,11 +1,11 @@
-package io.phore.android.ui.contacts_activity;
+package io.helix.android.ui.contacts_activity;
 
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.TextView;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.tools.adapter.BaseRecyclerViewHolder;
+import io.helix.android.R;
+import io.helix.android.ui.base.tools.adapter.BaseRecyclerViewHolder;
 
 /**
  * Created by Neoperol on 5/18/17.

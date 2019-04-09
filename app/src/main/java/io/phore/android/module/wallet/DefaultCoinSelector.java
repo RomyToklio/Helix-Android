@@ -1,13 +1,13 @@
-package io.phore.android.module.wallet;
+package io.helix.android.module.wallet;
 
-import org.phorej.core.Coin;
-import org.phorej.core.NetworkParameters;
-import org.phorej.core.Sha256Hash;
-import org.phorej.core.Transaction;
-import org.phorej.core.TransactionConfidence;
-import org.phorej.core.TransactionOutput;
-import org.phorej.wallet.CoinSelection;
-import org.phorej.wallet.CoinSelector;
+import org.helixj.core.Coin;
+import org.helixj.core.NetworkParameters;
+import org.helixj.core.Sha256Hash;
+import org.helixj.core.Transaction;
+import org.helixj.core.TransactionConfidence;
+import org.helixj.core.TransactionOutput;
+import org.helixj.wallet.CoinSelection;
+import org.helixj.wallet.CoinSelector;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

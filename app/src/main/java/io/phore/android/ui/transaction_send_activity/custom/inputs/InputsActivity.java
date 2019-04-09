@@ -1,4 +1,4 @@
-package io.phore.android.ui.transaction_send_activity.custom.inputs;
+package io.helix.android.ui.transaction_send_activity.custom.inputs;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,12 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.phorej.core.Coin;
+import org.helixj.core.Coin;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.BaseActivity;
+import io.helix.android.R;
+import io.helix.android.ui.base.BaseActivity;
 
-import static io.phore.android.ui.transaction_send_activity.SendActivity.INTENT_EXTRA_TOTAL_AMOUNT;
+import static io.helix.android.ui.transaction_send_activity.SendActivity.INTENT_EXTRA_TOTAL_AMOUNT;
 
 /**
  * Created by furszy on 8/4/17.

@@ -1,4 +1,4 @@
-package io.phore.android.utils;
+package io.helix.android.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,13 +22,13 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import global.PhoreGlobalData;
-import phoremore.PhorePeerData;
-import io.phore.android.R;
-import io.phore.android.module.PhoreContext;
-import io.phore.android.ui.address_add_activity.AddContactActivity;
-import io.phore.android.ui.base.dialogs.SimpleTextDialog;
-import io.phore.android.ui.base.dialogs.SimpleTwoButtonsDialog;
+import global.helixGlobalData;
+import helixmore.helixPeerData;
+import io.helix.android.R;
+import io.helix.android.module.helixContext;
+import io.helix.android.ui.address_add_activity.AddContactActivity;
+import io.helix.android.ui.base.dialogs.SimpleTextDialog;
+import io.helix.android.ui.base.dialogs.SimpleTwoButtonsDialog;
 
 /**
  * Created by furszy on 7/5/17.
@@ -92,7 +92,7 @@ public class DialogsUtil {
 
 
     public interface TrustedNodeDialogListener{
-        void onNodeSelected(PhorePeerData phorePeerData);
+        void onNodeSelected(helixPeerData helixPeerData);
     }
 
     public static DialogBuilder buildtrustedNodeDialog(final Activity context, final TrustedNodeDialogListener trustedNodeDialogListener){
@@ -114,7 +114,7 @@ public class DialogsUtil {
                     final String host = editHost.getText().toString();
                     final String tcpPortStr = editTcp.getText().toString();
                     final String sslPortStr = editSsl.getText().toString();
-                    int tcpPort = PhoreContext.NETWORK_PARAMETERS.getPort();
+                    int tcpPort = helixContext.NETWORK_PARAMETERS.getPort();
                     int sslPort = 0;
                     if (tcpPortStr.length() > 0) {
                         tcpPort = Integer.valueOf(tcpPortStr);
@@ -135,7 +135,7 @@ public class DialogsUtil {
                                 public void run() {
                                     if(check){
                                         trustedNodeDialogListener.onNodeSelected(
-                                                new PhorePeerData(
+                                                new helixPeerData(
                                                         host,
                                                         finalTcpPort,
                                                         finalSslPort)

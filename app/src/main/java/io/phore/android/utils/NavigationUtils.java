@@ -1,10 +1,10 @@
-package io.phore.android.utils;
+package io.helix.android.utils;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import io.phore.android.ui.wallet_activity.WalletActivity;
+import io.helix.android.ui.wallet_activity.WalletActivity;
 
 /**
  * Created by furszy on 10/19/17.

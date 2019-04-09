@@ -1,4 +1,4 @@
-package io.phore.android.ui.start_activity;
+package io.helix.android.ui.start_activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,12 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.BaseActivity;
-import io.phore.android.ui.restore_activity.RestoreActivity;
-import io.phore.android.ui.pincode_activity.PincodeActivity;
+import io.helix.android.R;
+import io.helix.android.ui.base.BaseActivity;
+import io.helix.android.ui.restore_activity.RestoreActivity;
+import io.helix.android.ui.pincode_activity.PincodeActivity;
 
-import static io.phore.android.ui.restore_activity.RestoreActivity.ACTION_RESTORE_AND_JUMP_TO_WIZARD;
+import static io.helix.android.ui.restore_activity.RestoreActivity.ACTION_RESTORE_AND_JUMP_TO_WIZARD;
 
 /**
  * Created by mati on 18/04/17.
@@ -30,7 +30,7 @@ public class StartActivity extends BaseActivity {
         buttonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                phoreModule.createWallet();
+                helixModule.createWallet();
                 startActivity(new Intent(v.getContext(), PincodeActivity.class));
                 finish();
             }

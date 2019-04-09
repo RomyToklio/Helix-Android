@@ -1,4 +1,4 @@
-package io.phore.android.ui.transaction_send_activity;
+package io.helix.android.ui.transaction_send_activity;
 
 import android.text.Editable;
 import android.text.TextWatcher;

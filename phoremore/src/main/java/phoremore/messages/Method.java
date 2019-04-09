@@ -1,4 +1,4 @@
-package phoremore.messages;
+package helixmore.messages;
 
 /**
  * Created by furszy on 6/12/17.
@@ -72,7 +72,7 @@ public enum Method {
 
     /**
      *
-     * Return an ordered list of UTXOs sent to a phore address.
+     * Return an ordered list of UTXOs sent to a helix address.
      *
      * blockchain.address.listunspent(**address**)
      *
@@ -88,7 +88,7 @@ public enum Method {
      * transaction was confirmed in, *tx_hash* the transaction hash in
      * hexadecimal, *tx_pos* the zero-based index of the output in the
      * transaction's list of outputs, and *value* its integer value in
-     * minimum coin units (satoshis in the case of Phore).
+     * minimum coin units (satoshis in the case of helix).
      *
      */
 

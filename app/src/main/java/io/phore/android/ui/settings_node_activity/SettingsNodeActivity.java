@@ -1,4 +1,4 @@
-package io.phore.android.ui.settings_node_activity;
+package io.helix.android.ui.settings_node_activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.BaseActivity;
-import io.phore.android.ui.wallet_activity.WalletActivity;
+import io.helix.android.R;
+import io.helix.android.ui.base.BaseActivity;
+import io.helix.android.ui.wallet_activity.WalletActivity;
 
 /**
  * Created by Neoperol on 6/27/17.

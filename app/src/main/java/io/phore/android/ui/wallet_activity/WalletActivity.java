@@ -1,4 +1,4 @@
-package io.phore.android.ui.wallet_activity;
+package io.helix.android.ui.wallet_activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,38 +18,38 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.phorej.core.Coin;
-import org.phorej.core.InsufficientMoneyException;
-import org.phorej.core.Transaction;
-import org.phorej.uri.PhoreURI;
-import org.phorej.wallet.Wallet;
+import org.helixj.core.Coin;
+import org.helixj.core.InsufficientMoneyException;
+import org.helixj.core.Transaction;
+import org.helixj.uri.helixURI;
+import org.helixj.wallet.Wallet;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.phore.android.PhoreApplication;
-import io.phore.android.R;
-import io.phore.android.module.CantSweepBalanceException;
-import io.phore.android.module.NoPeerConnectedException;
-import io.phore.android.rate.db.PhoreRate;
-import io.phore.android.service.IntentsConstants;
-import io.phore.android.ui.base.BaseDrawerActivity;
-import io.phore.android.ui.base.dialogs.DialogListener;
-import io.phore.android.ui.base.dialogs.SimpleTextDialog;
-import io.phore.android.ui.base.dialogs.SimpleTwoButtonsDialog;
-import io.phore.android.ui.qr_activity.QrActivity;
-import io.phore.android.ui.settings_backup_activity.SettingsBackupActivity;
-import io.phore.android.ui.transaction_send_activity.SendActivity;
-import io.phore.android.ui.upgrade.UpgradeWalletActivity;
-import io.phore.android.utils.DialogsUtil;
-import io.phore.android.utils.scanner.ScanActivity;
+import io.helix.android.helixApplication;
+import io.helix.android.R;
+import io.helix.android.module.CantSweepBalanceException;
+import io.helix.android.module.NoPeerConnectedException;
+import io.helix.android.rate.db.helixRate;
+import io.helix.android.service.IntentsConstants;
+import io.helix.android.ui.base.BaseDrawerActivity;
+import io.helix.android.ui.base.dialogs.DialogListener;
+import io.helix.android.ui.base.dialogs.SimpleTextDialog;
+import io.helix.android.ui.base.dialogs.SimpleTwoButtonsDialog;
+import io.helix.android.ui.qr_activity.QrActivity;
+import io.helix.android.ui.settings_backup_activity.SettingsBackupActivity;
+import io.helix.android.ui.transaction_send_activity.SendActivity;
+import io.helix.android.ui.upgrade.UpgradeWalletActivity;
+import io.helix.android.utils.DialogsUtil;
+import io.helix.android.utils.scanner.ScanActivity;
 
 import static android.Manifest.permission.CAMERA;
-import static io.phore.android.service.IntentsConstants.ACTION_NOTIFICATION;
-import static io.phore.android.service.IntentsConstants.INTENT_BROADCAST_DATA_ON_COIN_RECEIVED;
-import static io.phore.android.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
-import static io.phore.android.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
+import static io.helix.android.service.IntentsConstants.ACTION_NOTIFICATION;
+import static io.helix.android.service.IntentsConstants.INTENT_BROADCAST_DATA_ON_COIN_RECEIVED;
+import static io.helix.android.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
+import static io.helix.android.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
 
 /**
  * Created by Neoperol on 5/11/17.
@@ -67,14 +67,14 @@ public class WalletActivity extends BaseDrawerActivity {
     private TextView txt_unnavailable;
     private TextView txt_local_currency;
     private TextView txt_watch_only;
-    private PhoreRate phoreRate;
+    private helixRate helixRate;
     private TransactionsFragmentBase txsFragment;
 
     // Receiver
     private LocalBroadcastManager localBroadcastManager;
 
-    private IntentFilter phoreServiceFilter = new IntentFilter(ACTION_NOTIFICATION);
-    private BroadcastReceiver phoreServiceReceiver = new BroadcastReceiver() {
+    private IntentFilter helixServiceFilter = new IntentFilter(ACTION_NOTIFICATION);
+    private BroadcastReceiver helixServiceReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -118,7 +118,7 @@ public class WalletActivity extends BaseDrawerActivity {
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (phoreModule.isWalletWatchOnly()){
+                if (helixModule.isWalletWatchOnly()){
                     Toast.makeText(v.getContext(),R.string.error_watch_only_mode,Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -139,15 +139,15 @@ public class WalletActivity extends BaseDrawerActivity {
         init();
 
         // register
-        localBroadcastManager.registerReceiver(phoreServiceReceiver,phoreServiceFilter);
+        localBroadcastManager.registerReceiver(helixServiceReceiver,helixServiceFilter);
 
         updateState();
         updateBalance();
 
         // check if this wallet need an update:
         try {
-            if(phoreModule.isBip32Wallet() && phoreModule.isSyncWithNode()){
-                if (!phoreModule.isWalletWatchOnly() && phoreModule.getAvailableBalanceCoin().isGreaterThan(Transaction.DEFAULT_TX_FEE)) {
+            if(helixModule.isBip32Wallet() && helixModule.isSyncWithNode()){
+                if (!helixModule.isWalletWatchOnly() && helixModule.getAvailableBalanceCoin().isGreaterThan(Transaction.DEFAULT_TX_FEE)) {
                     Intent intent = UpgradeWalletActivity.createStartIntent(
                             this,
                             getString(R.string.upgrade_wallet),
@@ -170,17 +170,17 @@ public class WalletActivity extends BaseDrawerActivity {
     }
 
     private void updateState() {
-        txt_watch_only.setVisibility(phoreModule.isWalletWatchOnly()?View.VISIBLE:View.GONE);
+        txt_watch_only.setVisibility(helixModule.isWalletWatchOnly()?View.VISIBLE:View.GONE);
     }
 
     private void init() {
         // Start service if it's not started.
-        phoreApplication.startPhoreService();
+        helixApplication.starthelixService();
 
-        if (!phoreApplication.getAppConf().hasBackup()){
+        if (!helixApplication.getAppConf().hasBackup()){
             long now = System.currentTimeMillis();
-            if (phoreApplication.getLastTimeRequestedBackup()+1800000L<now) {
-                phoreApplication.setLastTimeBackupRequested(now);
+            if (helixApplication.getLastTimeRequestedBackup()+1800000L<now) {
+                helixApplication.setLastTimeBackupRequested(now);
                 SimpleTwoButtonsDialog reminderDialog = DialogsUtil.buildSimpleTwoBtnsDialog(
                         this,
                         getString(R.string.reminder_backup),
@@ -211,7 +211,7 @@ public class WalletActivity extends BaseDrawerActivity {
         super.onStop();
         // unregister
         //localBroadcastManager.unregisterReceiver(localReceiver);
-        localBroadcastManager.unregisterReceiver(phoreServiceReceiver);
+        localBroadcastManager.unregisterReceiver(helixServiceReceiver);
     }
 
     @Override
@@ -248,11 +248,11 @@ public class WalletActivity extends BaseDrawerActivity {
                 try {
                     String address = data.getStringExtra(INTENT_EXTRA_RESULT);
                     String usedAddress;
-                    if (phoreModule.chechAddress(address)){
+                    if (helixModule.chechAddress(address)){
                         usedAddress = address;
                     }else {
-                        PhoreURI phoreUri = new PhoreURI(address);
-                        usedAddress = phoreUri.getAddress().toBase58();
+                        helixURI helixUri = new helixURI(address);
+                        usedAddress = helixUri.getAddress().toBase58();
                     }
                     DialogsUtil.showCreateAddressLabelDialog(this,usedAddress);
                 }catch (Exception e){
@@ -274,28 +274,28 @@ public class WalletActivity extends BaseDrawerActivity {
 
 
     private void updateBalance() {
-        Coin availableBalance = phoreModule.getAvailableBalanceCoin();
+        Coin availableBalance = helixModule.getAvailableBalanceCoin();
         txt_value.setText(
             !availableBalance.isZero()
                 ? availableBalance.toFriendlyString()
                 : String.format("0 %1$s", getString(R.string.wallet_phr)));
-        Coin unnavailableBalance = phoreModule.getUnnavailableBalanceCoin();
+        Coin unnavailableBalance = helixModule.getUnnavailableBalanceCoin();
         txt_unnavailable.setText(
             !unnavailableBalance.isZero()
                 ? unnavailableBalance.toFriendlyString()
                 : String.format("0 %1$s", getString(R.string.wallet_phr)));
-        if (phoreRate == null)
-            phoreRate = phoreModule.getRate(phoreApplication.getAppConf().getSelectedRateCoin());
-        if (phoreRate!=null) {
+        if (helixRate == null)
+            helixRate = helixModule.getRate(helixApplication.getAppConf().getSelectedRateCoin());
+        if (helixRate!=null) {
             txt_local_currency.setText(
-                    phoreApplication.getCentralFormats().format(
-                            new BigDecimal(availableBalance.getValue() * phoreRate.getRate().doubleValue()).movePointLeft(8)
+                    helixApplication.getCentralFormats().format(
+                            new BigDecimal(availableBalance.getValue() * helixRate.getRate().doubleValue()).movePointLeft(8)
                     )
-                    + " "+phoreRate.getCode()
+                    + " "+helixRate.getCode()
             );
         }else {
-            if (phoreRate != null) {
-                txt_local_currency.setText("0 " + phoreRate.getCode());
+            if (helixRate != null) {
+                txt_local_currency.setText("0 " + helixRate.getCode());
             } else {
                 txt_local_currency.setText("");
             }

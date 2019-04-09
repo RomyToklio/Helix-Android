@@ -1,4 +1,4 @@
-package io.phore.android.ui.wallet_activity;
+package io.helix.android.ui.wallet_activity;
 
 /**
  * Created by Neoperol on 5/3/17.

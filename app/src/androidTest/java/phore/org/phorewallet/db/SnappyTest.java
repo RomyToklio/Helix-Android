@@ -1,4 +1,4 @@
-package phore.org.phorewallet.db;
+package helix.org.helixwallet.db;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -7,7 +7,7 @@ import com.snappydb.SnappydbException;
 
 import org.junit.Test;
 
-import phore.org.phorewallet.module.store.SnappyStore;
+import helix.org.helixwallet.module.store.SnappyStore;
 import store.AddressNotFoundException;
 import store.AddressStore;
 import store.CantInsertAddressException;

@@ -1,6 +1,6 @@
-package io.phore.android.contacts;
+package io.helix.android.contacts;
 
-import org.phorej.core.Sha256Hash;
+import org.helixj.core.Sha256Hash;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package io.phore.android.ui.base.dialogs;
+package io.helix.android.ui.base.dialogs;
 
 import android.app.DialogFragment;
 import android.content.DialogInterface;
@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import io.phore.android.R;
+import io.helix.android.R;
 
 
 /**

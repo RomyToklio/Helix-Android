@@ -1,4 +1,4 @@
-package io.phore.android.ui.transaction_send_activity.custom;
+package io.helix.android.ui.transaction_send_activity.custom;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import org.phorej.core.Transaction;
+import org.helixj.core.Transaction;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.BaseFragment;
+import io.helix.android.R;
+import io.helix.android.ui.base.BaseFragment;
 
 /**
  * Created by furszy on 8/3/17.

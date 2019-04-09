@@ -1,4 +1,4 @@
-package io.phore.android.ui.address_add_activity;
+package io.helix.android.ui.address_add_activity;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,16 +14,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import org.phorej.uri.PhoreURI;
+import org.helixj.uri.helixURI;
 
-import io.phore.android.R;
-import io.phore.android.contacts.AddressLabel;
-import io.phore.android.module.ContactAlreadyExistException;
-import io.phore.android.ui.base.BaseActivity;
-import io.phore.android.utils.scanner.ScanActivity;
+import io.helix.android.R;
+import io.helix.android.contacts.AddressLabel;
+import io.helix.android.module.ContactAlreadyExistException;
+import io.helix.android.ui.base.BaseActivity;
+import io.helix.android.utils.scanner.ScanActivity;
 
 import static android.Manifest.permission_group.CAMERA;
-import static io.phore.android.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
+import static io.helix.android.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
 
 /**
  * Created by Neoperol on 6/8/17.
@@ -65,7 +65,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
             @Override
             public void afterTextChanged(Editable s) {
                 String temp = s.toString();
-                if(phoreModule.chechAddress(temp)){
+                if(helixModule.chechAddress(temp)){
                     address = temp;
                     edit_address.setTextColor(Color.parseColor("#55476c"));;
                 }else {
@@ -93,13 +93,13 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
                 if (address!=null) {
                     if (name.length() > 0 && address.length() > 0) {
                         try {
-                            if (!phoreModule.chechAddress(address)) {
+                            if (!helixModule.chechAddress(address)) {
                                 Toast.makeText(this, R.string.invalid_input_address, Toast.LENGTH_LONG).show();
                                 return true;
                             }
                             AddressLabel addressLabel = new AddressLabel(name);
                             addressLabel.addAddress(address);
-                            phoreModule.saveContact(addressLabel);
+                            helixModule.saveContact(addressLabel);
                             Toast.makeText(this, "AddressLabel saved", Toast.LENGTH_LONG).show();
                             onBackPressed();
                         } catch (ContactAlreadyExistException e) {
@@ -142,11 +142,11 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
                 try {
                     String address = data.getStringExtra(INTENT_EXTRA_RESULT);
                     String usedAddress;
-                    if (phoreModule.chechAddress(address)){
+                    if (helixModule.chechAddress(address)){
                         usedAddress = address;
                     }else {
-                        PhoreURI phoreUri = new PhoreURI(address);
-                        usedAddress = phoreUri.getAddress().toBase58();
+                        helixURI helixUri = new helixURI(address);
+                        usedAddress = helixUri.getAddress().toBase58();
                     }
                     final String tempPubKey = usedAddress;
                     edit_address.setText(tempPubKey);

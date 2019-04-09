@@ -1,4 +1,4 @@
-package io.phore.android;
+package io.helix.android;
 
 import android.app.ActivityManager;
 import android.app.Application;
@@ -15,7 +15,7 @@ import com.snappydb.SnappydbException;
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
-import org.phorej.store.BlockStore;
+import org.helixj.store.BlockStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,41 +41,41 @@ import ch.qos.logback.core.rolling.TimeBasedRollingPolicy;
 import global.ContextWrapper;
 import global.WalletConfiguration;
 import global.utils.Io;
-import phoremore.NetworkConf;
-import phoremore.PhorePeerData;
-import io.phore.android.contacts.ContactsStore;
-import io.phore.android.module.PhoreContext;
-import io.phore.android.module.PhoreModule;
-import io.phore.android.module.PhoreModuleImp;
-import io.phore.android.module.WalletConfImp;
-import io.phore.android.module.store.SnappyBlockchainStore;
-import io.phore.android.rate.db.RateDb;
-import io.phore.android.service.PhoreWalletService;
-import io.phore.android.utils.AppConf;
-import io.phore.android.utils.CentralFormats;
-import io.phore.android.utils.CrashReporter;
+import helixmore.NetworkConf;
+import helixmore.helixPeerData;
+import io.helix.android.contacts.ContactsStore;
+import io.helix.android.module.helixContext;
+import io.helix.android.module.helixModule;
+import io.helix.android.module.helixModuleImp;
+import io.helix.android.module.WalletConfImp;
+import io.helix.android.module.store.SnappyBlockchainStore;
+import io.helix.android.rate.db.RateDb;
+import io.helix.android.service.helixWalletService;
+import io.helix.android.utils.AppConf;
+import io.helix.android.utils.CentralFormats;
+import io.helix.android.utils.CrashReporter;
 import store.AddressStore;
 
-import static io.phore.android.service.IntentsConstants.ACTION_RESET_BLOCKCHAIN;
-import static io.phore.android.utils.AndroidUtils.shareText;
+import static io.helix.android.service.IntentsConstants.ACTION_RESET_BLOCKCHAIN;
+import static io.helix.android.utils.AndroidUtils.shareText;
 
 /**
  * Created by mati on 18/04/17.
  */
 @ReportsCrashes(
-        mailTo = PhoreContext.REPORT_EMAIL, // my email here
+        mailTo = helixContext.REPORT_EMAIL, // my email here
         mode = ReportingInteractionMode.TOAST,
         resToastText = R.string.crash_toast_text)
-public class PhoreApplication extends Application implements ContextWrapper {
+public class helixApplication extends Application implements ContextWrapper {
 
     private static Logger log;
 
     /** Singleton */
-    private static PhoreApplication instance;
+    private static helixApplication instance;
     public static final long TIME_CREATE_APPLICATION = System.currentTimeMillis();
     private long lastTimeRequestBackup;
 
-    private PhoreModule phoreModule;
+    private helixModule helixModule;
     private AppConf appConf;
     private NetworkConf networkConf;
 
@@ -84,7 +84,7 @@ public class PhoreApplication extends Application implements ContextWrapper {
     private ActivityManager activityManager;
     private PackageInfo info;
 
-    public static PhoreApplication getInstance() {
+    public static helixApplication getInstance() {
         return instance;
     }
 
@@ -93,7 +93,7 @@ public class PhoreApplication extends Application implements ContextWrapper {
         public void onCrashOcurred(Thread thread, Throwable throwable) {
             log.error("crash occured..");
             throwable.printStackTrace();
-            String authorities = "io.phore.android.myfileprovider";
+            String authorities = "io.helix.android.myfileprovider";
             final File cacheDir = getCacheDir();
             // show error report dialog to send the crash
             final ArrayList<Uri> attachments = new ArrayList<Uri>();
@@ -123,7 +123,7 @@ public class PhoreApplication extends Application implements ContextWrapper {
             } catch (final IOException x) {
                 log.info("problem writing attachment", x);
             }
-            shareText(PhoreApplication.this,"Phore wallet crash", "Unexpected crash", attachments);
+            shareText(helixApplication.this,"helix wallet crash", "Unexpected crash", attachments);
         }
     };
 
@@ -133,7 +133,7 @@ public class PhoreApplication extends Application implements ContextWrapper {
         instance = this;
         try {
             initLogging();
-            log = LoggerFactory.getLogger(PhoreApplication.class);
+            log = LoggerFactory.getLogger(helixApplication.class);
             PackageManager manager = getPackageManager();
             info = manager.getPackageInfo(this.getPackageName(), 0);
             activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -150,17 +150,17 @@ public class PhoreApplication extends Application implements ContextWrapper {
             networkConf = new NetworkConf();
             appConf = new AppConf(getSharedPreferences(AppConf.PREFERENCE_NAME, MODE_PRIVATE));
             centralFormats = new CentralFormats(appConf);
-            WalletConfiguration walletConfiguration = new WalletConfImp(getSharedPreferences("phore_wallet",MODE_PRIVATE));
+            WalletConfiguration walletConfiguration = new WalletConfImp(getSharedPreferences("helix_wallet",MODE_PRIVATE));
             ContactsStore contactsStore = new ContactsStore(this);
-            phoreModule = new PhoreModuleImp(this, walletConfiguration,contactsStore,new RateDb(this));
-            phoreModule.start();
+            helixModule = new helixModuleImp(this, walletConfiguration,contactsStore,new RateDb(this));
+            helixModule.start();
         } catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public void startPhoreService() {
-        Intent intent = new Intent(this,PhoreWalletService.class);
+    public void starthelixService() {
+        Intent intent = new Intent(this,helixWalletService.class);
         startService(intent);
     }
 
@@ -211,8 +211,8 @@ public class PhoreApplication extends Application implements ContextWrapper {
         log.setLevel(Level.INFO);
     }
 
-    public PhoreModule getModule(){
-        return phoreModule;
+    public helixModule getModule(){
+        return helixModule;
     }
 
     public AppConf getAppConf(){
@@ -237,7 +237,7 @@ public class PhoreApplication extends Application implements ContextWrapper {
     @Override
     public boolean isMemoryLow() {
         final int memoryClass = activityManager.getMemoryClass();
-        return memoryClass<=phoreModule.getConf().getMinMemoryNeeded();
+        return memoryClass<=helixModule.getConf().getMinMemoryNeeded();
     }
 
     @Override
@@ -247,7 +247,7 @@ public class PhoreApplication extends Application implements ContextWrapper {
 
     @Override
     public void stopBlockchain() {
-        Intent intent = new Intent(this,PhoreWalletService.class);
+        Intent intent = new Intent(this,helixWalletService.class);
         intent.setAction(ACTION_RESET_BLOCKCHAIN);
         startService(intent);
     }
@@ -260,9 +260,9 @@ public class PhoreApplication extends Application implements ContextWrapper {
      *
      * @param trustedServer
      */
-    public void setTrustedServer(PhorePeerData trustedServer) {
+    public void setTrustedServer(helixPeerData trustedServer) {
         networkConf.setTrustedServer(trustedServer);
-        phoreModule.getConf().saveTrustedNode(trustedServer.getHost(),0);
+        helixModule.getConf().saveTrustedNode(trustedServer.getHost(),0);
         appConf.saveTrustedNode(trustedServer);
     }
 

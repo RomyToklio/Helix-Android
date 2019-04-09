@@ -1,5 +1,5 @@
 
-package io.phore.android.utils;
+package io.helix.android.utils;
 
 import android.app.ActivityManager;
 import android.app.admin.DevicePolicyManager;
@@ -14,9 +14,9 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
 
-import org.phorej.core.Transaction;
-import org.phorej.core.TransactionOutput;
-import org.phorej.wallet.Wallet;
+import org.helixj.core.Transaction;
+import org.helixj.core.TransactionOutput;
+import org.helixj.wallet.Wallet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,8 +38,8 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
 
-import io.phore.android.PhoreApplication;
-import io.phore.android.module.PhoreContext;
+import io.helix.android.helixApplication;
+import io.helix.android.module.helixContext;
 
 
 public class CrashReporter {
@@ -227,14 +227,14 @@ public class CrashReporter {
 					p.lastUpdateTime));
 	}
 
-	public static void appendApplicationInfo(final Appendable report, final PhoreApplication application) throws IOException {
+	public static void appendApplicationInfo(final Appendable report, final helixApplication application) throws IOException {
 
 		final PackageInfo pi = (PackageInfo) application.getPackageInfo();
 		final Calendar calendar = new GregorianCalendar(UTC);
 
 		report.append("Version: " + pi.versionName + " (" + pi.versionCode + ")\n");
 		report.append("Package: " + pi.packageName + "\n");
-		report.append("Test/Prod: " + (PhoreContext.IS_TEST ? "test" : "prod") + "\n");
+		report.append("Test/Prod: " + (helixContext.IS_TEST ? "test" : "prod") + "\n");
 		report.append("Timezone: " + TimeZone.getDefault().getID() + "\n");
 		calendar.setTimeInMillis(System.currentTimeMillis());
 		report.append("Time: " + String.format(Locale.US, "%tF %tT %tZ", calendar, calendar, calendar) + "\n");
@@ -249,7 +249,7 @@ public class CrashReporter {
 		calendar.setTimeInMillis(lastBackupTime);
 		report.append(
 				"Time of backup: " + (lastBackupTime > 0 ? String.format(Locale.US, "%tF %tT %tZ", calendar, calendar, calendar) : "none") + "\n");
-		report.append("Network: " + PhoreContext.NETWORK_PARAMETERS.getId() + "\n");
+		report.append("Network: " + helixContext.NETWORK_PARAMETERS.getId() + "\n");
 		final Wallet wallet = application.getModule().getWallet();
 		report.append("Encrypted: " + wallet.isEncrypted() + "\n");
 		report.append("Keychain size: " + wallet.getKeyChainGroupSize() + "\n");

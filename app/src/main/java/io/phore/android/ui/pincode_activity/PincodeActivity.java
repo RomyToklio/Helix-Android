@@ -1,4 +1,4 @@
-package io.phore.android.ui.pincode_activity;
+package io.helix.android.ui.pincode_activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,15 +11,15 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.Random;
 
-import global.PhoreGlobalData;
-import phoremore.PhorePeerData;
-import io.phore.android.R;
-import io.phore.android.ui.backup_mnemonic_activity.MnemonicActivity;
-import io.phore.android.ui.base.BaseActivity;
-import io.phore.android.ui.settings_pincode_activity.KeyboardFragment;
-import io.phore.android.ui.start_activity.StartActivity;
+import global.helixGlobalData;
+import helixmore.helixPeerData;
+import io.helix.android.R;
+import io.helix.android.ui.backup_mnemonic_activity.MnemonicActivity;
+import io.helix.android.ui.base.BaseActivity;
+import io.helix.android.ui.settings_pincode_activity.KeyboardFragment;
+import io.helix.android.ui.start_activity.StartActivity;
 
-import static io.phore.android.ui.backup_mnemonic_activity.MnemonicActivity.INTENT_EXTRA_INIT_VIEW;
+import static io.helix.android.ui.backup_mnemonic_activity.MnemonicActivity.INTENT_EXTRA_INIT_VIEW;
 
 /**
  * Created by Neoperol on 4/20/17.
@@ -44,7 +44,7 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
             checkPin = true;
         }
 
-        if (phoreApplication.getAppConf().getPincode()!=null && !checkPin){
+        if (helixApplication.getAppConf().getPincode()!=null && !checkPin){
             goNext();
         }
 
@@ -63,7 +63,7 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
     }
 
     private void goNext() {
-        phoreApplication.getAppConf().setAppInit(true);
+        helixApplication.getAppConf().setAppInit(true);
 
         Intent intent = new Intent(this, MnemonicActivity.class);
         intent.putExtra(INTENT_EXTRA_INIT_VIEW, true);
@@ -82,12 +82,12 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
                     String pincode = String.valueOf(pin[0]) + String.valueOf(pin[1]) + String.valueOf(pin[2]) + String.valueOf(pin[3]);
 
                     if (!checkPin) {
-                        phoreApplication.getAppConf().savePincode(pincode);
+                        helixApplication.getAppConf().savePincode(pincode);
                         Toast.makeText(this, R.string.pincode_saved, Toast.LENGTH_SHORT).show();
                         goNext();
                     } else {
                         // check pin and return result
-                        if (phoreApplication.getAppConf().getPincode().equals(pincode)){
+                        if (helixApplication.getAppConf().getPincode().equals(pincode)){
                             setResult(Activity.RESULT_OK, new Intent());
                             finish();
                         } else {
@@ -110,7 +110,7 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (phoreApplication.getAppConf().getPincode()==null){
+        if (helixApplication.getAppConf().getPincode()==null){
             startActivity(new Intent(this, StartActivity.class));
             finish();
         }

@@ -10,7 +10,7 @@
         <item>天王星</item>
         <item>海王星</item>
     </string-array>
-    <string name="app_name">Phore ウォレット</string>
+    <string name="app_name">helix ウォレット</string>
     <string name="btn_create_wallet">ウォレットを作る</string>
     <string name="btn_restore_wallet">ウォレットを復元する</string>
     <string name="restore_wallet_message">ストレージからバックアップした\nウォレットを選択する</string>
@@ -23,7 +23,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="set_amount">送金量を記入</string>
-    <string name="set_amount_phr">PHR</string>
+    <string name="set_amount_phr">HLIX</string>
     <string name="set_amount_usd">USD</string>
     <string name="add_all">すべて追加</string>
     <string name="title_amount">量</string>
@@ -70,7 +70,7 @@
     <string name="btn_select_node">ノードを追加</string>
 
     <string name="title_no_trusted_peer_connection">ネットワークの問題</string>
-    <string name="message_no_trusted_peer_connection">Phore ネットワークに接続できません。</string>
+    <string name="message_no_trusted_peer_connection">helix ネットワークに接続できません。</string>
     <string name="share_address_text">アドレスをシェア</string>
     <string name="error_sending_coins">送金に失敗</string>
 
@@ -114,12 +114,12 @@
     <string name="back">戻る</string>
     <string name="restore">復元</string>
     <string name="start">始める</string>
-    <string name="title_slide1">Phore はセキュア</string>
+    <string name="title_slide1">helix はセキュア</string>
     <string name="desc_slide1">BIP38 によるプライベートキーの暗号/復号化に対応</string>
     <string name="title_slide2">60秒のブロック時間</string>
     <string name="desc_slide2">ブロック時間も高速ですが、SwiftX を使うことで0確認で即時送金が可能です。</string>
     <string name="title_slide3">非常にセキュアで匿名性を持つ</string>
-    <string name="desc_slide3">Phoreはエコシステムを持つ最初の匿名通貨を目指します。</string>
+    <string name="desc_slide3">helixはエコシステムを持つ最初の匿名通貨を目指します。</string>
     <string name="title_slide4">信頼できるノードの集合体</string>
     <string name="desc_slide4">信頼できるノードによって高速なPoSウォレットが可能になり、自身でノードを作ることも出来ます。</string>
     <string name="option_add_node">ノードの追加</string>
@@ -140,7 +140,7 @@
     <string name="restore_dialog_tag">エラーダイアログタグを復元</string>
     <string name="restore_dialog_error">ダイアログエラーを復元</string>
     <string name="settings_support">サポート</string>
-    <string name="support_subject">Phore ウォレットサポート</string>
+    <string name="support_subject">helix ウォレットサポート</string>
     <string name="tutorial">チュートリアル</string>
     <string name="copy">コピー</string>
     <string name="share">シェア</string>
@@ -198,7 +198,7 @@
     <string name="per_kilobyte">キロバイトごと</string>
     <string name="total_at_least">全体で最小化</string>
     <string name="fee">手数料</string>
-    <string name="minimum_fee">0.00010000 PHR/kB の最小の手数料を支払い</string>
+    <string name="minimum_fee">0.00010000 HLIX/kB の最小の手数料を支払い</string>
     <string name="several_outputs_add_address">アドレスを追加</string>
     <string name="address_num">アドレス %d </string>
     <string name="invalid_last_amount">最後に入力された金額は無効です</string>
@@ -223,8 +223,8 @@
     <string name="not_connection">接続梨</string>
     <string name="confimations">確認数</string>
     <string name="multiple_address_send"> %d アドレスへ送金</string>
-    <string name="fee_per_kb">%s PHR/kB</string>
-    <string name="fee_explanation">カスタム手数料が最小手数料 (0.0001 PHR/kB)より低い場合、最低手数料で送金します。</string>
+    <string name="fee_per_kb">%s HLIX/kB</string>
+    <string name="fee_explanation">カスタム手数料が最小手数料 (0.0001 HLIX/kB)より低い場合、最低手数料で送金します。</string>
     <string name="invalid_fee_amount">手数料が間違っています</string>
     <string name="load_inputs_fail">コインコントロール失敗</string>
     <string name="title_tx_weight">ウェイト</string>
@@ -248,7 +248,7 @@
     <string name="validate_multi_send_enabled">MultiSendは有効です</string>
     <string name="detail_no_available_inputs">利用できるインプットがありません。</string>
     <string name="report_crash_title">クラッシュをレポート</string>
-    <string name="crash_toast_text">Phore ウォレットクラッシュ</string>
+    <string name="crash_toast_text">helix ウォレットクラッシュ</string>
     <string name="backup_fail">バックアップ失敗</string>
     <string name="no_peer_connection">ノードへの接続なし</string>
     <string name="wallet_is_not_sync">ウォレットは同期していません。残高を確認するには、同期完了までお待ちください。</string>
@@ -275,7 +275,7 @@
     <!-- Sweep wallet -->
     <!-- Sweep paper wallet means to redeem coins from a code usually printed on a paper -->
     <string name="title_activity_sweep_wallet">ペーパーウォレットをスイープ</string>
-    <string name="sweep_wallet_info">コインをペーパーウォレットからPhoreウォレットに送金しようとしています。セキュリティのため、ペーパーウォレットの再使用はおやめください。\n\n対応フォーマット: WIF, BIP38, ミニプライベートキー.</string>
+    <string name="sweep_wallet_info">コインをペーパーウォレットからhelixウォレットに送金しようとしています。セキュリティのため、ペーパーウォレットの再使用はおやめください。\n\n対応フォーマット: WIF, BIP38, ミニプライベートキー.</string>
     <string name="sweep_wallet_key_title">プライベートキー</string>
     <string name="sweep_wallet_key_password">プライベートキーパスワード</string>
     <string name="sweep_wallet_key_hint">プライベートキーを入力するかスキャンする</string>
@@ -328,10 +328,10 @@
     <string name="change_address_remember">選択を保存</string>
     <string name="my_address">自分のアドレス</string>
     <string name="wallet">ウォレット</string>
-    <string name="wallet_phr">PHR</string>
+    <string name="wallet_phr">HLIX</string>
     <string name="drawer_send">送金</string>
     <string name="drawer_receive">受け取り</string>
-    <string name="notification_receive_title">PHRを受け取りました</string>
+    <string name="notification_receive_title">HLIXを受け取りました</string>
     <string name="notification_receive_message">%1$s の価値のコインを受け取りました</string>
     <string name="settings_rates">通貨レート</string>
     <string name="rate_selected">選択したレート</string>

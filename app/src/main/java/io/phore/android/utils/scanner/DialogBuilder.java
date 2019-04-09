@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.phore.android.utils.scanner;
+package io.helix.android.utils.scanner;
 
 import javax.annotation.Nullable;
 
-import io.phore.android.R;
+import io.helix.android.R;
 
 import android.app.AlertDialog;
 import android.content.Context;

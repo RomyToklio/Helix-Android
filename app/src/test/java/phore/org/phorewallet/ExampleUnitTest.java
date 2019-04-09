@@ -1,4 +1,4 @@
-package phore.org.phorewallet;
+package helix.org.helixwallet;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package io.phore.android.ui.base.dialogs;
+package io.helix.android.ui.base.dialogs;
 
 /**
  * Created by mati on 19/12/16.

@@ -1,4 +1,4 @@
-package io.phore.android.utils;
+package io.helix.android.utils;
 
 import android.graphics.Bitmap;
 

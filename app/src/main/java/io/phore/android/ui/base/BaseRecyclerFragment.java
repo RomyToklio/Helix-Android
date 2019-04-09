@@ -1,4 +1,4 @@
-package io.phore.android.ui.base;
+package io.helix.android.ui.base;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,9 +18,9 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.tools.adapter.BaseRecyclerAdapter;
-import io.phore.android.ui.base.tools.adapter.BaseRecyclerViewHolder;
+import io.helix.android.R;
+import io.helix.android.ui.base.tools.adapter.BaseRecyclerAdapter;
+import io.helix.android.ui.base.tools.adapter.BaseRecyclerViewHolder;
 
 /**
  * Created by furszy on 6/20/17.

@@ -1,4 +1,4 @@
-package phoremore.messages;
+package helixmore.messages;
 
 import org.json.JSONException;
 import org.json.JSONObject;

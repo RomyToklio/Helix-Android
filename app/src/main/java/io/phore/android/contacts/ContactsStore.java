@@ -1,11 +1,11 @@
-package io.phore.android.contacts;
+package io.helix.android.contacts;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import org.phorej.core.Sha256Hash;
+import org.helixj.core.Sha256Hash;
 import org.json.JSONArray;
 import org.json.JSONException;
 

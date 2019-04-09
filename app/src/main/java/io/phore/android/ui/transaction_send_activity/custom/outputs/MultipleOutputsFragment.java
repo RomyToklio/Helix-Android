@@ -1,4 +1,4 @@
-package io.phore.android.ui.transaction_send_activity.custom.outputs;
+package io.helix.android.ui.transaction_send_activity.custom.outputs;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,22 +12,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import org.phorej.core.Coin;
-import org.phorej.uri.PhoreURI;
+import org.helixj.core.Coin;
+import org.helixj.uri.helixURI;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.phore.android.R;
-import io.phore.android.contacts.AddressLabel;
-import io.phore.android.ui.base.BaseRecyclerFragment;
-import io.phore.android.ui.base.tools.adapter.BaseRecyclerAdapter;
-import io.phore.android.ui.base.tools.adapter.BaseRecyclerViewHolder;
-import io.phore.android.utils.scanner.ScanActivity;
+import io.helix.android.R;
+import io.helix.android.contacts.AddressLabel;
+import io.helix.android.ui.base.BaseRecyclerFragment;
+import io.helix.android.ui.base.tools.adapter.BaseRecyclerAdapter;
+import io.helix.android.ui.base.tools.adapter.BaseRecyclerViewHolder;
+import io.helix.android.utils.scanner.ScanActivity;
 
 import static android.Manifest.permission_group.CAMERA;
 import static android.app.Activity.RESULT_OK;
-import static io.phore.android.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
+import static io.helix.android.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
 
 /**
  * Created by furszy on 8/4/17.
@@ -117,7 +117,7 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
                 });
                 if (data.getAddress()!=null){
                     holder.edit_address.setText(data.getAddress());
-                    if (!phoreModule.chechAddress(data.getAddress())) {
+                    if (!helixModule.chechAddress(data.getAddress())) {
                         holder.edit_address.setTextColor(Color.RED);
                     } else {
                         holder.edit_address.setTextColor(Color.parseColor("#4F4F4F"));
@@ -151,12 +151,12 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
                         if (s.length()>0){
                             if (holder.edit_address!=null) {
                                 String address = s.toString();
-                                if (!phoreModule.chechAddress(address)) {
+                                if (!helixModule.chechAddress(address)) {
                                     holder.edit_address.setTextColor(Color.RED);
                                 } else {
                                     holder.edit_address.setTextColor(Color.parseColor("#4F4F4F"));
                                     // check if there is a label for this address
-                                    AddressLabel addressLabel = phoreModule.getAddressLabel(address);
+                                    AddressLabel addressLabel = helixModule.getAddressLabel(address);
                                     if (addressLabel!=null){
                                         holder.edit_address_label.setText(addressLabel.getName());
                                     }
@@ -256,7 +256,7 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
         Coin amount = Coin.parseCoin(amountStr);
         String addressLabel = outputWrapper.getAddressLabel();
 
-        if (address==null || !phoreModule.chechAddress(address)){
+        if (address==null || !helixModule.chechAddress(address)){
             // todo: mejorar esto
             Toast.makeText(getActivity(),R.string.invalid_input_address,Toast.LENGTH_LONG).show();
             return;
@@ -278,11 +278,11 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
                     String address = "";
                     address = data.getStringExtra(INTENT_EXTRA_RESULT);
                     String usedAddress;
-                    if (phoreModule.chechAddress(address)){
+                    if (helixModule.chechAddress(address)){
                         usedAddress = address;
                     }else {
-                        PhoreURI phoreUri = new PhoreURI(address);
-                        usedAddress = phoreUri.getAddress().toBase58();
+                        helixURI helixUri = new helixURI(address);
+                        usedAddress = helixUri.getAddress().toBase58();
                     }
                     final String tempPubKey = usedAddress;
                     OutputHolder outputHolder = (OutputHolder) getRecycler().findViewHolderForAdapterPosition(holderWaitingForAddress);
@@ -317,7 +317,7 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
                 firstCheckAmount = true;
             }else
                 amountStr = outputWrapperList.getAmount().toPlainString();
-            boolean checkAddress = address==null || !phoreModule.chechAddress(address);
+            boolean checkAddress = address==null || !helixModule.chechAddress(address);
             boolean checkAmount = firstCheckAmount || amountStr==null || amountStr.length() == 0;
             if (i!=list.size()-1) {
                 if (checkAddress)

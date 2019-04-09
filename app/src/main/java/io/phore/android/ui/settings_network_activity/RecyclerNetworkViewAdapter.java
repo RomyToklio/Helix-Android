@@ -1,4 +1,4 @@
-package io.phore.android.ui.settings_network_activity;
+package io.helix.android.ui.settings_network_activity;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import java.util.Collections;
 import java.util.List;
 
-import io.phore.android.R;
+import io.helix.android.R;
 
 /**
  * Created by Neoperol on 6/8/17.

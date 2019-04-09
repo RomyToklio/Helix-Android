@@ -1,4 +1,4 @@
-package io.phore.android.service;
+package io.helix.android.service;
 
 import android.app.AlarmManager;
 import android.app.NotificationManager;
@@ -21,20 +21,20 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 
-import org.phorej.core.Block;
-import org.phorej.core.Coin;
-import org.phorej.core.FilteredBlock;
-import org.phorej.core.Peer;
-import org.phorej.core.Transaction;
-import org.phorej.core.TransactionConfidence;
-import org.phorej.core.listeners.AbstractPeerDataEventListener;
-import org.phorej.core.listeners.PeerConnectedEventListener;
-import org.phorej.core.listeners.PeerDataEventListener;
-import org.phorej.core.listeners.PeerDisconnectedEventListener;
-import org.phorej.core.listeners.TransactionConfidenceEventListener;
-import org.phorej.store.BlockStore;
-import org.phorej.wallet.Wallet;
-import org.phorej.wallet.listeners.WalletCoinsReceivedEventListener;
+import org.helixj.core.Block;
+import org.helixj.core.Coin;
+import org.helixj.core.FilteredBlock;
+import org.helixj.core.Peer;
+import org.helixj.core.Transaction;
+import org.helixj.core.TransactionConfidence;
+import org.helixj.core.listeners.AbstractPeerDataEventListener;
+import org.helixj.core.listeners.PeerConnectedEventListener;
+import org.helixj.core.listeners.PeerDataEventListener;
+import org.helixj.core.listeners.PeerDisconnectedEventListener;
+import org.helixj.core.listeners.TransactionConfidenceEventListener;
+import org.helixj.store.BlockStore;
+import org.helixj.wallet.Wallet;
+import org.helixj.wallet.listeners.WalletCoinsReceivedEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,47 +52,47 @@ import java.util.concurrent.ScheduledExecutorService;
 import chain.BlockchainManager;
 import chain.BlockchainState;
 import chain.Impediment;
-import phoremore.listeners.AddressListener;
-import io.phore.android.PhoreApplication;
-import io.phore.android.R;
-import io.phore.android.module.PhoreContext;
-import io.phore.android.module.PhoreModuleImp;
-import io.phore.android.module.store.SnappyBlockchainStore;
-import io.phore.android.rate.CoinMarketCapApiClient;
-import io.phore.android.rate.CoinTypes;
-import io.phore.android.rate.RequestPhoreRateException;
-import io.phore.android.rate.db.PhoreRate;
-import io.phore.android.ui.wallet_activity.WalletActivity;
-import io.phore.android.utils.AppConf;
-import io.phore.android.utils.CrashReporter;
+import helixmore.listeners.AddressListener;
+import io.helix.android.helixApplication;
+import io.helix.android.R;
+import io.helix.android.module.helixContext;
+import io.helix.android.module.helixModuleImp;
+import io.helix.android.module.store.SnappyBlockchainStore;
+import io.helix.android.rate.CoinMarketCapApiClient;
+import io.helix.android.rate.CoinTypes;
+import io.helix.android.rate.RequesthelixRateException;
+import io.helix.android.rate.db.helixRate;
+import io.helix.android.ui.wallet_activity.WalletActivity;
+import io.helix.android.utils.AppConf;
+import io.helix.android.utils.CrashReporter;
 
-import static io.phore.android.module.PhoreContext.CONTEXT;
-import static io.phore.android.service.IntentsConstants.ACTION_ADDRESS_BALANCE_CHANGE;
-import static io.phore.android.service.IntentsConstants.ACTION_BROADCAST_TRANSACTION;
-import static io.phore.android.service.IntentsConstants.ACTION_CANCEL_COINS_RECEIVED;
-import static io.phore.android.service.IntentsConstants.ACTION_NOTIFICATION;
-import static io.phore.android.service.IntentsConstants.ACTION_RESET_BLOCKCHAIN;
-import static io.phore.android.service.IntentsConstants.ACTION_SCHEDULE_SERVICE;
-import static io.phore.android.service.IntentsConstants.DATA_TRANSACTION_HASH;
-import static io.phore.android.service.IntentsConstants.INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE;
-import static io.phore.android.service.IntentsConstants.INTENT_BROADCAST_DATA_ON_COIN_RECEIVED;
-import static io.phore.android.service.IntentsConstants.INTENT_BROADCAST_DATA_PEER_CONNECTED;
-import static io.phore.android.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
-import static io.phore.android.service.IntentsConstants.INTENT_EXTRA_BLOCKCHAIN_STATE;
-import static io.phore.android.service.IntentsConstants.NOT_BLOCKCHAIN_ALERT;
-import static io.phore.android.service.IntentsConstants.NOT_COINS_RECEIVED;
+import static io.helix.android.module.helixContext.CONTEXT;
+import static io.helix.android.service.IntentsConstants.ACTION_ADDRESS_BALANCE_CHANGE;
+import static io.helix.android.service.IntentsConstants.ACTION_BROADCAST_TRANSACTION;
+import static io.helix.android.service.IntentsConstants.ACTION_CANCEL_COINS_RECEIVED;
+import static io.helix.android.service.IntentsConstants.ACTION_NOTIFICATION;
+import static io.helix.android.service.IntentsConstants.ACTION_RESET_BLOCKCHAIN;
+import static io.helix.android.service.IntentsConstants.ACTION_SCHEDULE_SERVICE;
+import static io.helix.android.service.IntentsConstants.DATA_TRANSACTION_HASH;
+import static io.helix.android.service.IntentsConstants.INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE;
+import static io.helix.android.service.IntentsConstants.INTENT_BROADCAST_DATA_ON_COIN_RECEIVED;
+import static io.helix.android.service.IntentsConstants.INTENT_BROADCAST_DATA_PEER_CONNECTED;
+import static io.helix.android.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
+import static io.helix.android.service.IntentsConstants.INTENT_EXTRA_BLOCKCHAIN_STATE;
+import static io.helix.android.service.IntentsConstants.NOT_BLOCKCHAIN_ALERT;
+import static io.helix.android.service.IntentsConstants.NOT_COINS_RECEIVED;
 
 /**
  * Created by furszy on 6/12/17.
  */
 
-public class PhoreWalletService extends Service{
+public class helixWalletService extends Service{
 
-    private Logger log = LoggerFactory.getLogger(PhoreWalletService.class);
+    private Logger log = LoggerFactory.getLogger(helixWalletService.class);
 
-    private PhoreApplication phoreApplication;
-    private PhoreModuleImp module;
-    //private PhorePeergroup phorePeergroup;
+    private helixApplication helixApplication;
+    private helixModuleImp module;
+    //private helixPeergroup helixPeergroup;
     private BlockchainManager blockchainManager;
 
     private PeerConnectivityListener peerConnectivityListener;
@@ -115,16 +115,16 @@ public class PhoreWalletService extends Service{
     private volatile long lastUpdateTime = System.currentTimeMillis();
     private volatile long lastMessageTime = System.currentTimeMillis();
 
-    public class PhoreBinder extends Binder {
-        public PhoreWalletService getService() {
-            return PhoreWalletService.this;
+    public class helixBinder extends Binder {
+        public helixWalletService getService() {
+            return helixWalletService.this;
         }
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return new PhoreBinder();
+        return new helixBinder();
     }
 
     private AddressListener addressListener = new AddressListener() {
@@ -162,12 +162,12 @@ public class PhoreWalletService extends Service{
                     } else {
                         blockchainState = BlockchainState.SYNCING;
                     }
-                    phoreApplication.getAppConf().setLastBestChainBlockTime(block.getTime().getTime());
+                    helixApplication.getAppConf().setLastBestChainBlockTime(block.getTime().getTime());
                     broadcastBlockchainState(true);
                 }
             }catch (Exception e){
                 e.printStackTrace();
-                CrashReporter.saveBackgroundTrace(e,phoreApplication.getPackageInfo());
+                CrashReporter.saveBackgroundTrace(e,helixApplication.getPackageInfo());
             }
         }
     };
@@ -182,7 +182,7 @@ public class PhoreWalletService extends Service{
 
         @Override
         public void run() {
-            org.phorej.core.Context.propagate(PhoreContext.CONTEXT);
+            org.helixj.core.Context.propagate(helixContext.CONTEXT);
             lastMessageTime = System.currentTimeMillis();
             broadcastBlockchainState(false);
         }
@@ -197,25 +197,25 @@ public class PhoreWalletService extends Service{
         public void run() {
             try {
                 CoinMarketCapApiClient c = new CoinMarketCapApiClient();
-                CoinMarketCapApiClient.PhoreMarket phoreMarket = c.getPhorePrice();
-                PhoreRate phoreRate = new PhoreRate("USD",phoreMarket.priceUsd,System.currentTimeMillis());
-                module.saveRate(phoreRate);
+                CoinMarketCapApiClient.helixMarket helixMarket = c.gethelixPrice();
+                helixRate helixRate = new helixRate("USD",helixMarket.priceUsd,System.currentTimeMillis());
+                module.saveRate(helixRate);
 
-                final PhoreRate phoreBtcRate = new PhoreRate("BTC", phoreMarket.priceBtc, System.currentTimeMillis());
-                module.saveRate(phoreBtcRate);
+                final helixRate helixBtcRate = new helixRate("BTC", helixMarket.priceBtc, System.currentTimeMillis());
+                module.saveRate(helixBtcRate);
 
                 // Get the rest of the rates:
-                List<PhoreRate> rates = new CoinMarketCapApiClient.BitPayApi().getRates(new CoinMarketCapApiClient.BitPayApi.RatesConvertor<PhoreRate>() {
+                List<helixRate> rates = new CoinMarketCapApiClient.BitPayApi().getRates(new CoinMarketCapApiClient.BitPayApi.RatesConvertor<helixRate>() {
                     @Override
-                    public PhoreRate convertRate(String code, String name, BigDecimal bitcoinRate) {
-                        BigDecimal rate = bitcoinRate.multiply(phoreBtcRate.getRate());
-                        return new PhoreRate(code,rate,System.currentTimeMillis());
+                    public helixRate convertRate(String code, String name, BigDecimal bitcoinRate) {
+                        BigDecimal rate = bitcoinRate.multiply(helixBtcRate.getRate());
+                        return new helixRate(code,rate,System.currentTimeMillis());
                     }
                 });
-                for (PhoreRate rate : rates) {
+                for (helixRate rate : rates) {
                     module.saveRate(rate);
                 }
-            } catch (RequestPhoreRateException e) {
+            } catch (RequesthelixRateException e) {
                 e.printStackTrace();
             } catch (Exception e){
                 e.printStackTrace();
@@ -279,7 +279,7 @@ public class PhoreWalletService extends Service{
         @Override
         public void onCoinsReceived(Wallet wallet, Transaction transaction, Coin coin, Coin coin1) {
             //todo: acá falta una validación para saber si la transaccion es mia.
-            org.phorej.core.Context.propagate(CONTEXT);
+            org.helixj.core.Context.propagate(CONTEXT);
 
             try {
 
@@ -302,21 +302,21 @@ public class PhoreWalletService extends Service{
                     notificationAccumulatedAmount = notificationAccumulatedAmount.add(amount);
                     Intent openIntent = new Intent(getApplicationContext(), WalletActivity.class);
                     openPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, openIntent, 0);
-                    Intent resultIntent = new Intent(getApplicationContext(), PhoreWalletService.this.getClass());
+                    Intent resultIntent = new Intent(getApplicationContext(), helixWalletService.this.getClass());
                     resultIntent.setAction(ACTION_CANCEL_COINS_RECEIVED);
-                    deleteIntent = PendingIntent.getService(PhoreWalletService.this, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+                    deleteIntent = PendingIntent.getService(helixWalletService.this, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
                     mBuilder = new NotificationCompat.Builder(getApplicationContext())
                             .setContentTitle(
-                                PhoreWalletService.this.getString(R.string.notification_receive_title))
+                                helixWalletService.this.getString(R.string.notification_receive_title))
                             .setContentText(String.format(
-                                PhoreWalletService.this.getString(R.string.notification_receive_message),
+                                helixWalletService.this.getString(R.string.notification_receive_message),
                                 notificationAccumulatedAmount.toFriendlyString()))
                             .setAutoCancel(true)
                             .setSmallIcon(R.mipmap.ic_notification)
                             .setColor(
                                 (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                                 ? getResources().getColor(R.color.bgGreen, null)
-                                : ContextCompat.getColor(PhoreWalletService.this, R.color.bgGreen))
+                                : ContextCompat.getColor(helixWalletService.this, R.color.bgGreen))
                             .setDeleteIntent(deleteIntent)
                             .setContentIntent(openPendingIntent);
                     nm.notify(NOT_COINS_RECEIVED, mBuilder.build());
@@ -334,7 +334,7 @@ public class PhoreWalletService extends Service{
     private TransactionConfidenceEventListener transactionConfidenceEventListener = new TransactionConfidenceEventListener() {
         @Override
         public void onTransactionConfidenceChanged(Wallet wallet, Transaction transaction) {
-            org.phorej.core.Context.propagate(CONTEXT);
+            org.helixj.core.Context.propagate(CONTEXT);
             try {
                 if (transaction != null) {
                     if (transaction.getConfidence().getDepthInBlocks() > 1) {
@@ -359,15 +359,15 @@ public class PhoreWalletService extends Service{
         serviceCreatedAt = System.currentTimeMillis();
         super.onCreate();
         try {
-            log.info("Phore service started");
+            log.info("helix service started");
             // Android stuff
             final String lockName = getPackageName() + " blockchain sync";
             final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
             wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, lockName);
             nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             broadcastManager = LocalBroadcastManager.getInstance(this);
-            phoreApplication = PhoreApplication.getInstance();
-            module = (PhoreModuleImp) phoreApplication.getModule();
+            helixApplication = helixApplication.getInstance();
+            module = (helixModuleImp) helixApplication.getModule();
             blockchainManager = module.getBlockchainManager();
 
             // Schedule service
@@ -378,11 +378,11 @@ public class PhoreWalletService extends Service{
             peerConnectivityListener = new PeerConnectivityListener();
 
             File file = getDir("blockstore_v2",MODE_PRIVATE);
-            String filename = PhoreContext.Files.BLOCKCHAIN_FILENAME;
+            String filename = helixContext.Files.BLOCKCHAIN_FILENAME;
             boolean fileExists = new File(file,filename).exists();
 
-            org.phorej.core.Context.propagate(PhoreContext.CONTEXT);
-            blockchainStore = new SnappyBlockchainStore(PhoreContext.CONTEXT,file,filename);
+            org.helixj.core.Context.propagate(helixContext.CONTEXT);
+            blockchainStore = new SnappyBlockchainStore(helixContext.CONTEXT,file,filename);
             blockchainManager.init(
                     blockchainStore,
                     file,
@@ -416,7 +416,7 @@ public class PhoreWalletService extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        log.info("Phore service onStartCommand");
+        log.info("helix service onStartCommand");
         try {
             if (intent != null) {
                 try {
@@ -471,8 +471,8 @@ public class PhoreWalletService extends Service{
             }*/
             blockchainManager.destroy(resetBlockchainOnShutdown);
 
-            /*if (phorePeergroup.isRunning()) {
-                phorePeergroup.shutdown();
+            /*if (helixPeergroup.isRunning()) {
+                helixPeergroup.shutdown();
             }*/
 
             if (wakeLock.isHeld()) {
@@ -500,7 +500,7 @@ public class PhoreWalletService extends Service{
             // long scheduleTime = System.currentTimeMillis() + 1000 * 15; //(1000 * 60 * 60);
             long scheduleTime = System.currentTimeMillis();
 
-            Intent intent = new Intent(this, PhoreWalletService.class);
+            Intent intent = new Intent(this, helixWalletService.class);
             intent.setAction(ACTION_SCHEDULE_SERVICE);
             alarm.set(
                     // This alarm will wake up the device when System.currentTimeMillis()
@@ -575,7 +575,7 @@ public class PhoreWalletService extends Service{
                                         (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ?
                                                 getResources().getColor(R.color.bgGreen,null)
                                                 :
-                                                ContextCompat.getColor(PhoreWalletService.this,R.color.bgGreen))
+                                                ContextCompat.getColor(helixWalletService.this,R.color.bgGreen))
                         ;
 
                 nm.notify(NOT_BLOCKCHAIN_ALERT, mBuilder.build());

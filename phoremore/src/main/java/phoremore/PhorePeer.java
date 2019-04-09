@@ -1,8 +1,8 @@
-package phoremore;
+package helixmore;
 
 import com.google.protobuf.ByteString;
 
-import org.phorej.core.Sha256Hash;
+import org.helixj.core.Sha256Hash;
 import org.furszy.client.IoManager;
 import org.furszy.client.basic.BaseMsgFuture;
 import org.furszy.client.basic.IoSessionConfImp;
@@ -37,21 +37,21 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
-import phoremore.exceptions.InvalidPeerVersion;
-import phoremore.listeners.PeerDataListener;
-import phoremore.listeners.PeerListener;
-import phoremore.messages.BaseMsg;
-import phoremore.messages.GetBalanceMsg;
-import phoremore.messages.GetHeader;
-import phoremore.messages.GetHistoryMsg;
-import phoremore.messages.GetTxMsg;
-import phoremore.messages.ListUnspentMsg;
-import phoremore.messages.Method;
-import phoremore.messages.SubscribeAddressMsg;
-import phoremore.messages.VersionMsg;
-import phoremore.messages.responses.StatusHistory;
-import phoremore.messages.responses.Unspent;
-import phoremore.utility.TxHashHeightWrapper;
+import helixmore.exceptions.InvalidPeerVersion;
+import helixmore.listeners.PeerDataListener;
+import helixmore.listeners.PeerListener;
+import helixmore.messages.BaseMsg;
+import helixmore.messages.GetBalanceMsg;
+import helixmore.messages.GetHeader;
+import helixmore.messages.GetHistoryMsg;
+import helixmore.messages.GetTxMsg;
+import helixmore.messages.ListUnspentMsg;
+import helixmore.messages.Method;
+import helixmore.messages.SubscribeAddressMsg;
+import helixmore.messages.VersionMsg;
+import helixmore.messages.responses.StatusHistory;
+import helixmore.messages.responses.Unspent;
+import helixmore.utility.TxHashHeightWrapper;
 
 /**
  * Created by furszy on 6/12/17.
@@ -61,12 +61,12 @@ import phoremore.utility.TxHashHeightWrapper;
  * todo: create batch message builder and bathMessage
  */
 
-public class PhorePeer implements IoHandler{
+public class helixPeer implements IoHandler{
 
     private final Logger log;
 
     /** Peer data */
-    private PhorePeerData peerData;
+    private helixPeerData peerData;
     /**  */
     private IoManager ioManager;
     /** Session connection id */
@@ -86,11 +86,11 @@ public class PhorePeer implements IoHandler{
     private CopyOnWriteArrayList<PeerListener> peerListeners = new CopyOnWriteArrayList<>();
     private CopyOnWriteArrayList<PeerDataListener> peerDataListeners = new CopyOnWriteArrayList<>();
 
-    public PhorePeer(PhorePeerData peerData,IoManager ioManager,VersionMsg versionMsg) {
+    public helixPeer(helixPeerData peerData,IoManager ioManager,VersionMsg versionMsg) {
         this.peerData = peerData;
         this.ioManager = ioManager;
         this.versionMsg = versionMsg;
-        this.log = LoggerFactory.getLogger(PhorePeer.class.getName()+"-"+peerData.getHost());
+        this.log = LoggerFactory.getLogger(helixPeer.class.getName()+"-"+peerData.getHost());
     }
 
     public void addPeerListener(PeerListener peerListener){
@@ -119,7 +119,7 @@ public class PhorePeer implements IoHandler{
                 throw new ConnectionFailureException(future.getException());
             }*/
         }else {
-            throw new IllegalStateException("PhorePeer already initializing");
+            throw new IllegalStateException("helixPeer already initializing");
         }
     }
 
@@ -492,7 +492,7 @@ public class PhorePeer implements IoHandler{
         log.error("input closed session id:"+ioSession.getId());
     }
 
-    public PhorePeerData getPeerData() {
+    public helixPeerData getPeerData() {
         return peerData;
     }
 

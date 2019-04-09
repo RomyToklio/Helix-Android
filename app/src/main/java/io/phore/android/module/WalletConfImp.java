@@ -1,21 +1,21 @@
-package io.phore.android.module;
+package io.helix.android.module;
 
 import android.content.SharedPreferences;
 
-import org.phorej.core.Context;
-import org.phorej.core.NetworkParameters;
+import org.helixj.core.Context;
+import org.helixj.core.NetworkParameters;
 
 import global.WalletConfiguration;
-import io.phore.android.utils.Configurations;
+import io.helix.android.utils.Configurations;
 
-import static io.phore.android.module.PhoreContext.CONTEXT;
-import static io.phore.android.module.PhoreContext.Files.BLOCKCHAIN_FILENAME;
-import static io.phore.android.module.PhoreContext.Files.CHECKPOINTS_FILENAME;
-import static io.phore.android.module.PhoreContext.Files.WALLET_FILENAME_PROTOBUF;
-import static io.phore.android.module.PhoreContext.Files.WALLET_KEY_BACKUP_PROTOBUF;
-import static io.phore.android.module.PhoreContext.NETWORK_PARAMETERS;
-import static io.phore.android.module.PhoreContext.PEER_DISCOVERY_TIMEOUT_MS;
-import static io.phore.android.module.PhoreContext.PEER_TIMEOUT_MS;
+import static io.helix.android.module.helixContext.CONTEXT;
+import static io.helix.android.module.helixContext.Files.BLOCKCHAIN_FILENAME;
+import static io.helix.android.module.helixContext.Files.CHECKPOINTS_FILENAME;
+import static io.helix.android.module.helixContext.Files.WALLET_FILENAME_PROTOBUF;
+import static io.helix.android.module.helixContext.Files.WALLET_KEY_BACKUP_PROTOBUF;
+import static io.helix.android.module.helixContext.NETWORK_PARAMETERS;
+import static io.helix.android.module.helixContext.PEER_DISCOVERY_TIMEOUT_MS;
+import static io.helix.android.module.helixContext.PEER_TIMEOUT_MS;
 
 /**
  * Created by furszy on 6/4/17.
@@ -61,12 +61,12 @@ public class WalletConfImp extends Configurations implements WalletConfiguration
 
     @Override
     public int getTrustedNodePort() {
-        return PhoreContext.NETWORK_PARAMETERS.getPort();
+        return helixContext.NETWORK_PARAMETERS.getPort();
     }
 
     @Override
     public String getMnemonicFilename() {
-        return PhoreContext.Files.BIP39_WORDLIST_FILENAME;
+        return helixContext.Files.BIP39_WORDLIST_FILENAME;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class WalletConfImp extends Configurations implements WalletConfiguration
 
     @Override
     public NetworkParameters getNetworkParams() {
-        return PhoreContext.NETWORK_PARAMETERS;
+        return helixContext.NETWORK_PARAMETERS;
     }
 
     @Override
@@ -86,7 +86,7 @@ public class WalletConfImp extends Configurations implements WalletConfiguration
 
     @Override
     public long getWalletAutosaveDelayMs() {
-        return PhoreContext.Files.WALLET_AUTOSAVE_DELAY_MS;
+        return helixContext.Files.WALLET_AUTOSAVE_DELAY_MS;
     }
 
     @Override
@@ -116,17 +116,17 @@ public class WalletConfImp extends Configurations implements WalletConfiguration
 
     @Override
     public int getMinMemoryNeeded() {
-        return PhoreContext.MEMORY_CLASS_LOWEND;
+        return helixContext.MEMORY_CLASS_LOWEND;
     }
 
     @Override
     public long getBackupMaxChars() {
-        return PhoreContext.BACKUP_MAX_CHARS;
+        return helixContext.BACKUP_MAX_CHARS;
     }
 
     @Override
     public boolean isTest() {
-        return PhoreContext.IS_TEST;
+        return helixContext.IS_TEST;
     }
 
     @Override

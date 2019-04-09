@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.phore.android.utils.scanner;
+package io.helix.android.utils.scanner;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -33,7 +33,7 @@ import com.google.zxing.ResultPointCallback;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 
-import io.phore.android.R;
+import io.helix.android.R;
 
 import android.Manifest;
 import android.app.Activity;

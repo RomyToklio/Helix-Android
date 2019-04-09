@@ -1,4 +1,4 @@
-package io.phore.android.ui.settings_network_activity;
+package io.helix.android.ui.settings_network_activity;
 
 /**
  * Created by Neoperol on 6/8/17.

@@ -1,7 +1,7 @@
-package phoremore;
+package helixmore;
 
-import org.phorej.core.Address;
-import org.phorej.core.CoinDefinition;
+import org.helixj.core.Address;
+import org.helixj.core.CoinDefinition;
 import org.furszy.client.IoManager;
 import org.furszy.client.exceptions.ConnectionFailureException;
 import org.slf4j.Logger;
@@ -15,14 +15,14 @@ import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import phoremore.exceptions.InvalidPeerVersion;
-import phoremore.listeners.AddressListener;
-import phoremore.listeners.PeerDataListener;
-import phoremore.listeners.PeerListener;
-import phoremore.messages.VersionMsg;
-import phoremore.messages.responses.StatusHistory;
-import phoremore.messages.responses.Unspent;
-import phoremore.utility.TxHashHeightWrapper;
+import helixmore.exceptions.InvalidPeerVersion;
+import helixmore.listeners.AddressListener;
+import helixmore.listeners.PeerDataListener;
+import helixmore.listeners.PeerListener;
+import helixmore.messages.VersionMsg;
+import helixmore.messages.responses.StatusHistory;
+import helixmore.messages.responses.Unspent;
+import helixmore.utility.TxHashHeightWrapper;
 import store.AddressBalance;
 import store.AddressNotFoundException;
 import store.AddressStore;
@@ -33,14 +33,14 @@ import wallet.WalletManager;
 /**
  * Created by furszy on 6/12/17.
  *
- * Class in charge of manage the connection with phoremore servers.
+ * Class in charge of manage the connection with helixmore servers.
  *
  * todo: para el look-a-head del bip 32 tengo que estar observando addresses de la account que compartí, 10 addresses despues de la última marcada(vista en la blockhain).
  */
 
-public class PhorePeergroup implements PeerListener, PeerDataListener {
+public class helixPeergroup implements PeerListener, PeerDataListener {
 
-    private static final Logger log = LoggerFactory.getLogger(PhorePeergroup.class);
+    private static final Logger log = LoggerFactory.getLogger(helixPeergroup.class);
 
     /**
      * Default number of connections
@@ -52,11 +52,11 @@ public class PhorePeergroup implements PeerListener, PeerDataListener {
     /** Connection manager */
     private IoManager ioManager;
     /** Trusted peer */
-    private PhorePeer trustedPeer;
+    private helixPeer trustedPeer;
     // Currently active peers.
-    private final CopyOnWriteArrayList<PhorePeer> peers;
+    private final CopyOnWriteArrayList<helixPeer> peers;
     // Currently connecting peers.
-    private final CopyOnWriteArrayList<PhorePeer> pendingPeers;
+    private final CopyOnWriteArrayList<helixPeer> pendingPeers;
     // The version message to use for new connections
     private VersionMsg versionMsg;
     // How many connections we want to have open at the current time. If we lose connections, we'll try opening more
@@ -82,7 +82,7 @@ public class PhorePeergroup implements PeerListener, PeerDataListener {
     private CopyOnWriteArrayList<AddressListener> addressListeners = new CopyOnWriteArrayList<>();
     private CopyOnWriteArrayList<PeerListener> peerConnectionListeners = new CopyOnWriteArrayList<>();
 
-    public PhorePeergroup(NetworkConf networkConf, WalletManager walletManager, AddressStore addressStore) throws IOException {
+    public helixPeergroup(NetworkConf networkConf, WalletManager walletManager, AddressStore addressStore) throws IOException {
         this.peers = new CopyOnWriteArrayList<>();
         this.pendingPeers = new CopyOnWriteArrayList<>();
         this.networkConf = networkConf;
@@ -93,7 +93,7 @@ public class PhorePeergroup implements PeerListener, PeerDataListener {
         versionMsg = new VersionMsg(networkConf.getClientName(),networkConf.getMaxProtocolVersion(),networkConf.getMinProtocolVersion());
     }
 
-    public PhorePeergroup(NetworkConf networkConf) throws IOException {
+    public helixPeergroup(NetworkConf networkConf) throws IOException {
         this.peers = new CopyOnWriteArrayList<>();
         this.pendingPeers = new CopyOnWriteArrayList<>();
         this.networkConf = networkConf;
@@ -129,13 +129,13 @@ public class PhorePeergroup implements PeerListener, PeerDataListener {
      */
     public synchronized void start() throws InterruptedException, ConnectionFailureException {
         try {
-            log.info("Starting PhorePeergroup");
+            log.info("Starting helixPeergroup");
             isActive = true;
             // todo: first part discovery..
             /*
             * Connect to the trusted node and get servers from it.
             */
-            trustedPeer = new PhorePeer(networkConf.getTrustedServer(), ioManager,versionMsg);
+            trustedPeer = new helixPeer(networkConf.getTrustedServer(), ioManager,versionMsg);
             trustedPeer.addPeerListener(this);
             trustedPeer.addPeerDataListener(this);
             trustedPeer.connect();
@@ -143,7 +143,7 @@ public class PhorePeergroup implements PeerListener, PeerDataListener {
         }catch (Exception e){
             isRunning = false;
             isActive = false;
-            log.error("PhorePeerGroup start",e);
+            log.error("helixPeerGroup start",e);
             throw e;
         }
     }
@@ -155,16 +155,16 @@ public class PhorePeergroup implements PeerListener, PeerDataListener {
 
 
     @Override
-    public void onConnected(PhorePeer phoremorePeer) {
+    public void onConnected(helixPeer helixmorePeer) {
         try {
-            if (phoremorePeer == trustedPeer) {
+            if (helixmorePeer == trustedPeer) {
                 log.info("trusted peer connected");
                 // trusted peer connected.
                 isRunning = true;
 
                 // notify -> todo: this should be on other thread.
                 for (PeerListener peerConnectionListener : peerConnectionListeners) {
-                    peerConnectionListener.onConnected(phoremorePeer);
+                    peerConnectionListener.onConnected(helixmorePeer);
                 }
 
                 // Get more peers from the trusted server to use it later
@@ -178,17 +178,17 @@ public class PhorePeergroup implements PeerListener, PeerDataListener {
 
                 // connect to non trusted peers
                 for (InetSocketAddress inetSocketAddress : networkConf.getNetworkServers()) {
-                    PhorePeerData peerData = new PhorePeerData(inetSocketAddress.getHostName(),inetSocketAddress.getPort(),0);
-                    PhorePeer peer = new PhorePeer(peerData,ioManager,versionMsg);
+                    helixPeerData peerData = new helixPeerData(inetSocketAddress.getHostName(),inetSocketAddress.getPort(),0);
+                    helixPeer peer = new helixPeer(peerData,ioManager,versionMsg);
                     peer.addPeerListener(this);
                     peer.addPeerDataListener(this);
                     pendingPeers.add(peer);
                     peer.connect();
                 }
             }else {
-                log.info("Non trusted peer connected, "+phoremorePeer.getPeerData());
-                pendingPeers.remove(phoremorePeer);
-                peers.add(phoremorePeer);
+                log.info("Non trusted peer connected, "+helixmorePeer.getPeerData());
+                pendingPeers.remove(helixmorePeer);
+                peers.add(helixmorePeer);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -196,14 +196,14 @@ public class PhorePeergroup implements PeerListener, PeerDataListener {
     }
 
     @Override
-    public void onDisconnected(PhorePeer phoremorePeer) {
+    public void onDisconnected(helixPeer helixmorePeer) {
 
     }
 
     @Override
-    public void onExceptionCaught(PhorePeer phoremorePeer, Exception e) {
+    public void onExceptionCaught(helixPeer helixmorePeer, Exception e) {
         if (e instanceof InvalidPeerVersion){
-            if (phoremorePeer == trustedPeer){
+            if (helixmorePeer == trustedPeer){
                 // We are fuck. Invalid trusted peer version..
                 isActive = false;
                 isRunning = false;
@@ -214,7 +214,7 @@ public class PhorePeergroup implements PeerListener, PeerDataListener {
     }
 
     @Override
-    public void onSubscribedAddressChange(PhorePeer phoremorePeer, String address, String status) {
+    public void onSubscribedAddressChange(helixPeer helixmorePeer, String address, String status) {
         try {
             if (status==null)return;
             AddressBalance statusDb = null;
@@ -240,11 +240,11 @@ public class PhorePeergroup implements PeerListener, PeerDataListener {
                 trustedPeer.getHistory(address);
                 // todo: mejorar esto con request en batch -> simplificaria la cantidad de request a la mitad.
                 // request status to other peers - 4 max
-                for (PhorePeer peer : peers) {
+                for (helixPeer peer : peers) {
                     peer.getHistory(address);
                 }
                 // request balance to other peers - 4 max
-                for (PhorePeer peer : peers) {
+                for (helixPeer peer : peers) {
                     peer.getBalance(address);
                 }
             }
@@ -255,7 +255,7 @@ public class PhorePeergroup implements PeerListener, PeerDataListener {
     }
 
     @Override
-    public void onListUnpent(PhorePeer phoremorePeer,String address, List<Unspent> unspents) {
+    public void onListUnpent(helixPeer helixmorePeer,String address, List<Unspent> unspents) {
         log.info("onListUnspent: "+address);
         // now i should check this unspent tx requesting the merkle root.
 
@@ -287,9 +287,9 @@ public class PhorePeergroup implements PeerListener, PeerDataListener {
     }
 
     @Override
-    public void onBalanceReceive(PhorePeer phoremorePeer, String address, long confirmed, long unconfirmed) {
+    public void onBalanceReceive(helixPeer helixmorePeer, String address, long confirmed, long unconfirmed) {
         try {
-            if (phoremorePeer == trustedPeer) {
+            if (helixmorePeer == trustedPeer) {
                 AddressBalance addressBalance = addressStore.getAddressStatus(address);
 
                 long prevConfirmedBalance = addressBalance.getConfirmedBalance();
@@ -321,13 +321,13 @@ public class PhorePeergroup implements PeerListener, PeerDataListener {
     }
 
     @Override
-    public void onGetHistory(PhorePeer phoremorePeer, StatusHistory statusHistory) {
+    public void onGetHistory(helixPeer helixmorePeer, StatusHistory statusHistory) {
         try {
             log.info("onGetHistory, address: "+statusHistory.getAddress()+", status: "+statusHistory.getStatus());
             AddressBalance addressBalance = addressStore.getAddressStatus(statusHistory.getAddress());
             if (addressBalance.getStatus().equals(statusHistory.getStatus())){
                 addressBalance.addStatusConfirmation();
-                if(phoremorePeer == trustedPeer){
+                if(helixmorePeer == trustedPeer){
                     addressBalance.addAllTx(statusHistory.getTxHashHeight());
                 }
                 addressStore.insert(statusHistory.getAddress(),addressBalance);

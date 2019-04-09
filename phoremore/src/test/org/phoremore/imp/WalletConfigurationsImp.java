@@ -1,8 +1,8 @@
-package org.phoremore.imp;
+package org.helixmore.imp;
 
-import org.phore.core.Context;
-import org.phore.core.NetworkParameters;
-import org.phore.params.TestNet3Params;
+import org.helix.core.Context;
+import org.helix.core.NetworkParameters;
+import org.helix.params.TestNet3Params;
 
 import global.WalletConfiguration;
 

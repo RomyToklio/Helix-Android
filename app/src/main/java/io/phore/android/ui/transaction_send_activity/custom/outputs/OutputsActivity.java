@@ -1,4 +1,4 @@
-package io.phore.android.ui.transaction_send_activity.custom.outputs;
+package io.helix.android.ui.transaction_send_activity.custom.outputs;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,15 +10,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.phorej.core.Coin;
+import org.helixj.core.Coin;
 
 import java.io.Serializable;
 import java.util.List;
 
-import io.phore.android.R;
-import io.phore.android.contacts.AddressLabel;
-import io.phore.android.ui.base.BaseActivity;
-import io.phore.android.utils.DialogsUtil;
+import io.helix.android.R;
+import io.helix.android.contacts.AddressLabel;
+import io.helix.android.ui.base.BaseActivity;
+import io.helix.android.utils.DialogsUtil;
 
 /**
  * Created by furszy on 8/4/17.
@@ -127,7 +127,7 @@ public class OutputsActivity extends BaseActivity {
                         outputWrapper.getAddressLabel()
                 );
                 addressLabel.addAddress(outputWrapper.getAddress());
-                phoreModule.saveContactIfNotExist(
+                helixModule.saveContactIfNotExist(
                         addressLabel
                 );
             }

@@ -1,4 +1,4 @@
-package io.phore.android.ui.qr_activity;
+package io.helix.android.ui.qr_activity;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -19,16 +19,16 @@ import android.widget.Toast;
 
 import com.google.zxing.WriterException;
 
-import org.phorej.core.Address;
-import org.phorej.uri.PhoreURI;
+import org.helixj.core.Address;
+import org.helixj.uri.helixURI;
 
-import io.phore.android.PhoreApplication;
-import io.phore.android.R;
-import io.phore.android.module.PhoreModule;
+import io.helix.android.helixApplication;
+import io.helix.android.R;
+import io.helix.android.module.helixModule;
 
 import static android.graphics.Color.WHITE;
-import static io.phore.android.utils.AndroidUtils.copyToClipboard;
-import static io.phore.android.utils.QrUtils.encodeAsBitmap;
+import static io.helix.android.utils.AndroidUtils.copyToClipboard;
+import static io.helix.android.utils.QrUtils.encodeAsBitmap;
 
 /**
  * Created by furszy on 6/8/17.
@@ -36,7 +36,7 @@ import static io.phore.android.utils.QrUtils.encodeAsBitmap;
 
 public class MyAddressFragment extends Fragment implements View.OnClickListener {
 
-    private PhoreModule module;
+    private helixModule module;
 
     private View root;
     private TextView txt_address;
@@ -46,16 +46,16 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
 
     private Address address;
 
-    public static MyAddressFragment newInstance(PhoreModule phoreModule) {
+    public static MyAddressFragment newInstance(helixModule helixModule) {
         MyAddressFragment f = new MyAddressFragment();
-        f.setModule(phoreModule);
+        f.setModule(helixModule);
         return f;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        module = PhoreApplication.getInstance().getModule();
+        module = helixApplication.getInstance().getModule();
         root = inflater.inflate(R.layout.my_address,null);
         txt_address = (TextView) root.findViewById(R.id.txt_address);
         btn_share = (Button) root.findViewById(R.id.btn_share);
@@ -80,8 +80,8 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
                 flag = true;
             }
             if (flag) {
-                String phoreUri = PhoreURI.convertToBitcoinURI(address,null,"Receive address",null);
-                loadAddress(phoreUri,address.toBase58());
+                String helixUri = helixURI.convertToBitcoinURI(address,null,"Receive address",null);
+                loadAddress(helixUri,address.toBase58());
             }
         }catch (WriterException e){
             e.printStackTrace();
@@ -91,7 +91,7 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
         }
 
     }
-    public void setModule(PhoreModule module) {
+    public void setModule(helixModule module) {
         this.module = module;
     }
 

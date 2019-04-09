@@ -1,12 +1,12 @@
-package io.phore.android.module;
+package io.helix.android.module;
 
 import android.os.Environment;
 import android.text.format.DateUtils;
 
-import org.phorej.core.Context;
-import org.phorej.core.NetworkParameters;
-import org.phorej.params.MainNetParams;
-import org.phorej.params.TestNet3Params;
+import org.helixj.core.Context;
+import org.helixj.core.NetworkParameters;
+import org.helixj.params.MainNetParams;
+import org.helixj.params.TestNet3Params;
 
 import java.io.File;
 
@@ -14,7 +14,7 @@ import java.io.File;
  * Created by furszy on 6/4/17.
  */
 
-public class PhoreContext {
+public class helixContext {
 
     public static final boolean IS_TEST = false;
     public static final NetworkParameters NETWORK_PARAMETERS = IS_TEST? TestNet3Params.get():MainNetParams.get();
@@ -25,7 +25,7 @@ public class PhoreContext {
 
     public static final String ENABLE_BIP44_APP_VERSION = "1.03";
 
-    public static final long PHORE_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME = 1500940800;
+    public static final long helix_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME = 1500940800;
 
     /** Currency exchange rate */
     public static final String URL_FIAT_CURRENCIES_RATE = "https://bitpay.com/rates";
@@ -50,7 +50,7 @@ public class PhoreContext {
         /** Path to external storage */
         public static final File EXTERNAL_STORAGE_DIR = Environment.getExternalStorageDirectory();
         /** Filename of the manual wallet backup. */
-        public static final String EXTERNAL_WALLET_BACKUP = "phore-wallet-backup" +"_"+ FILENAME_NETWORK_SUFFIX;
+        public static final String EXTERNAL_WALLET_BACKUP = "helix-wallet-backup" +"_"+ FILENAME_NETWORK_SUFFIX;
         /** Manual backups go here. */
         public static final File EXTERNAL_WALLET_BACKUP_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         public static final String getExternalWalletBackupFileName(String appName){

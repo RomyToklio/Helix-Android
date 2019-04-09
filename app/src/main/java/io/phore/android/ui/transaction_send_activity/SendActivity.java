@@ -1,4 +1,4 @@
-package io.phore.android.ui.transaction_send_activity;
+package io.helix.android.ui.transaction_send_activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,15 +25,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import org.phorej.core.Address;
-import org.phorej.core.Coin;
-import org.phorej.core.InsufficientMoneyException;
-import org.phorej.core.NetworkParameters;
-import org.phorej.core.Transaction;
-import org.phorej.core.TransactionInput;
-import org.phorej.core.TransactionOutput;
-import org.phorej.uri.PhoreURI;
-import org.phorej.wallet.Wallet;
+import org.helixj.core.Address;
+import org.helixj.core.Coin;
+import org.helixj.core.InsufficientMoneyException;
+import org.helixj.core.NetworkParameters;
+import org.helixj.core.Transaction;
+import org.helixj.core.TransactionInput;
+import org.helixj.core.TransactionOutput;
+import org.helixj.uri.helixURI;
+import org.helixj.wallet.Wallet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,46 +45,46 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import io.phore.android.R;
-import io.phore.android.contacts.AddressLabel;
-import io.phore.android.module.NoPeerConnectedException;
-import io.phore.android.rate.db.PhoreRate;
-import io.phore.android.service.PhoreWalletService;
-import io.phore.android.ui.base.BaseActivity;
-import io.phore.android.ui.base.dialogs.SimpleTextDialog;
-import io.phore.android.ui.base.dialogs.SimpleTwoButtonsDialog;
-import io.phore.android.ui.transaction_send_activity.custom.ChangeAddressActivity;
-import io.phore.android.ui.transaction_send_activity.custom.CustomFeeActivity;
-import io.phore.android.ui.transaction_send_activity.custom.CustomFeeFragment;
-import io.phore.android.ui.transaction_send_activity.custom.inputs.InputWrapper;
-import io.phore.android.ui.transaction_send_activity.custom.inputs.InputsActivity;
-import io.phore.android.ui.transaction_send_activity.custom.outputs.OutputWrapper;
-import io.phore.android.ui.transaction_send_activity.custom.outputs.OutputsActivity;
-import io.phore.android.ui.wallet_activity.TransactionWrapper;
-import io.phore.android.utils.CrashReporter;
-import io.phore.android.utils.DialogsUtil;
-import io.phore.android.utils.NavigationUtils;
-import io.phore.android.utils.scanner.ScanActivity;
+import io.helix.android.R;
+import io.helix.android.contacts.AddressLabel;
+import io.helix.android.module.NoPeerConnectedException;
+import io.helix.android.rate.db.helixRate;
+import io.helix.android.service.helixWalletService;
+import io.helix.android.ui.base.BaseActivity;
+import io.helix.android.ui.base.dialogs.SimpleTextDialog;
+import io.helix.android.ui.base.dialogs.SimpleTwoButtonsDialog;
+import io.helix.android.ui.transaction_send_activity.custom.ChangeAddressActivity;
+import io.helix.android.ui.transaction_send_activity.custom.CustomFeeActivity;
+import io.helix.android.ui.transaction_send_activity.custom.CustomFeeFragment;
+import io.helix.android.ui.transaction_send_activity.custom.inputs.InputWrapper;
+import io.helix.android.ui.transaction_send_activity.custom.inputs.InputsActivity;
+import io.helix.android.ui.transaction_send_activity.custom.outputs.OutputWrapper;
+import io.helix.android.ui.transaction_send_activity.custom.outputs.OutputsActivity;
+import io.helix.android.ui.wallet_activity.TransactionWrapper;
+import io.helix.android.utils.CrashReporter;
+import io.helix.android.utils.DialogsUtil;
+import io.helix.android.utils.NavigationUtils;
+import io.helix.android.utils.scanner.ScanActivity;
 import wallet.exceptions.InsufficientInputsException;
 import wallet.exceptions.TxNotFoundException;
 
 import static android.Manifest.permission_group.CAMERA;
-import static io.phore.android.service.IntentsConstants.ACTION_BROADCAST_TRANSACTION;
-import static io.phore.android.service.IntentsConstants.DATA_TRANSACTION_HASH;
-import static io.phore.android.ui.transaction_detail_activity.FragmentTxDetail.TX;
-import static io.phore.android.ui.transaction_detail_activity.FragmentTxDetail.TX_MEMO;
-import static io.phore.android.ui.transaction_detail_activity.FragmentTxDetail.TX_WRAPPER;
-import static io.phore.android.ui.transaction_send_activity.custom.ChangeAddressActivity.INTENT_EXTRA_CHANGE_ADDRESS;
-import static io.phore.android.ui.transaction_send_activity.custom.ChangeAddressActivity.INTENT_EXTRA_CHANGE_SEND_ORIGIN;
-import static io.phore.android.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_CLEAR;
-import static io.phore.android.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_FEE;
-import static io.phore.android.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_IS_FEE_PER_KB;
-import static io.phore.android.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_IS_MINIMUM_FEE;
-import static io.phore.android.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_IS_TOTAL_FEE;
-import static io.phore.android.ui.transaction_send_activity.custom.inputs.InputsFragment.INTENT_EXTRA_UNSPENT_WRAPPERS;
-import static io.phore.android.ui.transaction_send_activity.custom.outputs.OutputsActivity.INTENT_EXTRA_OUTPUTS_CLEAR;
-import static io.phore.android.ui.transaction_send_activity.custom.outputs.OutputsActivity.INTENT_EXTRA_OUTPUTS_WRAPPERS;
-import static io.phore.android.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
+import static io.helix.android.service.IntentsConstants.ACTION_BROADCAST_TRANSACTION;
+import static io.helix.android.service.IntentsConstants.DATA_TRANSACTION_HASH;
+import static io.helix.android.ui.transaction_detail_activity.FragmentTxDetail.TX;
+import static io.helix.android.ui.transaction_detail_activity.FragmentTxDetail.TX_MEMO;
+import static io.helix.android.ui.transaction_detail_activity.FragmentTxDetail.TX_WRAPPER;
+import static io.helix.android.ui.transaction_send_activity.custom.ChangeAddressActivity.INTENT_EXTRA_CHANGE_ADDRESS;
+import static io.helix.android.ui.transaction_send_activity.custom.ChangeAddressActivity.INTENT_EXTRA_CHANGE_SEND_ORIGIN;
+import static io.helix.android.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_CLEAR;
+import static io.helix.android.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_FEE;
+import static io.helix.android.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_IS_FEE_PER_KB;
+import static io.helix.android.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_IS_MINIMUM_FEE;
+import static io.helix.android.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_IS_TOTAL_FEE;
+import static io.helix.android.ui.transaction_send_activity.custom.inputs.InputsFragment.INTENT_EXTRA_UNSPENT_WRAPPERS;
+import static io.helix.android.ui.transaction_send_activity.custom.outputs.OutputsActivity.INTENT_EXTRA_OUTPUTS_CLEAR;
+import static io.helix.android.ui.transaction_send_activity.custom.outputs.OutputsActivity.INTENT_EXTRA_OUTPUTS_WRAPPERS;
+import static io.helix.android.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
 
 /**
  * Created by Neoperol on 5/4/17.
@@ -113,7 +113,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private EditText edit_memo;
     private MyFilterableAdapter filterableAdapter;
     private String addressStr;
-    private PhoreRate phoreRate;
+    private helixRate helixRate;
     private SimpleTextDialog errorDialog;
     private ImageButton btnSwap;
     private ViewFlipper amountSwap;
@@ -175,7 +175,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         //Sending amount phr
         addAll =  (Button) findViewById(R.id.btn_add_all);
         addAll.setOnClickListener(this);
-        phoreRate = phoreModule.getRate(phoreApplication.getAppConf().getSelectedRateCoin());
+        helixRate = helixModule.getRate(helixApplication.getAppConf().getSelectedRateCoin());
 
         editCurrency.addTextChangedListener(new TextWatcher() {
             @Override
@@ -190,16 +190,16 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (phoreRate != null) {
+                if (helixRate != null) {
                     if (s.length() > 0) {
                         String valueStr = s.toString();
                         if (valueStr.charAt(0) == '.') {
                             valueStr = "0" + valueStr;
                         }
-                        BigDecimal result = new BigDecimal(valueStr).divide(phoreRate.getRate(), 6, BigDecimal.ROUND_DOWN);
+                        BigDecimal result = new BigDecimal(valueStr).divide(helixRate.getRate(), 6, BigDecimal.ROUND_DOWN);
                         txtShow.setText(result.toPlainString() + getString(R.string.wallet_phr));
                     } else {
-                        txtShow.setText("0 " + phoreRate.getCode());
+                        txtShow.setText("0 " + helixRate.getCode());
                     }
                 }else {
                     txtShow.setText(R.string.no_rate);
@@ -222,25 +222,25 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length()>0) {
-                    if (phoreRate != null) {
+                    if (helixRate != null) {
                         String valueStr = s.toString();
                         if (valueStr.charAt(0) == '.') {
                             valueStr = "0" + valueStr;
                         }
                         Coin coin = Coin.parseCoin(valueStr);
                         txt_local_currency.setText(
-                                phoreApplication.getCentralFormats().format(
-                                        new BigDecimal(coin.getValue() * phoreRate.getRate().doubleValue()).movePointLeft(8)
+                                helixApplication.getCentralFormats().format(
+                                        new BigDecimal(coin.getValue() * helixRate.getRate().doubleValue()).movePointLeft(8)
                                 )
-                                        + " " + phoreRate.getCode()
+                                        + " " + helixRate.getCode()
                         );
                     }else {
                         // rate null -> no connection.
                         txt_local_currency.setText(R.string.no_rate);
                     }
                 }else {
-                    if (phoreRate!=null)
-                        txt_local_currency.setText("0 "+phoreRate.getCode());
+                    if (helixRate!=null)
+                        txt_local_currency.setText("0 "+helixRate.getCode());
                     else
                         txt_local_currency.setText(R.string.no_rate);
                 }
@@ -329,7 +329,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         super.onRestoreInstanceState(savedInstanceState);
         // todo: test this roting the screen..
         if (savedInstanceState.containsKey(TX)){
-            transaction = new Transaction(phoreModule.getConf().getNetworkParams(),savedInstanceState.getByteArray(TX));
+            transaction = new Transaction(helixModule.getConf().getNetworkParams(),savedInstanceState.getByteArray(TX));
         }
     }
 
@@ -344,7 +344,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         super.onResume();
         // todo: This is not updating the filter..
         if (filterableAdapter==null) {
-            List<AddressLabel> list = new ArrayList<>(phoreModule.getContacts());
+            List<AddressLabel> list = new ArrayList<>(helixModule.getContacts());
             filterableAdapter = new MyFilterableAdapter(this,list );
             edit_address.setAdapter(filterableAdapter);
         }
@@ -382,19 +382,19 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         }else if(id == R.id.btn_add_all){
             if (!isMultiSend) {
                 cleanWallet = true;
-                Coin coin = phoreModule.getAvailableBalanceCoin();
+                Coin coin = helixModule.getAvailableBalanceCoin();
                 if (inPhrs) {
                     edit_amount.setText(coin.toPlainString());
                     txt_local_currency.setText(
-                    phoreApplication.getCentralFormats().format(
-                            new BigDecimal(coin.getValue() * phoreRate.getRate().doubleValue()).movePointLeft(8)
+                    helixApplication.getCentralFormats().format(
+                            new BigDecimal(coin.getValue() * helixRate.getRate().doubleValue()).movePointLeft(8)
                     )
-                            + " " + phoreRate.getCode()
+                            + " " + helixRate.getCode()
                     );
                 } else {
                     editCurrency.setText(
-                            phoreApplication.getCentralFormats().format(
-                                    new BigDecimal(coin.getValue() * phoreRate.getRate().doubleValue()).movePointLeft(8)
+                            helixApplication.getCentralFormats().format(
+                                    new BigDecimal(coin.getValue() * helixRate.getRate().doubleValue()).movePointLeft(8)
                             )
                     );
                     txtShow.setText(coin.toFriendlyString());
@@ -479,11 +479,11 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 try {
                     address = data.getStringExtra(INTENT_EXTRA_RESULT);
                     String usedAddress;
-                    if (phoreModule.chechAddress(address)){
+                    if (helixModule.chechAddress(address)){
                         usedAddress = address;
                     }else {
-                        PhoreURI phoreUri = new PhoreURI(address);
-                        usedAddress = phoreUri.getAddress().toBase58();
+                        helixURI helixUri = new helixURI(address);
+                        usedAddress = helixUri.getAddress().toBase58();
                     }
                     final String tempPubKey = usedAddress;
                     edit_address.setText(tempPubKey);
@@ -499,7 +499,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     sendConfirmed();
                 }catch (Exception e){
                     e.printStackTrace();
-                    CrashReporter.saveBackgroundTrace(e,phoreApplication.getPackageInfo());
+                    CrashReporter.saveBackgroundTrace(e,helixApplication.getPackageInfo());
                     showErrorDialog(R.string.commit_tx_fail);
                 }
             }
@@ -529,16 +529,16 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 try {
                     Set<InputWrapper> unspents = (Set<InputWrapper>) data.getSerializableExtra(INTENT_EXTRA_UNSPENT_WRAPPERS);
                     for (InputWrapper inputWrapper : unspents) {
-                        inputWrapper.setUnspent(phoreModule.getUnspent(inputWrapper.getParentTxHash(), inputWrapper.getIndex()));
+                        inputWrapper.setUnspent(helixModule.getUnspent(inputWrapper.getParentTxHash(), inputWrapper.getIndex()));
                     }
                     unspent = unspents;
                     txt_coin_selection.setVisibility(View.VISIBLE);
                 } catch (TxNotFoundException e) {
                     e.printStackTrace();
-                    CrashReporter.saveBackgroundTrace(e,phoreApplication.getPackageInfo());
+                    CrashReporter.saveBackgroundTrace(e,helixApplication.getPackageInfo());
                     Toast.makeText(this,R.string.load_inputs_fail,Toast.LENGTH_LONG).show();
                 } catch (Exception e){
-                    CrashReporter.saveBackgroundTrace(e,phoreApplication.getPackageInfo());
+                    CrashReporter.saveBackgroundTrace(e,helixApplication.getPackageInfo());
                     Toast.makeText(this,R.string.load_inputs_fail,Toast.LENGTH_LONG).show();
                 }
             }
@@ -569,7 +569,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     }else {
                         if (data.hasExtra(INTENT_EXTRA_CHANGE_ADDRESS)) {
                             String address = data.getStringExtra(INTENT_EXTRA_CHANGE_ADDRESS);
-                            changeAddress = Address.fromBase58(phoreModule.getConf().getNetworkParams(),address);
+                            changeAddress = Address.fromBase58(helixModule.getConf().getNetworkParams(),address);
                         }
                     }
                     txt_change_address.setVisibility(View.VISIBLE);
@@ -603,7 +603,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 if (valueStr.charAt(0) == '.') {
                     valueStr = "0" + valueStr;
                 }
-                BigDecimal result = new BigDecimal(valueStr).multiply(phoreRate.getRate());
+                BigDecimal result = new BigDecimal(valueStr).multiply(helixRate.getRate());
                 amountStr = result.setScale(6, RoundingMode.FLOOR).toPlainString();
             }
         }
@@ -615,7 +615,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             edit_amount.setText(amount.toPlainString());
             edit_amount.setEnabled(false);
         }else {
-            BigDecimal result = new BigDecimal(amount.toPlainString()).multiply(phoreRate.getRate()).setScale(6,RoundingMode.FLOOR);
+            BigDecimal result = new BigDecimal(amount.toPlainString()).multiply(helixRate.getRate()).setScale(6,RoundingMode.FLOOR);
             editCurrency.setText(result.toPlainString());
             edit_amount.setEnabled(false);
         }
@@ -634,7 +634,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
             // check if the wallet is still syncing
             try {
-                if(!phoreModule.isSyncWithNode()){
+                if(!helixModule.isSyncWithNode()){
                     throw new IllegalArgumentException(getString(R.string.wallet_is_not_sync));
                 }
             } catch (NoPeerConnectedException e) {
@@ -655,31 +655,31 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             Coin amount = Coin.parseCoin(amountStr);
             if (amount.isZero()) throw new IllegalArgumentException("Amount zero, please correct it");
             if (amount.isLessThan(Transaction.MIN_NONDUST_OUTPUT)) throw new IllegalArgumentException("Amount must be greater than the minimum amount accepted from miners, "+Transaction.MIN_NONDUST_OUTPUT.toFriendlyString());
-            if (amount.isGreaterThan(Coin.valueOf(phoreModule.getAvailableBalance())))
+            if (amount.isGreaterThan(Coin.valueOf(helixModule.getAvailableBalance())))
                 throw new IllegalArgumentException("Insufficient balance");
 
             // memo
             String memo = edit_memo.getText().toString();
 
-            NetworkParameters params = phoreModule.getConf().getNetworkParams();
+            NetworkParameters params = helixModule.getConf().getNetworkParams();
 
             if ( (outputWrappers==null || outputWrappers.isEmpty()) && (unspent==null || unspent.isEmpty()) ){
                 addressStr = edit_address.getText().toString();
-                if (!phoreModule.chechAddress(addressStr))
+                if (!helixModule.chechAddress(addressStr))
                     throw new IllegalArgumentException("Address not valid");
                 Coin feePerKb = getFee();
                 Address changeAddressTemp = null;
                 if (changeAddress!=null){
                     changeAddressTemp = changeAddress;
                 }else {
-                    changeAddressTemp = phoreModule.getReceiveAddress();
+                    changeAddressTemp = helixModule.getReceiveAddress();
                 }
-                transaction = phoreModule.buildSendTx(addressStr,amount,feePerKb,memo,changeAddressTemp);
+                transaction = helixModule.buildSendTx(addressStr,amount,feePerKb,memo,changeAddressTemp);
 
                 // check if there is a need to change the change address
                 if (changeToOrigin){
                     transaction = changeChangeAddressToOriginAddress(transaction,changeAddressTemp);
-                    transaction = phoreModule.completeTx(transaction);
+                    transaction = helixModule.completeTx(transaction);
                 }
             }else {
                 transaction = new Transaction(params);
@@ -693,9 +693,9 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     }
                 } else {
                     addressStr = edit_address.getText().toString();
-                    if (!phoreModule.chechAddress(addressStr))
+                    if (!helixModule.chechAddress(addressStr))
                         throw new IllegalArgumentException("Address not valid");
-                    transaction.addOutput(amount, Address.fromBase58(phoreModule.getConf().getNetworkParams(), addressStr));
+                    transaction.addOutput(amount, Address.fromBase58(helixModule.getConf().getNetworkParams(), addressStr));
                 }
 
                 // then check custom inputs if there is any
@@ -709,7 +709,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 Coin inputsSum = transaction.getInputSum();
 
                 if (ouputsSum.isGreaterThan(inputsSum)) {
-                    List<TransactionOutput> unspent = phoreModule.getRandomUnspentNotInListToFullCoins(transaction.getInputs(), ouputsSum);
+                    List<TransactionOutput> unspent = helixModule.getRandomUnspentNotInListToFullCoins(transaction.getInputs(), ouputsSum);
                     for (TransactionOutput transactionOutput : unspent) {
                         transaction.addInput(transactionOutput);
                     }
@@ -727,16 +727,16 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 if (changeAddress==null){
                     changeAddressTemp = changeAddress;
                 }else {
-                    changeAddressTemp = phoreModule.getReceiveAddress();
+                    changeAddressTemp = helixModule.getReceiveAddress();
                 }
 
-                transaction = phoreModule.completeTx(transaction,changeAddressTemp,feePerKb);
+                transaction = helixModule.completeTx(transaction,changeAddressTemp,feePerKb);
 
                 // check if there is a need to change the change address
                 // check if there is a need to change the change address
                 if (changeToOrigin){
                     transaction = changeChangeAddressToOriginAddress(transaction,changeAddressTemp);
-                    transaction = phoreModule.completeTx(transaction);
+                    transaction = helixModule.completeTx(transaction);
                 }
             }
 
@@ -781,7 +781,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         }
         Address originAddress = origin.getConnectedOutput().getScriptPubKey().getToAddress(params,true);
         // check if the address is mine just in case
-        if (!phoreModule.isAddressUsed(originAddress)) throw new IllegalStateException("origin address is not on the wallet: "+originAddress);
+        if (!helixModule.isAddressUsed(originAddress)) throw new IllegalStateException("origin address is not on the wallet: "+originAddress);
 
         // Now i just have to re organize the outputs.
         TransactionOutput changeOutput = null;
@@ -836,8 +836,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             showErrorDialog(R.string.commit_tx_fail);
             return;
         }
-        phoreModule.commitTx(transaction);
-        Intent intent = new Intent(SendActivity.this, PhoreWalletService.class);
+        helixModule.commitTx(transaction);
+        Intent intent = new Intent(SendActivity.this, helixWalletService.class);
         intent.setAction(ACTION_BROADCAST_TRANSACTION);
         intent.putExtra(DATA_TRANSACTION_HASH,transaction.getHash().getBytes());
         startService(intent);

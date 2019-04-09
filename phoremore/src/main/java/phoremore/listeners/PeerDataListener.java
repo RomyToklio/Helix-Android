@@ -1,11 +1,11 @@
-package phoremore.listeners;
+package helixmore.listeners;
 
 import java.util.List;
 
-import phoremore.PhorePeer;
-import phoremore.messages.responses.StatusHistory;
-import phoremore.messages.responses.Unspent;
-import phoremore.utility.TxHashHeightWrapper;
+import helixmore.helixPeer;
+import helixmore.messages.responses.StatusHistory;
+import helixmore.messages.responses.Unspent;
+import helixmore.utility.TxHashHeightWrapper;
 
 /**
  * Created by furszy on 6/17/17.
@@ -13,11 +13,11 @@ import phoremore.utility.TxHashHeightWrapper;
 
 public interface PeerDataListener {
 
-    void onSubscribedAddressChange(PhorePeer phoremorePeer, String address, String status);
+    void onSubscribedAddressChange(helixPeer helixmorePeer, String address, String status);
 
-    void onListUnpent(PhorePeer phoremorePeer,String address, List<Unspent> unspent);
+    void onListUnpent(helixPeer helixmorePeer,String address, List<Unspent> unspent);
 
-    void onBalanceReceive(PhorePeer phoremorePeer, String address, long confirmed, long unconfirmed);
+    void onBalanceReceive(helixPeer helixmorePeer, String address, long confirmed, long unconfirmed);
 
-    void onGetHistory(PhorePeer phoremorePeer, StatusHistory statusHistory);
+    void onGetHistory(helixPeer helixmorePeer, StatusHistory statusHistory);
 }

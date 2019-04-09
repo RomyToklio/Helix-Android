@@ -1,4 +1,4 @@
-package io.phore.android.ui.transaction_detail_activity;
+package io.helix.android.ui.transaction_detail_activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,11 +12,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.BaseRecyclerFragment;
-import io.phore.android.ui.base.tools.adapter.BaseRecyclerAdapter;
-import io.phore.android.ui.base.tools.adapter.BaseRecyclerViewHolder;
-import io.phore.android.ui.transaction_send_activity.custom.inputs.InputWrapper;
+import io.helix.android.R;
+import io.helix.android.ui.base.BaseRecyclerFragment;
+import io.helix.android.ui.base.tools.adapter.BaseRecyclerAdapter;
+import io.helix.android.ui.base.tools.adapter.BaseRecyclerViewHolder;
+import io.helix.android.ui.transaction_send_activity.custom.inputs.InputWrapper;
 import wallet.exceptions.TxNotFoundException;
 
 /**
@@ -41,7 +41,7 @@ public class InputsDetailFragment extends BaseRecyclerFragment<InputWrapper> {
                 if (intent.hasExtra(INTENT_EXTRA_UNSPENT_WRAPPERS)) {
                     list = (Set<InputWrapper>) intent.getSerializableExtra(INTENT_EXTRA_UNSPENT_WRAPPERS);
                     for (InputWrapper inputWrapper : list) {
-                        inputWrapper.setUnspent(phoreModule.getUnspent(inputWrapper.getParentTxHash(), inputWrapper.getIndex()));
+                        inputWrapper.setUnspent(helixModule.getUnspent(inputWrapper.getParentTxHash(), inputWrapper.getIndex()));
                     }
                 }
             }

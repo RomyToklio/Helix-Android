@@ -1,4 +1,4 @@
-package phore.org.phorewallet;
+package helix.org.helixwallet;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("phore.org.phorewallet", appContext.getPackageName());
+        assertEquals("helix.org.helixwallet", appContext.getPackageName());
     }
 }

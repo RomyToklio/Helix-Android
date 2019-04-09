@@ -1,4 +1,4 @@
-package io.phore.android.ui.upgrade;
+package io.helix.android.ui.upgrade;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,16 +12,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.phorej.core.InsufficientMoneyException;
+import org.helixj.core.InsufficientMoneyException;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import io.phore.android.R;
-import io.phore.android.module.UpgradeException;
-import io.phore.android.ui.base.BaseActivity;
-import io.phore.android.ui.base.dialogs.SimpleTextDialog;
-import io.phore.android.utils.DialogsUtil;
+import io.helix.android.R;
+import io.helix.android.module.UpgradeException;
+import io.helix.android.ui.base.BaseActivity;
+import io.helix.android.ui.base.dialogs.SimpleTextDialog;
+import io.helix.android.utils.DialogsUtil;
 
 /**
  * Created by furszy on 10/8/17.
@@ -73,7 +73,7 @@ public class UpgradeWalletActivity extends BaseActivity {
         root.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!phoreModule.isAnyPeerConnected()){
+                if (!helixModule.isAnyPeerConnected()){
                     if (noConnectionDialog==null)
                         noConnectionDialog = DialogsUtil.buildSimpleTextDialog(
                                 UpgradeWalletActivity.this,
@@ -93,7 +93,7 @@ public class UpgradeWalletActivity extends BaseActivity {
                             boolean succed = false;
                             String message = null;
                             try {
-                                succed = phoreModule.upgradeWallet(upgradeCode);
+                                succed = helixModule.upgradeWallet(upgradeCode);
                                 Log.i("UpgradeWallet", "wallet upgrade result: " + succed);
                             } catch (UpgradeException e) {
                                 e.printStackTrace();
@@ -108,7 +108,7 @@ public class UpgradeWalletActivity extends BaseActivity {
                                         new Handler().postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
-                                                phoreApplication.startPhoreService();
+                                                helixApplication.starthelixService();
                                             }
                                         }, TimeUnit.SECONDS.toMillis(3));
                                         Toast.makeText(UpgradeWalletActivity.this,

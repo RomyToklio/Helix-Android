@@ -1,13 +1,13 @@
-package io.phore.android.ui.transaction_send_activity;
+package io.helix.android.ui.transaction_send_activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.BaseActivity;
-import io.phore.android.ui.pincode_activity.PincodeActivity;
+import io.helix.android.R;
+import io.helix.android.ui.base.BaseActivity;
+import io.helix.android.ui.pincode_activity.PincodeActivity;
 
 /**
  * Created by furszy on 8/7/17.

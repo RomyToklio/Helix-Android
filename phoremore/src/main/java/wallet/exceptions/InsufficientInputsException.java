@@ -1,6 +1,6 @@
 package wallet.exceptions;
 
-import org.phorej.core.Coin;
+import org.helixj.core.Coin;
 
 /**
  * Created by furszy on 8/9/17.

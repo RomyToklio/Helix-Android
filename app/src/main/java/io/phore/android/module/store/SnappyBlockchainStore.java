@@ -1,4 +1,4 @@
-package io.phore.android.module.store;
+package io.helix.android.module.store;
 
 import android.support.annotation.Nullable;
 
@@ -6,13 +6,13 @@ import com.snappydb.DB;
 import com.snappydb.DBFactory;
 import com.snappydb.SnappydbException;
 
-import org.phorej.core.Block;
-import org.phorej.core.Context;
-import org.phorej.core.NetworkParameters;
-import org.phorej.core.Sha256Hash;
-import org.phorej.core.StoredBlock;
-import org.phorej.store.BlockStore;
-import org.phorej.store.BlockStoreException;
+import org.helixj.core.Block;
+import org.helixj.core.Context;
+import org.helixj.core.NetworkParameters;
+import org.helixj.core.Sha256Hash;
+import org.helixj.core.StoredBlock;
+import org.helixj.store.BlockStore;
+import org.helixj.store.BlockStoreException;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package io.phore.android.ui.settings_rates;
+package io.helix.android.ui.settings_rates;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,24 +8,24 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.phorej.core.Peer;
+import org.helixj.core.Peer;
 
 import java.util.List;
 
-import io.phore.android.PhoreApplication;
-import io.phore.android.R;
-import io.phore.android.rate.db.PhoreRate;
-import io.phore.android.ui.base.BaseRecyclerFragment;
-import io.phore.android.ui.base.tools.adapter.BaseRecyclerAdapter;
-import io.phore.android.ui.base.tools.adapter.BaseRecyclerViewHolder;
-import io.phore.android.ui.base.tools.adapter.ListItemListeners;
-import io.phore.android.ui.settings_network_activity.NetworkViewHolder;
+import io.helix.android.helixApplication;
+import io.helix.android.R;
+import io.helix.android.rate.db.helixRate;
+import io.helix.android.ui.base.BaseRecyclerFragment;
+import io.helix.android.ui.base.tools.adapter.BaseRecyclerAdapter;
+import io.helix.android.ui.base.tools.adapter.BaseRecyclerViewHolder;
+import io.helix.android.ui.base.tools.adapter.ListItemListeners;
+import io.helix.android.ui.settings_network_activity.NetworkViewHolder;
 
 /**
  * Created by furszy on 7/2/17.
  */
 
-public class RatesFragment extends BaseRecyclerFragment<PhoreRate> implements ListItemListeners<PhoreRate> {
+public class RatesFragment extends BaseRecyclerFragment<helixRate> implements ListItemListeners<helixRate> {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,16 +36,16 @@ public class RatesFragment extends BaseRecyclerFragment<PhoreRate> implements Li
     }
 
     @Override
-    protected List<PhoreRate> onLoading() {
-        return phoreModule.listRates();
+    protected List<helixRate> onLoading() {
+        return helixModule.listRates();
     }
 
     @Override
-    protected BaseRecyclerAdapter<PhoreRate, ? extends PhoreRateHolder> initAdapter() {
-        BaseRecyclerAdapter<PhoreRate, PhoreRateHolder> adapter = new BaseRecyclerAdapter<PhoreRate, PhoreRateHolder>(getActivity()) {
+    protected BaseRecyclerAdapter<helixRate, ? extends helixRateHolder> initAdapter() {
+        BaseRecyclerAdapter<helixRate, helixRateHolder> adapter = new BaseRecyclerAdapter<helixRate, helixRateHolder>(getActivity()) {
             @Override
-            protected PhoreRateHolder createHolder(View itemView, int type) {
-                return new PhoreRateHolder(itemView,type);
+            protected helixRateHolder createHolder(View itemView, int type) {
+                return new helixRateHolder(itemView,type);
             }
 
             @Override
@@ -54,7 +54,7 @@ public class RatesFragment extends BaseRecyclerFragment<PhoreRate> implements Li
             }
 
             @Override
-            protected void bindHolder(PhoreRateHolder holder, PhoreRate data, int position) {
+            protected void bindHolder(helixRateHolder holder, helixRate data, int position) {
                 holder.txt_name.setText(data.getCode());
                 if (list.get(0).getCode().equals(data.getCode()))
                     holder.view_line.setVisibility(View.GONE);
@@ -65,23 +65,23 @@ public class RatesFragment extends BaseRecyclerFragment<PhoreRate> implements Li
     }
 
     @Override
-    public void onItemClickListener(PhoreRate data, int position) {
-        phoreApplication.getAppConf().setSelectedRateCoin(data.getCode());
+    public void onItemClickListener(helixRate data, int position) {
+        helixApplication.getAppConf().setSelectedRateCoin(data.getCode());
         Toast.makeText(getActivity(),R.string.rate_selected,Toast.LENGTH_SHORT).show();
         getActivity().onBackPressed();
     }
 
     @Override
-    public void onLongItemClickListener(PhoreRate data, int position) {
+    public void onLongItemClickListener(helixRate data, int position) {
 
     }
 
-    private  class PhoreRateHolder extends BaseRecyclerViewHolder{
+    private  class helixRateHolder extends BaseRecyclerViewHolder{
 
         private TextView txt_name;
         private View view_line;
 
-        protected PhoreRateHolder(View itemView, int holderType) {
+        protected helixRateHolder(View itemView, int holderType) {
             super(itemView, holderType);
             txt_name = (TextView) itemView.findViewById(R.id.txt_name);
             view_line = itemView.findViewById(R.id.view_line);

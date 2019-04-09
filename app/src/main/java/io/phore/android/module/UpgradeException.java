@@ -1,4 +1,4 @@
-package io.phore.android.module;
+package io.helix.android.module;
 
 /**
  * Created by furszy on 10/8/17.

@@ -1,7 +1,7 @@
 package global;
 
-import org.phorej.core.Context;
-import org.phorej.core.NetworkParameters;
+import org.helixj.core.Context;
+import org.helixj.core.NetworkParameters;
 
 /**
  * Created by furszy on 6/4/17.

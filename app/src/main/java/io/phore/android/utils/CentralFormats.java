@@ -1,4 +1,4 @@
-package io.phore.android.utils;
+package io.helix.android.utils;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;

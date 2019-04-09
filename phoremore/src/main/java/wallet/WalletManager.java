@@ -2,30 +2,30 @@ package wallet;
 
 import com.google.common.base.Charsets;
 
-import org.phorej.core.Address;
-import org.phorej.core.BlockChain;
-import org.phorej.core.Coin;
-import org.phorej.core.InsufficientMoneyException;
-import org.phorej.core.PeerGroup;
-import org.phorej.core.Sha256Hash;
-import org.phorej.core.Transaction;
-import org.phorej.core.TransactionInput;
-import org.phorej.core.TransactionOutput;
-import org.phorej.core.Utils;
-import org.phorej.core.listeners.TransactionConfidenceEventListener;
-import org.phorej.crypto.DeterministicKey;
-import org.phorej.crypto.LinuxSecureRandom;
-import org.phorej.crypto.MnemonicCode;
-import org.phorej.crypto.MnemonicException;
-import org.phorej.wallet.DeterministicKeyChain;
-import org.phorej.wallet.DeterministicSeed;
-import org.phorej.wallet.Protos;
-import org.phorej.wallet.SendRequest;
-import org.phorej.wallet.UnreadableWalletException;
-import org.phorej.wallet.Wallet;
-import org.phorej.wallet.WalletFiles;
-import org.phorej.wallet.WalletProtobufSerializer;
-import org.phorej.wallet.listeners.WalletCoinsReceivedEventListener;
+import org.helixj.core.Address;
+import org.helixj.core.BlockChain;
+import org.helixj.core.Coin;
+import org.helixj.core.InsufficientMoneyException;
+import org.helixj.core.PeerGroup;
+import org.helixj.core.Sha256Hash;
+import org.helixj.core.Transaction;
+import org.helixj.core.TransactionInput;
+import org.helixj.core.TransactionOutput;
+import org.helixj.core.Utils;
+import org.helixj.core.listeners.TransactionConfidenceEventListener;
+import org.helixj.crypto.DeterministicKey;
+import org.helixj.crypto.LinuxSecureRandom;
+import org.helixj.crypto.MnemonicCode;
+import org.helixj.crypto.MnemonicException;
+import org.helixj.wallet.DeterministicKeyChain;
+import org.helixj.wallet.DeterministicSeed;
+import org.helixj.wallet.Protos;
+import org.helixj.wallet.SendRequest;
+import org.helixj.wallet.UnreadableWalletException;
+import org.helixj.wallet.Wallet;
+import org.helixj.wallet.WalletFiles;
+import org.helixj.wallet.WalletProtobufSerializer;
+import org.helixj.wallet.listeners.WalletCoinsReceivedEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -188,7 +188,7 @@ public class WalletManager {
         wallet.addCoinsReceivedEventListener(new WalletCoinsReceivedEventListener() {
             @Override
             public void onCoinsReceived(Wallet wallet, Transaction transaction, Coin coin, Coin coin1) {
-                org.phorej.core.Context.propagate(conf.getWalletContext());
+                org.helixj.core.Context.propagate(conf.getWalletContext());
                 saveWallet();
             }
         });
@@ -200,7 +200,7 @@ public class WalletManager {
         }
         List<String> words = generateMnemonic(SEED_ENTROPY_EXTRA);
         DeterministicSeed seed = new DeterministicSeed(words, null, "", System.currentTimeMillis());
-        return Wallet.fromSeed(conf.getNetworkParams(), seed, DeterministicKeyChain.KeyChainType.BIP44_PHORE_ONLY);
+        return Wallet.fromSeed(conf.getNetworkParams(), seed, DeterministicKeyChain.KeyChainType.BIP44_helix_ONLY);
     }
 
     public static List<String> generateMnemonic(int entropyBitsSize){
@@ -280,7 +280,7 @@ public class WalletManager {
         wallet = Wallet.fromSeed(
                 conf.getNetworkParams(),
                 new DeterministicSeed(mnemonic,null,"",timestamp),
-                bip44? DeterministicKeyChain.KeyChainType.BIP44_PHORE_ONLY: DeterministicKeyChain.KeyChainType.BIP32
+                bip44? DeterministicKeyChain.KeyChainType.BIP44_helix_ONLY: DeterministicKeyChain.KeyChainType.BIP32
         );
         restoreWallet(wallet);
     }

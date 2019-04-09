@@ -1,4 +1,4 @@
-package phoremore;
+package helixmore;
 
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
@@ -13,11 +13,11 @@ import java.util.List;
 
 public class NetworkConf {
 
-    private static final String CLIENT_NAME = "phore_mobile";
+    private static final String CLIENT_NAME = "helix_mobile";
     private static final String MAX_PROTOCOL_VERSION = "2.9.5";
     private static final String MIN_PROTOCOL_VERSION = "1.0";
     /** Trusted server selected on the first screen of the app */
-    private PhorePeerData trustedHost;
+    private helixPeerData trustedHost;
     /** Known servers from the network */
     private List<InetSocketAddress> networkServers;
 
@@ -25,12 +25,12 @@ public class NetworkConf {
         this.networkServers = new ArrayList<>();
     }
 
-    public PhorePeerData getTrustedServer() {
+    public helixPeerData getTrustedServer() {
         return trustedHost;
     }
 
-    public void setTrustedServer(PhorePeerData phoremorePeerData) {
-        this.trustedHost = phoremorePeerData;
+    public void setTrustedServer(helixPeerData helixmorePeerData) {
+        this.trustedHost = helixmorePeerData;
 
     }
 

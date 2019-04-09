@@ -1,4 +1,4 @@
-package io.phore.android.ui.backup_mnemonic_activity;
+package io.helix.android.ui.backup_mnemonic_activity;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,9 +17,9 @@ import com.google.android.flexbox.FlexboxLayout;
 import java.util.Arrays;
 import java.util.List;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.BaseActivity;
-import io.phore.android.ui.wallet_activity.WalletActivity;
+import io.helix.android.R;
+import io.helix.android.ui.base.BaseActivity;
+import io.helix.android.ui.wallet_activity.WalletActivity;
 
 /**
  * Created by Neoperol on 7/17/17.
@@ -60,7 +60,7 @@ public class MnemonicActivity extends BaseActivity {
             });
         }
 
-        List<String> textArray = phoreModule.getMnemonic();
+        List<String> textArray = helixModule.getMnemonic();
 
         txt_words = (FlexboxLayout) findViewById(R.id.securityWords);
 

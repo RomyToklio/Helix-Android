@@ -1,10 +1,10 @@
-package io.phore.android.ui.transaction_request_activity;
+package io.helix.android.ui.transaction_request_activity;
 
 import android.os.Bundle;
 import android.view.ViewGroup;
 
-import io.phore.android.R;
-import io.phore.android.ui.base.BaseActivity;
+import io.helix.android.R;
+import io.helix.android.ui.base.BaseActivity;
 
 /**
  * Created by Neoperol on 5/11/17.

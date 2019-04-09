@@ -1,4 +1,4 @@
-package io.phore.android.ui.import_watch_only;
+package io.helix.android.ui.import_watch_only;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,18 +9,18 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import org.phorej.wallet.DeterministicKeyChain;
+import org.helixj.wallet.DeterministicKeyChain;
 
 import java.io.IOException;
 
-import io.phore.android.R;
-import io.phore.android.module.PhoreContext;
-import io.phore.android.ui.base.BaseActivity;
-import io.phore.android.ui.base.dialogs.DialogListener;
-import io.phore.android.ui.base.dialogs.SimpleTextDialog;
-import io.phore.android.utils.DialogsUtil;
+import io.helix.android.R;
+import io.helix.android.module.helixContext;
+import io.helix.android.ui.base.BaseActivity;
+import io.helix.android.ui.base.dialogs.DialogListener;
+import io.helix.android.ui.base.dialogs.SimpleTextDialog;
+import io.helix.android.utils.DialogsUtil;
 
-import static io.phore.android.utils.CrashReporter.appendSavedBackgroundTraces;
+import static io.helix.android.utils.CrashReporter.appendSavedBackgroundTraces;
 
 /**
  * Created by furszy on 8/30/17.
@@ -48,7 +48,7 @@ public class SettingsWatchOnly extends BaseActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    org.phorej.core.Context.propagate(PhoreContext.CONTEXT);
+                    org.helixj.core.Context.propagate(helixContext.CONTEXT);
                     importXpub();
                 }catch (Exception e){
                     e.printStackTrace();
@@ -64,9 +64,9 @@ public class SettingsWatchOnly extends BaseActivity {
         boolean isBip32 = check_bip32.isChecked();
         if (xpub.length()>0){
             try {
-                phoreModule.watchOnlyMode(
+                helixModule.watchOnlyMode(
                         xpub,
-                        isBip32 ? DeterministicKeyChain.KeyChainType.BIP32: DeterministicKeyChain.KeyChainType.BIP44_PHORE_ONLY
+                        isBip32 ? DeterministicKeyChain.KeyChainType.BIP32: DeterministicKeyChain.KeyChainType.BIP44_helix_ONLY
                 );
                 SimpleTextDialog simpleTextDialog = DialogsUtil.buildSimpleTextDialog(
                         this,

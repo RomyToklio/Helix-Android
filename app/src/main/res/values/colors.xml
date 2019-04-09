@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="transparent">#00000000</color>
-    <!-- Phore Green -->
+    <!-- helix Green -->
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#007F59</color>
     <color name="colorAccent">#53DAB1</color>
 
-    <!-- Phore Background Green -->
+    <!-- helix Background Green -->
     <color name="bgGreen">#000000</color>
     <color name="green">#009688</color>
     <color name="mainGreen">#B7FFF9</color>

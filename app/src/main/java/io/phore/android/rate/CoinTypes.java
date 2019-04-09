@@ -1,4 +1,4 @@
-package io.phore.android.rate;
+package io.helix.android.rate;
 
 /**
  * Created by furszy on 7/5/17.

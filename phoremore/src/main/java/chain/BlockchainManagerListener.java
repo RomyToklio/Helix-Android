@@ -1,6 +1,6 @@
 package chain;
 
-import org.phorej.core.PeerGroup;
+import org.helixj.core.PeerGroup;
 
 import java.util.Set;
 

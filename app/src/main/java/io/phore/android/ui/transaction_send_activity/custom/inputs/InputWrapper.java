@@ -1,12 +1,12 @@
-package io.phore.android.ui.transaction_send_activity.custom.inputs;
+package io.helix.android.ui.transaction_send_activity.custom.inputs;
 
-import org.phorej.core.Sha256Hash;
-import org.phorej.core.TransactionOutput;
+import org.helixj.core.Sha256Hash;
+import org.helixj.core.TransactionOutput;
 
 import java.io.Serializable;
 
-import io.phore.android.contacts.AddressLabel;
-import io.phore.android.module.PhoreContext;
+import io.helix.android.contacts.AddressLabel;
+import io.helix.android.module.helixContext;
 
 /**
  * Created by furszy on 8/4/17.
@@ -50,7 +50,7 @@ public class InputWrapper implements Serializable{
 
 
     public String getLabel() {
-        return addressLabel !=null? addressLabel.toLabel():unspent.getScriptPubKey().getToAddress(PhoreContext.NETWORK_PARAMETERS,true).toBase58();
+        return addressLabel !=null? addressLabel.toLabel():unspent.getScriptPubKey().getToAddress(helixContext.NETWORK_PARAMETERS,true).toBase58();
     }
 
     @Override

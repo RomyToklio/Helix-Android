@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package io.phore.android.utils.scanner;
+package io.helix.android.utils.scanner;
 
 import java.io.IOException;
 import java.util.ArrayList;
