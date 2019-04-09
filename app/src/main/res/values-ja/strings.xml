@@ -23,7 +23,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="set_amount">送金量を記入</string>
-    <string name="set_amount_phr">HLIX</string>
+    <string name="set_amount_hlix">HLIX</string>
     <string name="set_amount_usd">USD</string>
     <string name="add_all">すべて追加</string>
     <string name="title_amount">量</string>
@@ -328,7 +328,7 @@
     <string name="change_address_remember">選択を保存</string>
     <string name="my_address">自分のアドレス</string>
     <string name="wallet">ウォレット</string>
-    <string name="wallet_phr">HLIX</string>
+    <string name="wallet_hlix">HLIX</string>
     <string name="drawer_send">送金</string>
     <string name="drawer_receive">受け取り</string>
     <string name="notification_receive_title">HLIXを受け取りました</string>

@@ -23,7 +23,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="set_amount">Write amount to send</string>
-    <string name="set_amount_phr">HLIX</string>
+    <string name="set_amount_hlix">HLIX</string>
     <string name="set_amount_usd">USD</string>
     <string name="add_all">ADD ALL</string>
     <string name="title_amount">Amount</string>
@@ -379,7 +379,7 @@
     <string name="change_address_remember">Remember selection</string>
     <string name="my_address">My Address</string>
     <string name="wallet">Wallet</string>
-    <string name="wallet_phr">HLIX</string>
+    <string name="wallet_hlix">HLIX</string>
     <string name="drawer_send">Send</string>
     <string name="drawer_receive">Receive</string>
     <string name="notification_receive_title">HLIXs received!</string>
