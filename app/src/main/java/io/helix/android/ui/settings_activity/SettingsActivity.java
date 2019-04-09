@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import chain.BlockchainState;
 import io.helix.android.BuildConfig;
 import io.helix.android.R;
-import io.helix.android.module.helixContext;
+import io.helix.android.module.HelixContext;
 import io.helix.android.ui.base.BaseDrawerActivity;
 import io.helix.android.ui.base.dialogs.SimpleTwoButtonsDialog;
 import io.helix.android.ui.export_account.ExportKeyActivity;
@@ -123,11 +123,11 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
     private void updateNetworkStatus() {
         txt_network_info.setText(
                 Html.fromHtml(
-                        "Network<br><font color=#55476c>"+helixModule.getConf().getNetworkParams().getId()+
+                        "Network<br><font color=#55476c>"+HelixModule.getConf().getNetworkParams().getId()+
                                 "</font><br>" +
-                                "Height<br><font color=#55476c>"+helixModule.getChainHeight()+"</font><br>" +
+                                "Height<br><font color=#55476c>"+HelixModule.getChainHeight()+"</font><br>" +
                                 "Protocol Version<br><font color=#55476c>"+
-                                helixModule.getProtocolVersion()+"</font>"
+                                HelixModule.getProtocolVersion()+"</font>"
 
                 )
         );
@@ -177,7 +177,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
                 new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
                     @Override
                     public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
-                        helixApplication.stopBlockchain();
+                        HelixApplication.stopBlockchain();
                         Toast.makeText(SettingsActivity.this,R.string.reseting_blockchain,Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                     }
@@ -203,14 +203,14 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
             @Nullable
             @Override
             protected CharSequence subject() {
-                return helixContext.REPORT_SUBJECT_ISSUE+" "+helixApplication.getVersionName();
+                return HelixContext.REPORT_SUBJECT_ISSUE+" "+HelixApplication.getVersionName();
             }
 
             @Nullable
             @Override
             protected CharSequence collectApplicationInfo() throws IOException {
                 final StringBuilder applicationInfo = new StringBuilder();
-                CrashReporter.appendApplicationInfo(applicationInfo, helixApplication);
+                CrashReporter.appendApplicationInfo(applicationInfo, HelixApplication);
                 return applicationInfo;
             }
 
@@ -231,7 +231,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
             @Nullable
             @Override
             protected CharSequence collectWalletDump() throws IOException {
-                return helixModule.getWallet().toString(false,true,true,null);
+                return HelixModule.getWallet().toString(false,true,true,null);
             }
         };
         dialog.show();

@@ -20,11 +20,11 @@ import android.widget.Toast;
 import com.google.zxing.WriterException;
 
 import org.helixj.core.Address;
-import org.helixj.uri.helixURI;
+import org.helixj.uri.HelixURI;
 
-import io.helix.android.helixApplication;
+import io.helix.android.HelixApplication;
 import io.helix.android.R;
-import io.helix.android.module.helixModule;
+import io.helix.android.module.HelixModule;
 
 import static android.graphics.Color.WHITE;
 import static io.helix.android.utils.AndroidUtils.copyToClipboard;
@@ -36,7 +36,7 @@ import static io.helix.android.utils.QrUtils.encodeAsBitmap;
 
 public class MyAddressFragment extends Fragment implements View.OnClickListener {
 
-    private helixModule module;
+    private HelixModule module;
 
     private View root;
     private TextView txt_address;
@@ -46,16 +46,16 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
 
     private Address address;
 
-    public static MyAddressFragment newInstance(helixModule helixModule) {
+    public static MyAddressFragment newInstance(HelixModule HelixModule) {
         MyAddressFragment f = new MyAddressFragment();
-        f.setModule(helixModule);
+        f.setModule(HelixModule);
         return f;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        module = helixApplication.getInstance().getModule();
+        module = HelixApplication.getInstance().getModule();
         root = inflater.inflate(R.layout.my_address,null);
         txt_address = (TextView) root.findViewById(R.id.txt_address);
         btn_share = (Button) root.findViewById(R.id.btn_share);
@@ -80,7 +80,7 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
                 flag = true;
             }
             if (flag) {
-                String helixUri = helixURI.convertToBitcoinURI(address,null,"Receive address",null);
+                String helixUri = HelixURI.convertToBitcoinURI(address,null,"Receive address",null);
                 loadAddress(helixUri,address.toBase58());
             }
         }catch (WriterException e){
@@ -91,7 +91,7 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
         }
 
     }
-    public void setModule(helixModule module) {
+    public void setModule(HelixModule module) {
         this.module = module;
     }
 

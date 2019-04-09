@@ -27,7 +27,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 
 import global.utils.Io;
-import io.helix.android.helixApplication;
+import io.helix.android.HelixApplication;
 import io.helix.android.R;
 import io.helix.android.utils.CrashReporter;
 
@@ -53,11 +53,11 @@ public class CrashPopupActivity extends AppCompatActivity implements View.OnClic
     private TextView txt_send;
     private TextView txt_cancel;
 
-    private helixApplication helixApplication;
+    private HelixApplication HelixApplication;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        helixApplication = helixApplication.getInstance();
+        HelixApplication = HelixApplication.getInstance();
         setTheme(R.style.AppTheme_Dialog);
         setContentView(R.layout.report_issue_activity_dialog);
         this.setFinishOnTouchOutside(false);
@@ -75,7 +75,7 @@ public class CrashPopupActivity extends AppCompatActivity implements View.OnClic
         txt_send.setOnClickListener(this);
         txt_cancel.setOnClickListener(this);
 
-        helixApplication.getAppConf().saveShowReportScreenOnStart(false);
+        HelixApplication.getAppConf().saveShowReportScreenOnStart(false);
 
         super.onCreate(savedInstanceState);
     }
@@ -224,13 +224,13 @@ public class CrashPopupActivity extends AppCompatActivity implements View.OnClic
     }
 
     protected CharSequence subject(){
-        return "Crash report"+" "+ helixApplication.getVersionName();
+        return "Crash report"+" "+ HelixApplication.getVersionName();
     }
 
     @Nullable
     protected CharSequence collectApplicationInfo() throws IOException{
         final StringBuilder applicationInfo = new StringBuilder();
-        CrashReporter.appendApplicationInfo(applicationInfo, helixApplication);
+        CrashReporter.appendApplicationInfo(applicationInfo, HelixApplication);
         return applicationInfo;
     }
 
@@ -248,6 +248,6 @@ public class CrashPopupActivity extends AppCompatActivity implements View.OnClic
 
     @Nullable
     protected CharSequence collectWalletDump() throws IOException{
-        return helixApplication.getModule().getWallet().toString(false,true,true,null);
+        return HelixApplication.getModule().getWallet().toString(false,true,true,null);
     }
 }

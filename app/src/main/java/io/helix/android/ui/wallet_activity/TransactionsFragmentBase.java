@@ -19,7 +19,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import io.helix.android.R;
-import io.helix.android.rate.db.helixRate;
+import io.helix.android.rate.db.HelixRate;
 import io.helix.android.ui.base.BaseRecyclerFragment;
 import io.helix.android.ui.base.tools.adapter.BaseRecyclerAdapter;
 import io.helix.android.ui.base.tools.adapter.BaseRecyclerViewHolder;
@@ -38,7 +38,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
 
     private static final Logger logger = LoggerFactory.getLogger(TransactionsFragmentBase.class);
 
-    private helixRate helixRate;
+    private HelixRate HelixRate;
     private MonetaryFormat coinFormat = MonetaryFormat.BTC;
     private int scale = 3;
 
@@ -53,7 +53,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
 
     @Override
     protected List<TransactionWrapper> onLoading() {
-        List<TransactionWrapper> list = helixModule.listTx();
+        List<TransactionWrapper> list = HelixModule.listTx();
         Collections.sort(list, new Comparator<TransactionWrapper>(){
             public int compare(TransactionWrapper o1, TransactionWrapper o2){
                 if(o1.getTransaction().getUpdateTime().getTime() == o2.getTransaction().getUpdateTime().getTime())
@@ -90,11 +90,11 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                 }
 
                 String localCurrency = null;
-                if (helixRate!=null) {
-                    localCurrency = helixApplication.getCentralFormats().format(
-                                    new BigDecimal(data.getAmount().getValue() * helixRate.getRate().doubleValue()).movePointLeft(8)
+                if (HelixRate!=null) {
+                    localCurrency = HelixApplication.getCentralFormats().format(
+                                    new BigDecimal(data.getAmount().getValue() * HelixRate.getRate().doubleValue()).movePointLeft(8)
                                     )
-                                    + " " + helixRate.getCode();
+                                    + " " + HelixRate.getCode();
                     holder.amountLocal.setText(localCurrency);
                     holder.amountLocal.setVisibility(View.VISIBLE);
                 }else {
@@ -115,7 +115,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                     holder.imageView.setImageResource(R.drawable.ic_transaction_mining);
                     holder.amount.setTextColor(ContextCompat.getColor(context, R.color.green));
                 }
-                holder.title.setText(getAddressOrContact(helixModule,data));
+                holder.title.setText(getAddressOrContact(HelixModule,data));
 
                 /*if (data.getOutputLabels()!=null && !data.getOutputLabels().isEmpty()){
                     AddressLabel contact = data.getOutputLabels().get(0);
@@ -125,10 +125,10 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                         else
                             holder.title.setText(contact.getAddresses().get(0));
                     }else {
-                        holder.title.setText(data.getTransaction().getOutput(0).getScriptPubKey().getToAddress(helixModule.getConf().getNetworkParams()).toBase58());
+                        holder.title.setText(data.getTransaction().getOutput(0).getScriptPubKey().getToAddress(HelixModule.getConf().getNetworkParams()).toBase58());
                     }
                 }else {
-                    holder.title.setText(data.getTransaction().getOutput(0).getScriptPubKey().getToAddress(helixModule.getConf().getNetworkParams()).toBase58());
+                    holder.title.setText(data.getTransaction().getOutput(0).getScriptPubKey().getToAddress(HelixModule.getConf().getNetworkParams()).toBase58());
                 }*/
                 String memo = data.getTransaction().getMemo();
                 holder.description.setText(memo!=null?memo:"No description");
@@ -156,7 +156,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
     @Override
     public void onResume() {
         super.onResume();
-        helixRate = helixModule.getRate(helixApplication.getAppConf().getSelectedRateCoin());
+        HelixRate = HelixModule.getRate(HelixApplication.getAppConf().getSelectedRateCoin());
     }
 
     /**

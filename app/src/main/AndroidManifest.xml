@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name=".helixApplication">
+        android:name=".HelixApplication">
 
         <activity android:name=".ui.initial.InitialActivity" android:noHistory="true">
             <intent-filter>
@@ -86,7 +86,7 @@
             android:taskAffinity=""
             android:theme="@android:style/Theme.Dialog" />
 
-        <service android:name=".service.helixWalletService" />
+        <service android:name=".service.HelixWalletService" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

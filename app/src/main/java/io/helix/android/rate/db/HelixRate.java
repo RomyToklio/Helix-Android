@@ -6,7 +6,7 @@ import java.math.BigDecimal;
  * Created by furszy on 7/5/17.
  */
 
-public class helixRate {
+public class HelixRate {
 
     /** Coin letters (USD,EUR,etc..) */
     private final String code;
@@ -15,7 +15,7 @@ public class helixRate {
     /** Last update time */
     private final long timestamp;
 
-    public helixRate(String code, BigDecimal rate, long timestamp) {
+    public HelixRate(String code, BigDecimal rate, long timestamp) {
         this.code = code;
         this.rate = rate;
         this.timestamp = timestamp;

@@ -53,20 +53,20 @@ import chain.BlockchainManager;
 import chain.BlockchainState;
 import chain.Impediment;
 import helixmore.listeners.AddressListener;
-import io.helix.android.helixApplication;
+import io.helix.android.HelixApplication;
 import io.helix.android.R;
-import io.helix.android.module.helixContext;
-import io.helix.android.module.helixModuleImp;
+import io.helix.android.module.HelixContext;
+import io.helix.android.module.HelixModuleImp;
 import io.helix.android.module.store.SnappyBlockchainStore;
 import io.helix.android.rate.CoinMarketCapApiClient;
 import io.helix.android.rate.CoinTypes;
-import io.helix.android.rate.RequesthelixRateException;
-import io.helix.android.rate.db.helixRate;
+import io.helix.android.rate.RequestHelixRateException;
+import io.helix.android.rate.db.HelixRate;
 import io.helix.android.ui.wallet_activity.WalletActivity;
 import io.helix.android.utils.AppConf;
 import io.helix.android.utils.CrashReporter;
 
-import static io.helix.android.module.helixContext.CONTEXT;
+import static io.helix.android.module.HelixContext.CONTEXT;
 import static io.helix.android.service.IntentsConstants.ACTION_ADDRESS_BALANCE_CHANGE;
 import static io.helix.android.service.IntentsConstants.ACTION_BROADCAST_TRANSACTION;
 import static io.helix.android.service.IntentsConstants.ACTION_CANCEL_COINS_RECEIVED;
@@ -86,13 +86,13 @@ import static io.helix.android.service.IntentsConstants.NOT_COINS_RECEIVED;
  * Created by furszy on 6/12/17.
  */
 
-public class helixWalletService extends Service{
+public class HelixWalletService extends Service{
 
-    private Logger log = LoggerFactory.getLogger(helixWalletService.class);
+    private Logger log = LoggerFactory.getLogger(HelixWalletService.class);
 
-    private helixApplication helixApplication;
-    private helixModuleImp module;
-    //private helixPeergroup helixPeergroup;
+    private HelixApplication HelixApplication;
+    private HelixModuleImp module;
+    //private HelixPeergroup HelixPeergroup;
     private BlockchainManager blockchainManager;
 
     private PeerConnectivityListener peerConnectivityListener;
@@ -116,8 +116,8 @@ public class helixWalletService extends Service{
     private volatile long lastMessageTime = System.currentTimeMillis();
 
     public class helixBinder extends Binder {
-        public helixWalletService getService() {
-            return helixWalletService.this;
+        public HelixWalletService getService() {
+            return HelixWalletService.this;
         }
     }
 
@@ -162,12 +162,12 @@ public class helixWalletService extends Service{
                     } else {
                         blockchainState = BlockchainState.SYNCING;
                     }
-                    helixApplication.getAppConf().setLastBestChainBlockTime(block.getTime().getTime());
+                    HelixApplication.getAppConf().setLastBestChainBlockTime(block.getTime().getTime());
                     broadcastBlockchainState(true);
                 }
             }catch (Exception e){
                 e.printStackTrace();
-                CrashReporter.saveBackgroundTrace(e,helixApplication.getPackageInfo());
+                CrashReporter.saveBackgroundTrace(e,HelixApplication.getPackageInfo());
             }
         }
     };
@@ -182,7 +182,7 @@ public class helixWalletService extends Service{
 
         @Override
         public void run() {
-            org.helixj.core.Context.propagate(helixContext.CONTEXT);
+            org.helixj.core.Context.propagate(HelixContext.CONTEXT);
             lastMessageTime = System.currentTimeMillis();
             broadcastBlockchainState(false);
         }
@@ -198,24 +198,24 @@ public class helixWalletService extends Service{
             try {
                 CoinMarketCapApiClient c = new CoinMarketCapApiClient();
                 CoinMarketCapApiClient.helixMarket helixMarket = c.gethelixPrice();
-                helixRate helixRate = new helixRate("USD",helixMarket.priceUsd,System.currentTimeMillis());
-                module.saveRate(helixRate);
+                HelixRate HelixRate = new HelixRate("USD",helixMarket.priceUsd,System.currentTimeMillis());
+                module.saveRate(HelixRate);
 
-                final helixRate helixBtcRate = new helixRate("BTC", helixMarket.priceBtc, System.currentTimeMillis());
+                final HelixRate helixBtcRate = new HelixRate("BTC", helixMarket.priceBtc, System.currentTimeMillis());
                 module.saveRate(helixBtcRate);
 
                 // Get the rest of the rates:
-                List<helixRate> rates = new CoinMarketCapApiClient.BitPayApi().getRates(new CoinMarketCapApiClient.BitPayApi.RatesConvertor<helixRate>() {
+                List<HelixRate> rates = new CoinMarketCapApiClient.BitPayApi().getRates(new CoinMarketCapApiClient.BitPayApi.RatesConvertor<HelixRate>() {
                     @Override
-                    public helixRate convertRate(String code, String name, BigDecimal bitcoinRate) {
+                    public HelixRate convertRate(String code, String name, BigDecimal bitcoinRate) {
                         BigDecimal rate = bitcoinRate.multiply(helixBtcRate.getRate());
-                        return new helixRate(code,rate,System.currentTimeMillis());
+                        return new HelixRate(code,rate,System.currentTimeMillis());
                     }
                 });
-                for (helixRate rate : rates) {
+                for (HelixRate rate : rates) {
                     module.saveRate(rate);
                 }
-            } catch (RequesthelixRateException e) {
+            } catch (RequestHelixRateException e) {
                 e.printStackTrace();
             } catch (Exception e){
                 e.printStackTrace();
@@ -302,21 +302,21 @@ public class helixWalletService extends Service{
                     notificationAccumulatedAmount = notificationAccumulatedAmount.add(amount);
                     Intent openIntent = new Intent(getApplicationContext(), WalletActivity.class);
                     openPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, openIntent, 0);
-                    Intent resultIntent = new Intent(getApplicationContext(), helixWalletService.this.getClass());
+                    Intent resultIntent = new Intent(getApplicationContext(), HelixWalletService.this.getClass());
                     resultIntent.setAction(ACTION_CANCEL_COINS_RECEIVED);
-                    deleteIntent = PendingIntent.getService(helixWalletService.this, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+                    deleteIntent = PendingIntent.getService(HelixWalletService.this, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
                     mBuilder = new NotificationCompat.Builder(getApplicationContext())
                             .setContentTitle(
-                                helixWalletService.this.getString(R.string.notification_receive_title))
+                                HelixWalletService.this.getString(R.string.notification_receive_title))
                             .setContentText(String.format(
-                                helixWalletService.this.getString(R.string.notification_receive_message),
+                                HelixWalletService.this.getString(R.string.notification_receive_message),
                                 notificationAccumulatedAmount.toFriendlyString()))
                             .setAutoCancel(true)
                             .setSmallIcon(R.mipmap.ic_notification)
                             .setColor(
                                 (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                                 ? getResources().getColor(R.color.bgGreen, null)
-                                : ContextCompat.getColor(helixWalletService.this, R.color.bgGreen))
+                                : ContextCompat.getColor(HelixWalletService.this, R.color.bgGreen))
                             .setDeleteIntent(deleteIntent)
                             .setContentIntent(openPendingIntent);
                     nm.notify(NOT_COINS_RECEIVED, mBuilder.build());
@@ -366,8 +366,8 @@ public class helixWalletService extends Service{
             wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, lockName);
             nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             broadcastManager = LocalBroadcastManager.getInstance(this);
-            helixApplication = helixApplication.getInstance();
-            module = (helixModuleImp) helixApplication.getModule();
+            HelixApplication = HelixApplication.getInstance();
+            module = (HelixModuleImp) HelixApplication.getModule();
             blockchainManager = module.getBlockchainManager();
 
             // Schedule service
@@ -378,11 +378,11 @@ public class helixWalletService extends Service{
             peerConnectivityListener = new PeerConnectivityListener();
 
             File file = getDir("blockstore_v2",MODE_PRIVATE);
-            String filename = helixContext.Files.BLOCKCHAIN_FILENAME;
+            String filename = HelixContext.Files.BLOCKCHAIN_FILENAME;
             boolean fileExists = new File(file,filename).exists();
 
-            org.helixj.core.Context.propagate(helixContext.CONTEXT);
-            blockchainStore = new SnappyBlockchainStore(helixContext.CONTEXT,file,filename);
+            org.helixj.core.Context.propagate(HelixContext.CONTEXT);
+            blockchainStore = new SnappyBlockchainStore(HelixContext.CONTEXT,file,filename);
             blockchainManager.init(
                     blockchainStore,
                     file,
@@ -471,8 +471,8 @@ public class helixWalletService extends Service{
             }*/
             blockchainManager.destroy(resetBlockchainOnShutdown);
 
-            /*if (helixPeergroup.isRunning()) {
-                helixPeergroup.shutdown();
+            /*if (HelixPeergroup.isRunning()) {
+                HelixPeergroup.shutdown();
             }*/
 
             if (wakeLock.isHeld()) {
@@ -500,7 +500,7 @@ public class helixWalletService extends Service{
             // long scheduleTime = System.currentTimeMillis() + 1000 * 15; //(1000 * 60 * 60);
             long scheduleTime = System.currentTimeMillis();
 
-            Intent intent = new Intent(this, helixWalletService.class);
+            Intent intent = new Intent(this, HelixWalletService.class);
             intent.setAction(ACTION_SCHEDULE_SERVICE);
             alarm.set(
                     // This alarm will wake up the device when System.currentTimeMillis()
@@ -575,7 +575,7 @@ public class helixWalletService extends Service{
                                         (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ?
                                                 getResources().getColor(R.color.bgGreen,null)
                                                 :
-                                                ContextCompat.getColor(helixWalletService.this,R.color.bgGreen))
+                                                ContextCompat.getColor(HelixWalletService.this,R.color.bgGreen))
                         ;
 
                 nm.notify(NOT_BLOCKCHAIN_ALERT, mBuilder.build());

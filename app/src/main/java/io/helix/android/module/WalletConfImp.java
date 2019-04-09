@@ -8,14 +8,14 @@ import org.helixj.core.NetworkParameters;
 import global.WalletConfiguration;
 import io.helix.android.utils.Configurations;
 
-import static io.helix.android.module.helixContext.CONTEXT;
-import static io.helix.android.module.helixContext.Files.BLOCKCHAIN_FILENAME;
-import static io.helix.android.module.helixContext.Files.CHECKPOINTS_FILENAME;
-import static io.helix.android.module.helixContext.Files.WALLET_FILENAME_PROTOBUF;
-import static io.helix.android.module.helixContext.Files.WALLET_KEY_BACKUP_PROTOBUF;
-import static io.helix.android.module.helixContext.NETWORK_PARAMETERS;
-import static io.helix.android.module.helixContext.PEER_DISCOVERY_TIMEOUT_MS;
-import static io.helix.android.module.helixContext.PEER_TIMEOUT_MS;
+import static io.helix.android.module.HelixContext.CONTEXT;
+import static io.helix.android.module.HelixContext.Files.BLOCKCHAIN_FILENAME;
+import static io.helix.android.module.HelixContext.Files.CHECKPOINTS_FILENAME;
+import static io.helix.android.module.HelixContext.Files.WALLET_FILENAME_PROTOBUF;
+import static io.helix.android.module.HelixContext.Files.WALLET_KEY_BACKUP_PROTOBUF;
+import static io.helix.android.module.HelixContext.NETWORK_PARAMETERS;
+import static io.helix.android.module.HelixContext.PEER_DISCOVERY_TIMEOUT_MS;
+import static io.helix.android.module.HelixContext.PEER_TIMEOUT_MS;
 
 /**
  * Created by furszy on 6/4/17.
@@ -61,12 +61,12 @@ public class WalletConfImp extends Configurations implements WalletConfiguration
 
     @Override
     public int getTrustedNodePort() {
-        return helixContext.NETWORK_PARAMETERS.getPort();
+        return HelixContext.NETWORK_PARAMETERS.getPort();
     }
 
     @Override
     public String getMnemonicFilename() {
-        return helixContext.Files.BIP39_WORDLIST_FILENAME;
+        return HelixContext.Files.BIP39_WORDLIST_FILENAME;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class WalletConfImp extends Configurations implements WalletConfiguration
 
     @Override
     public NetworkParameters getNetworkParams() {
-        return helixContext.NETWORK_PARAMETERS;
+        return HelixContext.NETWORK_PARAMETERS;
     }
 
     @Override
@@ -86,7 +86,7 @@ public class WalletConfImp extends Configurations implements WalletConfiguration
 
     @Override
     public long getWalletAutosaveDelayMs() {
-        return helixContext.Files.WALLET_AUTOSAVE_DELAY_MS;
+        return HelixContext.Files.WALLET_AUTOSAVE_DELAY_MS;
     }
 
     @Override
@@ -116,17 +116,17 @@ public class WalletConfImp extends Configurations implements WalletConfiguration
 
     @Override
     public int getMinMemoryNeeded() {
-        return helixContext.MEMORY_CLASS_LOWEND;
+        return HelixContext.MEMORY_CLASS_LOWEND;
     }
 
     @Override
     public long getBackupMaxChars() {
-        return helixContext.BACKUP_MAX_CHARS;
+        return HelixContext.BACKUP_MAX_CHARS;
     }
 
     @Override
     public boolean isTest() {
-        return helixContext.IS_TEST;
+        return HelixContext.IS_TEST;
     }
 
     @Override

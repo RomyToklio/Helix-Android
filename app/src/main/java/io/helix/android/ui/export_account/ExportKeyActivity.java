@@ -16,7 +16,7 @@ import com.google.zxing.WriterException;
 import org.helixj.crypto.DeterministicKey;
 
 import io.helix.android.R;
-import io.helix.android.module.helixContext;
+import io.helix.android.module.HelixContext;
 import io.helix.android.ui.base.BaseActivity;
 import io.helix.android.utils.AndroidUtils;
 import io.helix.android.utils.CrashReporter;
@@ -52,15 +52,15 @@ public class ExportKeyActivity extends BaseActivity implements View.OnClickListe
             initValues();
         }catch (Exception e){
             e.printStackTrace();
-            CrashReporter.saveBackgroundTrace(e,helixApplication.getPackageInfo());
+            CrashReporter.saveBackgroundTrace(e,HelixApplication.getPackageInfo());
             Toast.makeText(this,R.string.unknown_error_message,Toast.LENGTH_LONG).show();
             onBackPressed();
         }
     }
 
     private void initValues() throws WriterException {
-        DeterministicKey deterministicKey = helixModule.getWatchingKey();
-        xpubKey = deterministicKey.serializePubB58(helixContext.NETWORK_PARAMETERS);
+        DeterministicKey deterministicKey = HelixModule.getWatchingKey();
+        xpubKey = deterministicKey.serializePubB58(HelixContext.NETWORK_PARAMETERS);
         txt_title.setText(R.string.public_key);
         txt_key.setText(xpubKey);
         txt_key.setOnClickListener(this);

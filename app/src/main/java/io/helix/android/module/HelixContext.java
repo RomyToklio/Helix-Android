@@ -14,7 +14,7 @@ import java.io.File;
  * Created by furszy on 6/4/17.
  */
 
-public class helixContext {
+public class HelixContext {
 
     public static final boolean IS_TEST = false;
     public static final NetworkParameters NETWORK_PARAMETERS = IS_TEST? TestNet3Params.get():MainNetParams.get();

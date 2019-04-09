@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import io.helix.android.R;
-import io.helix.android.module.helixContext;
+import io.helix.android.module.HelixContext;
 import io.helix.android.ui.base.BaseActivity;
 import io.helix.android.ui.base.dialogs.DialogListener;
 import io.helix.android.ui.base.dialogs.SimpleTextDialog;
@@ -114,7 +114,7 @@ public class RestoreActivity extends BaseActivity {
             @Override
             public View getDropDownView(int position, View row, ViewGroup parent) {
                 final File file = getItem(position);
-                final boolean isExternal = helixContext.Files.EXTERNAL_WALLET_BACKUP_DIR.equals(file.getParentFile());
+                final boolean isExternal = HelixContext.Files.EXTERNAL_WALLET_BACKUP_DIR.equals(file.getParentFile());
                 final boolean isEncrypted = Crypto.OPENSSL_FILE_FILTER.accept(file);
 
                 if (row == null)
@@ -140,8 +140,8 @@ public class RestoreActivity extends BaseActivity {
             }
         };
         final String path;
-        final String backupPath = helixContext.Files.EXTERNAL_WALLET_BACKUP_DIR.getAbsolutePath();
-        final String storagePath = helixContext.Files.EXTERNAL_STORAGE_DIR.getAbsolutePath();
+        final String backupPath = HelixContext.Files.EXTERNAL_WALLET_BACKUP_DIR.getAbsolutePath();
+        final String storagePath = HelixContext.Files.EXTERNAL_STORAGE_DIR.getAbsolutePath();
         if (backupPath.startsWith(storagePath))
             path = backupPath.substring(storagePath.length());
         else
@@ -169,16 +169,16 @@ public class RestoreActivity extends BaseActivity {
                 @Override
                 public void run() {
                     try {
-                        org.helixj.core.Context.propagate(helixContext.CONTEXT);
+                        org.helixj.core.Context.propagate(HelixContext.CONTEXT);
                         File file = (File) spinnerFiles.getSelectedItem();
                         if (WalletUtils.BACKUP_FILE_FILTER.accept(file)) {
-                            helixModule.restoreWallet(file);
+                            HelixModule.restoreWallet(file);
                             showRestoreSucced();
                         } else if (KEYS_FILE_FILTER.accept(file)) {
                             //module.restorePrivateKeysFromBase58(file);
                         } else if (Crypto.OPENSSL_FILE_FILTER.accept(file)) {
                             try {
-                                helixModule.restoreWalletFromEncrypted(file, password);
+                                HelixModule.restoreWalletFromEncrypted(file, password);
                                 showRestoreSucced();
                             } catch (final CantRestoreEncryptedWallet x) {
                                 runOnUiThread(new Runnable() {
@@ -266,13 +266,13 @@ public class RestoreActivity extends BaseActivity {
                     }
                 });
                 simpleTextDialog.show(getFragmentManager(),getResources().getString(R.string.restore_dialog_tag));
-                helixApplication.getAppConf().setHasBackup(true);
+                HelixApplication.getAppConf().setHasBackup(true);
 
                 if (!jumpToWizard) {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            helixApplication.starthelixService();
+                            HelixApplication.starthelixService();
                         }
                     }, TimeUnit.SECONDS.toMillis(5));
                 }
@@ -285,8 +285,8 @@ public class RestoreActivity extends BaseActivity {
         files.clear();
 
         // external storage
-        if (helixContext.Files.EXTERNAL_WALLET_BACKUP_DIR.exists() && helixContext.Files.EXTERNAL_WALLET_BACKUP_DIR.isDirectory()) {
-            File[] fileArray = helixContext.Files.EXTERNAL_WALLET_BACKUP_DIR.listFiles();
+        if (HelixContext.Files.EXTERNAL_WALLET_BACKUP_DIR.exists() && HelixContext.Files.EXTERNAL_WALLET_BACKUP_DIR.isDirectory()) {
+            File[] fileArray = HelixContext.Files.EXTERNAL_WALLET_BACKUP_DIR.listFiles();
             if (fileArray!=null) {
                 for (final File file : fileArray)
                     if (Crypto.OPENSSL_FILE_FILTER.accept(file))
@@ -295,7 +295,7 @@ public class RestoreActivity extends BaseActivity {
         }
         // internal storage
         for (final String filename : fileList())
-            if (filename.startsWith(helixContext.Files.WALLET_KEY_BACKUP_PROTOBUF + '.'))
+            if (filename.startsWith(HelixContext.Files.WALLET_KEY_BACKUP_PROTOBUF + '.'))
                 files.add(new File(getFilesDir(), filename));
 
         // sort
@@ -379,7 +379,7 @@ public class RestoreActivity extends BaseActivity {
             try {
                 if (file==null)return false;
                 reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), Charsets.UTF_8));
-                WalletUtils.readKeys(reader, helixContext.NETWORK_PARAMETERS,helixContext.BACKUP_MAX_CHARS);
+                WalletUtils.readKeys(reader, HelixContext.NETWORK_PARAMETERS,HelixContext.BACKUP_MAX_CHARS);
                 return true;
             } catch (final IOException x) {
                 return false;

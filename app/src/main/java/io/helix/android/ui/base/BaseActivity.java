@@ -17,7 +17,7 @@ import io.helix.android.R;
  * Created by mati on 18/04/17.
  */
 
-public abstract class BaseActivity extends helixActivity {
+public abstract class BaseActivity extends HelixActivity {
 
     protected Toolbar toolbar;
     protected FrameLayout childContainer;

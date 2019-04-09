@@ -4,14 +4,14 @@ package helixmore;
  * Created by furszy on 6/13/17.
  */
 
-public class helixPeerData {
+public class HelixPeerData {
 
     private String host;
     private int tcpPort;
     private int sslPort;
     private long prunningLimit;
 
-    public helixPeerData(String host, int tcpPort, int sslPort) {
+    public HelixPeerData(String host, int tcpPort, int sslPort) {
         this.host = host;
         this.tcpPort = tcpPort;
         this.sslPort = sslPort;
@@ -31,8 +31,8 @@ public class helixPeerData {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof helixPeerData)) return false;
-        helixPeerData other = (helixPeerData) o;
+        if (!(o instanceof HelixPeerData)) return false;
+        HelixPeerData other = (HelixPeerData) o;
         if (!this.host.equals(other.getHost())){
             return false;
         }
@@ -44,7 +44,7 @@ public class helixPeerData {
 
     @Override
     public String toString() {
-        return "helixPeerData{" +
+        return "HelixPeerData{" +
                 "host='" + host + '\'' +
                 ", tcpPort=" + tcpPort +
                 ", sslPort=" + sslPort +

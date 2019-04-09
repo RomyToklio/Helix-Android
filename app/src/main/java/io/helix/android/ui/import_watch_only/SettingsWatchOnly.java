@@ -14,7 +14,7 @@ import org.helixj.wallet.DeterministicKeyChain;
 import java.io.IOException;
 
 import io.helix.android.R;
-import io.helix.android.module.helixContext;
+import io.helix.android.module.HelixContext;
 import io.helix.android.ui.base.BaseActivity;
 import io.helix.android.ui.base.dialogs.DialogListener;
 import io.helix.android.ui.base.dialogs.SimpleTextDialog;
@@ -48,7 +48,7 @@ public class SettingsWatchOnly extends BaseActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    org.helixj.core.Context.propagate(helixContext.CONTEXT);
+                    org.helixj.core.Context.propagate(HelixContext.CONTEXT);
                     importXpub();
                 }catch (Exception e){
                     e.printStackTrace();
@@ -64,9 +64,9 @@ public class SettingsWatchOnly extends BaseActivity {
         boolean isBip32 = check_bip32.isChecked();
         if (xpub.length()>0){
             try {
-                helixModule.watchOnlyMode(
+                HelixModule.watchOnlyMode(
                         xpub,
-                        isBip32 ? DeterministicKeyChain.KeyChainType.BIP32: DeterministicKeyChain.KeyChainType.BIP44_helix_ONLY
+                        isBip32 ? DeterministicKeyChain.KeyChainType.BIP32: DeterministicKeyChain.KeyChainType.BIP44_PHORE_ONLY
                 );
                 SimpleTextDialog simpleTextDialog = DialogsUtil.buildSimpleTextDialog(
                         this,

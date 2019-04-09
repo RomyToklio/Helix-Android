@@ -61,12 +61,12 @@ import helixmore.utility.TxHashHeightWrapper;
  * todo: create batch message builder and bathMessage
  */
 
-public class helixPeer implements IoHandler{
+public class HelixPeer implements IoHandler{
 
     private final Logger log;
 
     /** Peer data */
-    private helixPeerData peerData;
+    private HelixPeerData peerData;
     /**  */
     private IoManager ioManager;
     /** Session connection id */
@@ -86,11 +86,11 @@ public class helixPeer implements IoHandler{
     private CopyOnWriteArrayList<PeerListener> peerListeners = new CopyOnWriteArrayList<>();
     private CopyOnWriteArrayList<PeerDataListener> peerDataListeners = new CopyOnWriteArrayList<>();
 
-    public helixPeer(helixPeerData peerData,IoManager ioManager,VersionMsg versionMsg) {
+    public HelixPeer(HelixPeerData peerData,IoManager ioManager,VersionMsg versionMsg) {
         this.peerData = peerData;
         this.ioManager = ioManager;
         this.versionMsg = versionMsg;
-        this.log = LoggerFactory.getLogger(helixPeer.class.getName()+"-"+peerData.getHost());
+        this.log = LoggerFactory.getLogger(HelixPeer.class.getName()+"-"+peerData.getHost());
     }
 
     public void addPeerListener(PeerListener peerListener){
@@ -119,7 +119,7 @@ public class helixPeer implements IoHandler{
                 throw new ConnectionFailureException(future.getException());
             }*/
         }else {
-            throw new IllegalStateException("helixPeer already initializing");
+            throw new IllegalStateException("HelixPeer already initializing");
         }
     }
 
@@ -492,7 +492,7 @@ public class helixPeer implements IoHandler{
         log.error("input closed session id:"+ioSession.getId());
     }
 
-    public helixPeerData getPeerData() {
+    public HelixPeerData getPeerData() {
         return peerData;
     }
 

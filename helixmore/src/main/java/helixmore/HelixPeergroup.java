@@ -38,9 +38,9 @@ import wallet.WalletManager;
  * todo: para el look-a-head del bip 32 tengo que estar observando addresses de la account que compartí, 10 addresses despues de la última marcada(vista en la blockhain).
  */
 
-public class helixPeergroup implements PeerListener, PeerDataListener {
+public class HelixPeergroup implements PeerListener, PeerDataListener {
 
-    private static final Logger log = LoggerFactory.getLogger(helixPeergroup.class);
+    private static final Logger log = LoggerFactory.getLogger(HelixPeergroup.class);
 
     /**
      * Default number of connections
@@ -52,11 +52,11 @@ public class helixPeergroup implements PeerListener, PeerDataListener {
     /** Connection manager */
     private IoManager ioManager;
     /** Trusted peer */
-    private helixPeer trustedPeer;
+    private HelixPeer trustedPeer;
     // Currently active peers.
-    private final CopyOnWriteArrayList<helixPeer> peers;
+    private final CopyOnWriteArrayList<HelixPeer> peers;
     // Currently connecting peers.
-    private final CopyOnWriteArrayList<helixPeer> pendingPeers;
+    private final CopyOnWriteArrayList<HelixPeer> pendingPeers;
     // The version message to use for new connections
     private VersionMsg versionMsg;
     // How many connections we want to have open at the current time. If we lose connections, we'll try opening more
@@ -82,7 +82,7 @@ public class helixPeergroup implements PeerListener, PeerDataListener {
     private CopyOnWriteArrayList<AddressListener> addressListeners = new CopyOnWriteArrayList<>();
     private CopyOnWriteArrayList<PeerListener> peerConnectionListeners = new CopyOnWriteArrayList<>();
 
-    public helixPeergroup(NetworkConf networkConf, WalletManager walletManager, AddressStore addressStore) throws IOException {
+    public HelixPeergroup(NetworkConf networkConf, WalletManager walletManager, AddressStore addressStore) throws IOException {
         this.peers = new CopyOnWriteArrayList<>();
         this.pendingPeers = new CopyOnWriteArrayList<>();
         this.networkConf = networkConf;
@@ -93,7 +93,7 @@ public class helixPeergroup implements PeerListener, PeerDataListener {
         versionMsg = new VersionMsg(networkConf.getClientName(),networkConf.getMaxProtocolVersion(),networkConf.getMinProtocolVersion());
     }
 
-    public helixPeergroup(NetworkConf networkConf) throws IOException {
+    public HelixPeergroup(NetworkConf networkConf) throws IOException {
         this.peers = new CopyOnWriteArrayList<>();
         this.pendingPeers = new CopyOnWriteArrayList<>();
         this.networkConf = networkConf;
@@ -129,13 +129,13 @@ public class helixPeergroup implements PeerListener, PeerDataListener {
      */
     public synchronized void start() throws InterruptedException, ConnectionFailureException {
         try {
-            log.info("Starting helixPeergroup");
+            log.info("Starting HelixPeergroup");
             isActive = true;
             // todo: first part discovery..
             /*
             * Connect to the trusted node and get servers from it.
             */
-            trustedPeer = new helixPeer(networkConf.getTrustedServer(), ioManager,versionMsg);
+            trustedPeer = new HelixPeer(networkConf.getTrustedServer(), ioManager,versionMsg);
             trustedPeer.addPeerListener(this);
             trustedPeer.addPeerDataListener(this);
             trustedPeer.connect();
@@ -143,7 +143,7 @@ public class helixPeergroup implements PeerListener, PeerDataListener {
         }catch (Exception e){
             isRunning = false;
             isActive = false;
-            log.error("helixPeerGroup start",e);
+            log.error("HelixPeerGroup start",e);
             throw e;
         }
     }
@@ -155,7 +155,7 @@ public class helixPeergroup implements PeerListener, PeerDataListener {
 
 
     @Override
-    public void onConnected(helixPeer helixmorePeer) {
+    public void onConnected(HelixPeer helixmorePeer) {
         try {
             if (helixmorePeer == trustedPeer) {
                 log.info("trusted peer connected");
@@ -178,8 +178,8 @@ public class helixPeergroup implements PeerListener, PeerDataListener {
 
                 // connect to non trusted peers
                 for (InetSocketAddress inetSocketAddress : networkConf.getNetworkServers()) {
-                    helixPeerData peerData = new helixPeerData(inetSocketAddress.getHostName(),inetSocketAddress.getPort(),0);
-                    helixPeer peer = new helixPeer(peerData,ioManager,versionMsg);
+                    HelixPeerData peerData = new HelixPeerData(inetSocketAddress.getHostName(),inetSocketAddress.getPort(),0);
+                    HelixPeer peer = new HelixPeer(peerData,ioManager,versionMsg);
                     peer.addPeerListener(this);
                     peer.addPeerDataListener(this);
                     pendingPeers.add(peer);
@@ -196,12 +196,12 @@ public class helixPeergroup implements PeerListener, PeerDataListener {
     }
 
     @Override
-    public void onDisconnected(helixPeer helixmorePeer) {
+    public void onDisconnected(HelixPeer helixmorePeer) {
 
     }
 
     @Override
-    public void onExceptionCaught(helixPeer helixmorePeer, Exception e) {
+    public void onExceptionCaught(HelixPeer helixmorePeer, Exception e) {
         if (e instanceof InvalidPeerVersion){
             if (helixmorePeer == trustedPeer){
                 // We are fuck. Invalid trusted peer version..
@@ -214,7 +214,7 @@ public class helixPeergroup implements PeerListener, PeerDataListener {
     }
 
     @Override
-    public void onSubscribedAddressChange(helixPeer helixmorePeer, String address, String status) {
+    public void onSubscribedAddressChange(HelixPeer helixmorePeer, String address, String status) {
         try {
             if (status==null)return;
             AddressBalance statusDb = null;
@@ -240,11 +240,11 @@ public class helixPeergroup implements PeerListener, PeerDataListener {
                 trustedPeer.getHistory(address);
                 // todo: mejorar esto con request en batch -> simplificaria la cantidad de request a la mitad.
                 // request status to other peers - 4 max
-                for (helixPeer peer : peers) {
+                for (HelixPeer peer : peers) {
                     peer.getHistory(address);
                 }
                 // request balance to other peers - 4 max
-                for (helixPeer peer : peers) {
+                for (HelixPeer peer : peers) {
                     peer.getBalance(address);
                 }
             }
@@ -255,7 +255,7 @@ public class helixPeergroup implements PeerListener, PeerDataListener {
     }
 
     @Override
-    public void onListUnpent(helixPeer helixmorePeer,String address, List<Unspent> unspents) {
+    public void onListUnpent(HelixPeer helixmorePeer,String address, List<Unspent> unspents) {
         log.info("onListUnspent: "+address);
         // now i should check this unspent tx requesting the merkle root.
 
@@ -287,7 +287,7 @@ public class helixPeergroup implements PeerListener, PeerDataListener {
     }
 
     @Override
-    public void onBalanceReceive(helixPeer helixmorePeer, String address, long confirmed, long unconfirmed) {
+    public void onBalanceReceive(HelixPeer helixmorePeer, String address, long confirmed, long unconfirmed) {
         try {
             if (helixmorePeer == trustedPeer) {
                 AddressBalance addressBalance = addressStore.getAddressStatus(address);
@@ -321,7 +321,7 @@ public class helixPeergroup implements PeerListener, PeerDataListener {
     }
 
     @Override
-    public void onGetHistory(helixPeer helixmorePeer, StatusHistory statusHistory) {
+    public void onGetHistory(HelixPeer helixmorePeer, StatusHistory statusHistory) {
         try {
             log.info("onGetHistory, address: "+statusHistory.getAddress()+", status: "+statusHistory.getStatus());
             AddressBalance addressBalance = addressStore.getAddressStatus(statusHistory.getAddress());

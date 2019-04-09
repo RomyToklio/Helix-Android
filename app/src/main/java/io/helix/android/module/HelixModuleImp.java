@@ -42,11 +42,11 @@ import java.util.concurrent.TimeoutException;
 import chain.BlockchainManager;
 import global.ContextWrapper;
 import global.WalletConfiguration;
-import helixmore.helixPeergroup;
+import helixmore.HelixPeergroup;
 import io.helix.android.contacts.AddressLabel;
 import io.helix.android.contacts.ContactsStore;
 import io.helix.android.module.wallet.WalletBackupHelper;
-import io.helix.android.rate.db.helixRate;
+import io.helix.android.rate.db.HelixRate;
 import io.helix.android.rate.db.RateDb;
 import io.helix.android.ui.transaction_send_activity.custom.inputs.InputWrapper;
 import io.helix.android.ui.wallet_activity.TransactionWrapper;
@@ -59,15 +59,15 @@ import wallet.WalletManager;
  * Created by mati on 18/04/17.
  */
 
-public class helixModuleImp implements helixModule {
+public class HelixModuleImp implements HelixModule {
 
-    private static final Logger logger = LoggerFactory.getLogger(helixModuleImp.class);
+    private static final Logger logger = LoggerFactory.getLogger(HelixModuleImp.class);
 
     private ContextWrapper context;
     private WalletConfiguration walletConfiguration;
     private WalletManager walletManager;
     private BlockchainManager blockchainManager;
-    private helixPeergroup peergroup;
+    private HelixPeergroup peergroup;
     private ContactsStore contactsStore;
     private RateDb rateDb;
 
@@ -75,7 +75,7 @@ public class helixModuleImp implements helixModule {
     private long availableBalance = 0;
     private BigDecimal hlixInUsdHardcoded = new BigDecimal("1.5");
 
-    public helixModuleImp(ContextWrapper contextWrapper, WalletConfiguration walletConfiguration,ContactsStore contactsStore,RateDb rateDb) {
+    public HelixModuleImp(ContextWrapper contextWrapper, WalletConfiguration walletConfiguration,ContactsStore contactsStore,RateDb rateDb) {
         this.context = contextWrapper;
         this.walletConfiguration = walletConfiguration;
         this.contactsStore = contactsStore;
@@ -433,7 +433,7 @@ public class helixModuleImp implements helixModule {
         walletManager.removeTransactionConfidenceChange(transactionConfidenceEventListener);
     }
 
-    public helixRate getRate(String coin) {
+    public HelixRate getRate(String coin) {
         return rateDb.getRate(coin);
     }
 
@@ -605,12 +605,12 @@ public class helixModuleImp implements helixModule {
     }
 
     @Override
-    public List<helixRate> listRates() {
+    public List<HelixRate> listRates() {
         return rateDb.list();
     }
 
 
-    public void saveRate(helixRate helixRate){
-        rateDb.insertOrUpdateIfExist(helixRate);
+    public void saveRate(HelixRate HelixRate){
+        rateDb.insertOrUpdateIfExist(HelixRate);
     }
 }

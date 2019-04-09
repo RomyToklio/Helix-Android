@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import io.helix.android.rate.db.helixRate;
+import io.helix.android.rate.db.HelixRate;
 
 /**
  * Created by furszy on 7/5/17.
@@ -46,7 +46,7 @@ public class CoinMarketCapApiClient {
         }
     }
 
-    public helixMarket gethelixPrice() throws RequesthelixRateException {
+    public helixMarket gethelixPrice() throws RequestHelixRateException {
         try {
             helixMarket helixMarket = null;
             String url = this.URL + "ticker/helix/";
@@ -70,13 +70,13 @@ public class CoinMarketCapApiClient {
             return helixMarket;
         } catch (ClientProtocolException e) {
             e.printStackTrace();
-            throw new RequesthelixRateException(e);
+            throw new RequestHelixRateException(e);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RequesthelixRateException(e);
+            throw new RequestHelixRateException(e);
         } catch (JSONException e) {
             e.printStackTrace();
-            throw new RequesthelixRateException(e);
+            throw new RequestHelixRateException(e);
         }
     }
 
@@ -115,9 +115,9 @@ public class CoinMarketCapApiClient {
         /**
          * {"code":"BTC","name":"Bitcoin","rate":1}
          * @return
-         * @throws RequesthelixRateException
+         * @throws RequestHelixRateException
          */
-        public <T> List<T> getRates(RatesConvertor<T> ratesConvertor) throws RequesthelixRateException{
+        public <T> List<T> getRates(RatesConvertor<T> ratesConvertor) throws RequestHelixRateException{
             try {
                 HttpResponse httpResponse = get(URL);
                 // receive response as inputStream
@@ -139,13 +139,13 @@ public class CoinMarketCapApiClient {
                 return ret;
             } catch (ClientProtocolException e) {
                 e.printStackTrace();
-                throw new RequesthelixRateException(e);
+                throw new RequestHelixRateException(e);
             } catch (IOException e) {
                 e.printStackTrace();
-                throw new RequesthelixRateException(e);
+                throw new RequestHelixRateException(e);
             } catch (JSONException e) {
                 e.printStackTrace();
-                throw new RequesthelixRateException(e);
+                throw new RequestHelixRateException(e);
             }
         }
 

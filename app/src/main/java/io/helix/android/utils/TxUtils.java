@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Collection;
 
 import io.helix.android.contacts.AddressLabel;
-import io.helix.android.module.helixModule;
+import io.helix.android.module.HelixModule;
 import io.helix.android.ui.wallet_activity.TransactionWrapper;
 
 /**
@@ -18,7 +18,7 @@ public class TxUtils {
 
     private static Logger logger = LoggerFactory.getLogger(TxUtils.class);
 
-    public static String getAddressOrContact(helixModule helixModule, TransactionWrapper data) {
+    public static String getAddressOrContact(HelixModule HelixModule, TransactionWrapper data) {
         String text;
         if (data.getOutputLabels()!=null && !data.getOutputLabels().isEmpty()){
             Collection<AddressLabel> addressLabels = data.getOutputLabels().values();
@@ -30,9 +30,9 @@ public class TxUtils {
                     text = addressLabel.getAddresses().get(0);
             }else {
                 try {
-                    text = data.getTransaction().getOutput(0).getScriptPubKey().getToAddress(helixModule.getConf().getNetworkParams(), true).toBase58();
+                    text = data.getTransaction().getOutput(0).getScriptPubKey().getToAddress(HelixModule.getConf().getNetworkParams(), true).toBase58();
                 }catch (ScriptException e){
-                    text = data.getTransaction().getOutput(1).getScriptPubKey().getToAddress(helixModule.getConf().getNetworkParams(),true).toBase58();
+                    text = data.getTransaction().getOutput(1).getScriptPubKey().getToAddress(HelixModule.getConf().getNetworkParams(),true).toBase58();
                 }
             }
         }else {

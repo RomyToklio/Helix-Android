@@ -20,7 +20,7 @@ import java.io.File;
 import java.io.IOException;
 
 import io.helix.android.R;
-import io.helix.android.module.helixContext;
+import io.helix.android.module.HelixContext;
 import io.helix.android.module.wallet.WalletBackupHelper;
 import io.helix.android.ui.backup_mnemonic_activity.MnemonicActivity;
 import io.helix.android.ui.base.BaseActivity;
@@ -66,7 +66,7 @@ public class SettingsBackupActivity extends BaseActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                org.helixj.core.Context.propagate(helixContext.CONTEXT);
+                org.helixj.core.Context.propagate(HelixContext.CONTEXT);
                 backup();
                 runOnUiThread(new Runnable() {
                     @Override
@@ -90,7 +90,7 @@ public class SettingsBackupActivity extends BaseActivity {
 
         switch (item.getItemId()) {
             case 0:
-                if (helixModule.isWalletWatchOnly()){
+                if (HelixModule.isWalletWatchOnly()){
                     Toast.makeText(this,R.string.error_watch_only_mode,Toast.LENGTH_SHORT).show();
                     return true;
                 }
@@ -113,10 +113,10 @@ public class SettingsBackupActivity extends BaseActivity {
                 return;
             }
             File backupFile = new WalletBackupHelper().determineBackupFile(null);
-            boolean result = helixModule.backupWallet(backupFile, firstPassword);
+            boolean result = HelixModule.backupWallet(backupFile, firstPassword);
 
             if (result){
-                helixApplication.getAppConf().setHasBackup(true);
+                HelixApplication.getAppConf().setHasBackup(true);
                 showSuccedBackupDialog(backupFile.getAbsolutePath());
             }else {
                 backupRes = R.string.backup_fail;

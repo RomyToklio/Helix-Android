@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import global.helixGlobalData;
-import helixmore.helixPeer;
-import helixmore.helixPeerData;
+import global.HelixGlobalData;
+import helixmore.HelixPeer;
+import helixmore.HelixPeerData;
 import io.helix.android.R;
 import io.helix.android.ui.base.BaseActivity;
 import io.helix.android.ui.pincode_activity.PincodeActivity;
@@ -40,7 +40,7 @@ public class StartNodeActivity extends BaseActivity {
     private ArrayAdapter<String> adapter;
     private List<String> hosts = new ArrayList<>();
 
-    private static final List<helixPeerData> trustedNodes = helixGlobalData.listTrustedHosts();
+    private static final List<HelixPeerData> trustedNodes = HelixGlobalData.listTrustedHosts();
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
@@ -56,13 +56,13 @@ public class StartNodeActivity extends BaseActivity {
             public void onClick(View view) {
                 DialogBuilder dialogBuilder = DialogsUtil.buildtrustedNodeDialog(StartNodeActivity.this, new DialogsUtil.TrustedNodeDialogListener() {
                     @Override
-                    public void onNodeSelected(helixPeerData helixPeerData) {
-                        if(!trustedNodes.contains(helixPeerData)) {
+                    public void onNodeSelected(HelixPeerData HelixPeerData) {
+                        if(!trustedNodes.contains(HelixPeerData)) {
                             dropdown.setAdapter(null);
                             adapter.clear();
                             hosts = new ArrayList<String>();
-                            trustedNodes.add(helixPeerData);
-                            for (helixPeerData trustedNode : trustedNodes) {
+                            trustedNodes.add(HelixPeerData);
+                            for (HelixPeerData trustedNode : trustedNodes) {
                                 hosts.add(trustedNode.getHost());
                             }
                             adapter.addAll(hosts);
@@ -82,17 +82,17 @@ public class StartNodeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 int selected = dropdown.getSelectedItemPosition();
-                helixPeerData selectedNode = trustedNodes.get(selected);
-                boolean isStarted = helixApplication.getAppConf().getTrustedNode()!=null;
-                helixApplication.setTrustedServer(selectedNode);
+                HelixPeerData selectedNode = trustedNodes.get(selected);
+                boolean isStarted = HelixApplication.getAppConf().getTrustedNode()!=null;
+                HelixApplication.setTrustedServer(selectedNode);
 
                 if (isStarted){
-                    helixApplication.stopBlockchain();
+                    HelixApplication.stopBlockchain();
                     // now that everything is good, start the service
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            helixApplication.starthelixService();
+                            HelixApplication.starthelixService();
                         }
                     }, TimeUnit.SECONDS.toMillis(5));
                 }
@@ -104,14 +104,14 @@ public class StartNodeActivity extends BaseActivity {
         dropdown = (Spinner)findViewById(R.id.spinner);
 
         // add connected node if it's not on the list
-        helixPeerData helixPeer = helixApplication.getAppConf().getTrustedNode();
-        trustedNodes.add(helixPeer);
+        HelixPeerData HelixPeer = HelixApplication.getAppConf().getTrustedNode();
+        trustedNodes.add(HelixPeer);
 
         int selectionPos = 0;
 
         for (int i=0;i<trustedNodes.size();i++){
-            helixPeerData trustedNode = trustedNodes.get(i);
-            if (helixPeer!=null && helixPeer.getHost().equals(trustedNode)){
+            HelixPeerData trustedNode = trustedNodes.get(i);
+            if (HelixPeer!=null && HelixPeer.getHost().equals(trustedNode)){
                 selectionPos = i;
             }
             hosts.add(trustedNode.getHost());
@@ -140,7 +140,7 @@ public class StartNodeActivity extends BaseActivity {
 
     private void goNext() {
         Class clazz = null;
-        if (helixApplication.getAppConf().getPincode()==null){
+        if (HelixApplication.getAppConf().getPincode()==null){
             clazz = PincodeActivity.class;
         }else {
             clazz = WalletActivity.class;

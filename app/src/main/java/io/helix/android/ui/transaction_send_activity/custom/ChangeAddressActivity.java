@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.helixj.core.AddressFormatException;
-import org.helixj.uri.helixURI;
+import org.helixj.uri.HelixURI;
 
 import io.helix.android.R;
 import io.helix.android.ui.base.BaseActivity;
@@ -154,10 +154,10 @@ public class ChangeAddressActivity extends BaseActivity {
                     String address = "";
                     address = data.getStringExtra(INTENT_EXTRA_RESULT);
                     String usedAddress;
-                    if (helixModule.chechAddress(address)){
+                    if (HelixModule.chechAddress(address)){
                         usedAddress = address;
                     }else {
-                        helixURI helixUri = new helixURI(address);
+                        HelixURI helixUri = new HelixURI(address);
                         usedAddress = helixUri.getAddress().toBase58();
                     }
                     edit_address.setText(usedAddress);
@@ -171,7 +171,7 @@ public class ChangeAddressActivity extends BaseActivity {
 
     public String getAndCheckAddress() {
         String address = edit_address.getText().toString();
-        if (!helixModule.chechAddress(address)){
+        if (!HelixModule.chechAddress(address)){
             throw new AddressFormatException();
         }
         return address;

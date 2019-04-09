@@ -30,7 +30,7 @@ public class StartActivity extends BaseActivity {
         buttonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                helixModule.createWallet();
+                HelixModule.createWallet();
                 startActivity(new Intent(v.getContext(), PincodeActivity.class));
                 finish();
             }

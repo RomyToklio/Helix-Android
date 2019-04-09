@@ -2,9 +2,9 @@ package io.helix.android.utils;
 
 import android.content.SharedPreferences;
 
-import helixmore.helixPeerData;
+import helixmore.HelixPeerData;
 
-import static io.helix.android.module.helixContext.DEFAULT_RATE_COIN;
+import static io.helix.android.module.HelixContext.DEFAULT_RATE_COIN;
 
 /**
  * Created by furszy on 6/8/17.
@@ -46,17 +46,17 @@ public class AppConf extends Configurations {
         return getString(PINCODE,null);
     }
 
-    public void saveTrustedNode(helixPeerData helixPeerData){
-        save(TRUSTED_NODE_HOST,helixPeerData.getHost());
-        save(TRUSTED_NODE_TCP,helixPeerData.getTcpPort());
-        save(TRUSTED_NODE_SSL,helixPeerData.getSslPort());
+    public void saveTrustedNode(HelixPeerData HelixPeerData){
+        save(TRUSTED_NODE_HOST,HelixPeerData.getHost());
+        save(TRUSTED_NODE_TCP,HelixPeerData.getTcpPort());
+        save(TRUSTED_NODE_SSL,HelixPeerData.getSslPort());
     }
-    public helixPeerData getTrustedNode(){
+    public HelixPeerData getTrustedNode(){
         String host = getString(TRUSTED_NODE_HOST,null);
         if (host!=null){
             int tcp = getInt(TRUSTED_NODE_TCP,-1);
             int ssl = getInt(TRUSTED_NODE_TCP,-1);
-            return new helixPeerData(host,tcp,ssl);
+            return new HelixPeerData(host,tcp,ssl);
         }else
             return null;
     }

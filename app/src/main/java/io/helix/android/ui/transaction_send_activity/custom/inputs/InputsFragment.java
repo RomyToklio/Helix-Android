@@ -55,7 +55,7 @@ public class InputsFragment extends BaseRecyclerFragment<InputsFragment.InputSel
                 if (intent.hasExtra(INTENT_EXTRA_UNSPENT_WRAPPERS)) {
                     selectedList = (Set<InputWrapper>) intent.getSerializableExtra(INTENT_EXTRA_UNSPENT_WRAPPERS);
                     for (InputWrapper inputWrapper : selectedList) {
-                        inputWrapper.setUnspent(helixModule.getUnspent(inputWrapper.getParentTxHash(), inputWrapper.getIndex()));
+                        inputWrapper.setUnspent(HelixModule.getUnspent(inputWrapper.getParentTxHash(), inputWrapper.getIndex()));
                     }
                 }
             }
@@ -123,7 +123,7 @@ public class InputsFragment extends BaseRecyclerFragment<InputsFragment.InputSel
                     )
         ));
 
-        for (InputWrapper inputWrapper : helixModule.listUnspentWrappers()) {
+        for (InputWrapper inputWrapper : HelixModule.listUnspentWrappers()) {
             InputSelectionWrapper inputSelectionWrapper = new InputSelectionWrapper(inputWrapper);
             list.add(inputSelectionWrapper);
         }

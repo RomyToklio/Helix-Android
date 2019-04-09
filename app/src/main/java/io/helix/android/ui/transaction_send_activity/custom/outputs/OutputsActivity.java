@@ -127,7 +127,7 @@ public class OutputsActivity extends BaseActivity {
                         outputWrapper.getAddressLabel()
                 );
                 addressLabel.addAddress(outputWrapper.getAddress());
-                helixModule.saveContactIfNotExist(
+                HelixModule.saveContactIfNotExist(
                         addressLabel
                 );
             }

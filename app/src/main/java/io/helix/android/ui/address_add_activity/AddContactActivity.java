@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import org.helixj.uri.helixURI;
+import org.helixj.uri.HelixURI;
 
 import io.helix.android.R;
 import io.helix.android.contacts.AddressLabel;
@@ -65,7 +65,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
             @Override
             public void afterTextChanged(Editable s) {
                 String temp = s.toString();
-                if(helixModule.chechAddress(temp)){
+                if(HelixModule.chechAddress(temp)){
                     address = temp;
                     edit_address.setTextColor(Color.parseColor("#55476c"));;
                 }else {
@@ -93,13 +93,13 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
                 if (address!=null) {
                     if (name.length() > 0 && address.length() > 0) {
                         try {
-                            if (!helixModule.chechAddress(address)) {
+                            if (!HelixModule.chechAddress(address)) {
                                 Toast.makeText(this, R.string.invalid_input_address, Toast.LENGTH_LONG).show();
                                 return true;
                             }
                             AddressLabel addressLabel = new AddressLabel(name);
                             addressLabel.addAddress(address);
-                            helixModule.saveContact(addressLabel);
+                            HelixModule.saveContact(addressLabel);
                             Toast.makeText(this, "AddressLabel saved", Toast.LENGTH_LONG).show();
                             onBackPressed();
                         } catch (ContactAlreadyExistException e) {
@@ -142,10 +142,10 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
                 try {
                     String address = data.getStringExtra(INTENT_EXTRA_RESULT);
                     String usedAddress;
-                    if (helixModule.chechAddress(address)){
+                    if (HelixModule.chechAddress(address)){
                         usedAddress = address;
                     }else {
-                        helixURI helixUri = new helixURI(address);
+                        HelixURI helixUri = new HelixURI(address);
                         usedAddress = helixUri.getAddress().toBase58();
                     }
                     final String tempPubKey = usedAddress;

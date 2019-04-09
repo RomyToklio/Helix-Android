@@ -22,10 +22,10 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import global.helixGlobalData;
-import helixmore.helixPeerData;
+import global.HelixGlobalData;
+import helixmore.HelixPeerData;
 import io.helix.android.R;
-import io.helix.android.module.helixContext;
+import io.helix.android.module.HelixContext;
 import io.helix.android.ui.address_add_activity.AddContactActivity;
 import io.helix.android.ui.base.dialogs.SimpleTextDialog;
 import io.helix.android.ui.base.dialogs.SimpleTwoButtonsDialog;
@@ -92,7 +92,7 @@ public class DialogsUtil {
 
 
     public interface TrustedNodeDialogListener{
-        void onNodeSelected(helixPeerData helixPeerData);
+        void onNodeSelected(HelixPeerData HelixPeerData);
     }
 
     public static DialogBuilder buildtrustedNodeDialog(final Activity context, final TrustedNodeDialogListener trustedNodeDialogListener){
@@ -114,7 +114,7 @@ public class DialogsUtil {
                     final String host = editHost.getText().toString();
                     final String tcpPortStr = editTcp.getText().toString();
                     final String sslPortStr = editSsl.getText().toString();
-                    int tcpPort = helixContext.NETWORK_PARAMETERS.getPort();
+                    int tcpPort = HelixContext.NETWORK_PARAMETERS.getPort();
                     int sslPort = 0;
                     if (tcpPortStr.length() > 0) {
                         tcpPort = Integer.valueOf(tcpPortStr);
@@ -135,7 +135,7 @@ public class DialogsUtil {
                                 public void run() {
                                     if(check){
                                         trustedNodeDialogListener.onNodeSelected(
-                                                new helixPeerData(
+                                                new HelixPeerData(
                                                         host,
                                                         finalTcpPort,
                                                         finalSslPort)

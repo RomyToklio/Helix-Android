@@ -24,14 +24,14 @@ import java.io.IOException;
 import java.util.List;
 
 import io.helix.android.R;
-import io.helix.android.module.helixContext;
+import io.helix.android.module.HelixContext;
 import io.helix.android.ui.base.BaseActivity;
 import io.helix.android.ui.base.dialogs.SimpleTwoButtonsDialog;
 import io.helix.android.ui.wallet_activity.WalletActivity;
 import io.helix.android.utils.CrashReporter;
 import io.helix.android.utils.DialogsUtil;
 
-import static io.helix.android.module.helixContext.helix_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME;
+import static io.helix.android.module.HelixContext.helix_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME;
 
 /**
  * Created by Neoperol on 7/19/17.
@@ -162,11 +162,11 @@ public class RestoreWordsActivity extends BaseActivity {
                                 dialog.dismiss();
                                 try {
 
-                                    helixModule.checkMnemonic(mnemonic);
+                                    HelixModule.checkMnemonic(mnemonic);
 
                                     boolean isBip32 = check_bip32.isChecked();
 
-                                    helixModule.restoreWallet(mnemonic, helix_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME,!isBip32);
+                                    HelixModule.restoreWallet(mnemonic, helix_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME,!isBip32);
 
                                     Toast.makeText(RestoreWordsActivity.this, R.string.restore_mnemonic, Toast.LENGTH_LONG).show();
 
@@ -174,7 +174,7 @@ public class RestoreWordsActivity extends BaseActivity {
                                     finish();
                                 } catch (IOException e) {
                                     e.printStackTrace();
-                                    CrashReporter.saveBackgroundTrace(e, helixApplication.getPackageInfo());
+                                    CrashReporter.saveBackgroundTrace(e, HelixApplication.getPackageInfo());
                                     // todo: show an error message here..
                                     Toast.makeText(RestoreWordsActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                                 }catch (MnemonicException e){
@@ -182,7 +182,7 @@ public class RestoreWordsActivity extends BaseActivity {
                                     Toast.makeText(RestoreWordsActivity.this, R.string.invalid_mnemonic_code, Toast.LENGTH_LONG).show();
                                 }catch (Exception e){
                                     e.printStackTrace();
-                                    CrashReporter.saveBackgroundTrace(e,helixApplication.getPackageInfo());
+                                    CrashReporter.saveBackgroundTrace(e,HelixApplication.getPackageInfo());
                                     // todo: show an error message here..
                                     Toast.makeText(RestoreWordsActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
                                 }
@@ -301,7 +301,7 @@ public class RestoreWordsActivity extends BaseActivity {
                 txtWord24 = (EditText) view.findViewById(R.id.text_word24);
                 txt_bip32_message = (TextView) root.findViewById(R.id.txt_bip32_message);
                 check_bip32 = (CheckBox) root.findViewById(R.id.check_bip32);
-                txt_bip32_message.setText(getString(R.string.restore_bip32_warning, helixContext.ENABLE_BIP44_APP_VERSION));
+                txt_bip32_message.setText(getString(R.string.restore_bip32_warning, HelixContext.ENABLE_BIP44_APP_VERSION));
 
             }
 

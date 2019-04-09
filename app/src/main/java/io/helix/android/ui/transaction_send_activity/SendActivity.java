@@ -32,7 +32,7 @@ import org.helixj.core.NetworkParameters;
 import org.helixj.core.Transaction;
 import org.helixj.core.TransactionInput;
 import org.helixj.core.TransactionOutput;
-import org.helixj.uri.helixURI;
+import org.helixj.uri.HelixURI;
 import org.helixj.wallet.Wallet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,8 +48,8 @@ import java.util.Set;
 import io.helix.android.R;
 import io.helix.android.contacts.AddressLabel;
 import io.helix.android.module.NoPeerConnectedException;
-import io.helix.android.rate.db.helixRate;
-import io.helix.android.service.helixWalletService;
+import io.helix.android.rate.db.HelixRate;
+import io.helix.android.service.HelixWalletService;
 import io.helix.android.ui.base.BaseActivity;
 import io.helix.android.ui.base.dialogs.SimpleTextDialog;
 import io.helix.android.ui.base.dialogs.SimpleTwoButtonsDialog;
@@ -113,7 +113,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private EditText edit_memo;
     private MyFilterableAdapter filterableAdapter;
     private String addressStr;
-    private helixRate helixRate;
+    private HelixRate HelixRate;
     private SimpleTextDialog errorDialog;
     private ImageButton btnSwap;
     private ViewFlipper amountSwap;
@@ -175,7 +175,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         //Sending amount hlix
         addAll =  (Button) findViewById(R.id.btn_add_all);
         addAll.setOnClickListener(this);
-        helixRate = helixModule.getRate(helixApplication.getAppConf().getSelectedRateCoin());
+        HelixRate = HelixModule.getRate(HelixApplication.getAppConf().getSelectedRateCoin());
 
         editCurrency.addTextChangedListener(new TextWatcher() {
             @Override
@@ -190,16 +190,16 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (helixRate != null) {
+                if (HelixRate != null) {
                     if (s.length() > 0) {
                         String valueStr = s.toString();
                         if (valueStr.charAt(0) == '.') {
                             valueStr = "0" + valueStr;
                         }
-                        BigDecimal result = new BigDecimal(valueStr).divide(helixRate.getRate(), 6, BigDecimal.ROUND_DOWN);
+                        BigDecimal result = new BigDecimal(valueStr).divide(HelixRate.getRate(), 6, BigDecimal.ROUND_DOWN);
                         txtShow.setText(result.toPlainString() + getString(R.string.wallet_hlix));
                     } else {
-                        txtShow.setText("0 " + helixRate.getCode());
+                        txtShow.setText("0 " + HelixRate.getCode());
                     }
                 }else {
                     txtShow.setText(R.string.no_rate);
@@ -222,25 +222,25 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length()>0) {
-                    if (helixRate != null) {
+                    if (HelixRate != null) {
                         String valueStr = s.toString();
                         if (valueStr.charAt(0) == '.') {
                             valueStr = "0" + valueStr;
                         }
                         Coin coin = Coin.parseCoin(valueStr);
                         txt_local_currency.setText(
-                                helixApplication.getCentralFormats().format(
-                                        new BigDecimal(coin.getValue() * helixRate.getRate().doubleValue()).movePointLeft(8)
+                                HelixApplication.getCentralFormats().format(
+                                        new BigDecimal(coin.getValue() * HelixRate.getRate().doubleValue()).movePointLeft(8)
                                 )
-                                        + " " + helixRate.getCode()
+                                        + " " + HelixRate.getCode()
                         );
                     }else {
                         // rate null -> no connection.
                         txt_local_currency.setText(R.string.no_rate);
                     }
                 }else {
-                    if (helixRate!=null)
-                        txt_local_currency.setText("0 "+helixRate.getCode());
+                    if (HelixRate!=null)
+                        txt_local_currency.setText("0 "+HelixRate.getCode());
                     else
                         txt_local_currency.setText(R.string.no_rate);
                 }
@@ -329,7 +329,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         super.onRestoreInstanceState(savedInstanceState);
         // todo: test this roting the screen..
         if (savedInstanceState.containsKey(TX)){
-            transaction = new Transaction(helixModule.getConf().getNetworkParams(),savedInstanceState.getByteArray(TX));
+            transaction = new Transaction(HelixModule.getConf().getNetworkParams(),savedInstanceState.getByteArray(TX));
         }
     }
 
@@ -344,7 +344,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         super.onResume();
         // todo: This is not updating the filter..
         if (filterableAdapter==null) {
-            List<AddressLabel> list = new ArrayList<>(helixModule.getContacts());
+            List<AddressLabel> list = new ArrayList<>(HelixModule.getContacts());
             filterableAdapter = new MyFilterableAdapter(this,list );
             edit_address.setAdapter(filterableAdapter);
         }
@@ -382,19 +382,19 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         }else if(id == R.id.btn_add_all){
             if (!isMultiSend) {
                 cleanWallet = true;
-                Coin coin = helixModule.getAvailableBalanceCoin();
+                Coin coin = HelixModule.getAvailableBalanceCoin();
                 if (inHlixs) {
                     edit_amount.setText(coin.toPlainString());
                     txt_local_currency.setText(
-                    helixApplication.getCentralFormats().format(
-                            new BigDecimal(coin.getValue() * helixRate.getRate().doubleValue()).movePointLeft(8)
+                    HelixApplication.getCentralFormats().format(
+                            new BigDecimal(coin.getValue() * HelixRate.getRate().doubleValue()).movePointLeft(8)
                     )
-                            + " " + helixRate.getCode()
+                            + " " + HelixRate.getCode()
                     );
                 } else {
                     editCurrency.setText(
-                            helixApplication.getCentralFormats().format(
-                                    new BigDecimal(coin.getValue() * helixRate.getRate().doubleValue()).movePointLeft(8)
+                            HelixApplication.getCentralFormats().format(
+                                    new BigDecimal(coin.getValue() * HelixRate.getRate().doubleValue()).movePointLeft(8)
                             )
                     );
                     txtShow.setText(coin.toFriendlyString());
@@ -479,10 +479,10 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 try {
                     address = data.getStringExtra(INTENT_EXTRA_RESULT);
                     String usedAddress;
-                    if (helixModule.chechAddress(address)){
+                    if (HelixModule.chechAddress(address)){
                         usedAddress = address;
                     }else {
-                        helixURI helixUri = new helixURI(address);
+                        HelixURI helixUri = new HelixURI(address);
                         usedAddress = helixUri.getAddress().toBase58();
                     }
                     final String tempPubKey = usedAddress;
@@ -499,7 +499,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     sendConfirmed();
                 }catch (Exception e){
                     e.printStackTrace();
-                    CrashReporter.saveBackgroundTrace(e,helixApplication.getPackageInfo());
+                    CrashReporter.saveBackgroundTrace(e,HelixApplication.getPackageInfo());
                     showErrorDialog(R.string.commit_tx_fail);
                 }
             }
@@ -529,16 +529,16 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 try {
                     Set<InputWrapper> unspents = (Set<InputWrapper>) data.getSerializableExtra(INTENT_EXTRA_UNSPENT_WRAPPERS);
                     for (InputWrapper inputWrapper : unspents) {
-                        inputWrapper.setUnspent(helixModule.getUnspent(inputWrapper.getParentTxHash(), inputWrapper.getIndex()));
+                        inputWrapper.setUnspent(HelixModule.getUnspent(inputWrapper.getParentTxHash(), inputWrapper.getIndex()));
                     }
                     unspent = unspents;
                     txt_coin_selection.setVisibility(View.VISIBLE);
                 } catch (TxNotFoundException e) {
                     e.printStackTrace();
-                    CrashReporter.saveBackgroundTrace(e,helixApplication.getPackageInfo());
+                    CrashReporter.saveBackgroundTrace(e,HelixApplication.getPackageInfo());
                     Toast.makeText(this,R.string.load_inputs_fail,Toast.LENGTH_LONG).show();
                 } catch (Exception e){
-                    CrashReporter.saveBackgroundTrace(e,helixApplication.getPackageInfo());
+                    CrashReporter.saveBackgroundTrace(e,HelixApplication.getPackageInfo());
                     Toast.makeText(this,R.string.load_inputs_fail,Toast.LENGTH_LONG).show();
                 }
             }
@@ -569,7 +569,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     }else {
                         if (data.hasExtra(INTENT_EXTRA_CHANGE_ADDRESS)) {
                             String address = data.getStringExtra(INTENT_EXTRA_CHANGE_ADDRESS);
-                            changeAddress = Address.fromBase58(helixModule.getConf().getNetworkParams(),address);
+                            changeAddress = Address.fromBase58(HelixModule.getConf().getNetworkParams(),address);
                         }
                     }
                     txt_change_address.setVisibility(View.VISIBLE);
@@ -603,7 +603,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 if (valueStr.charAt(0) == '.') {
                     valueStr = "0" + valueStr;
                 }
-                BigDecimal result = new BigDecimal(valueStr).multiply(helixRate.getRate());
+                BigDecimal result = new BigDecimal(valueStr).multiply(HelixRate.getRate());
                 amountStr = result.setScale(6, RoundingMode.FLOOR).toPlainString();
             }
         }
@@ -615,7 +615,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             edit_amount.setText(amount.toPlainString());
             edit_amount.setEnabled(false);
         }else {
-            BigDecimal result = new BigDecimal(amount.toPlainString()).multiply(helixRate.getRate()).setScale(6,RoundingMode.FLOOR);
+            BigDecimal result = new BigDecimal(amount.toPlainString()).multiply(HelixRate.getRate()).setScale(6,RoundingMode.FLOOR);
             editCurrency.setText(result.toPlainString());
             edit_amount.setEnabled(false);
         }
@@ -634,7 +634,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
             // check if the wallet is still syncing
             try {
-                if(!helixModule.isSyncWithNode()){
+                if(!HelixModule.isSyncWithNode()){
                     throw new IllegalArgumentException(getString(R.string.wallet_is_not_sync));
                 }
             } catch (NoPeerConnectedException e) {
@@ -655,31 +655,31 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             Coin amount = Coin.parseCoin(amountStr);
             if (amount.isZero()) throw new IllegalArgumentException("Amount zero, please correct it");
             if (amount.isLessThan(Transaction.MIN_NONDUST_OUTPUT)) throw new IllegalArgumentException("Amount must be greater than the minimum amount accepted from miners, "+Transaction.MIN_NONDUST_OUTPUT.toFriendlyString());
-            if (amount.isGreaterThan(Coin.valueOf(helixModule.getAvailableBalance())))
+            if (amount.isGreaterThan(Coin.valueOf(HelixModule.getAvailableBalance())))
                 throw new IllegalArgumentException("Insufficient balance");
 
             // memo
             String memo = edit_memo.getText().toString();
 
-            NetworkParameters params = helixModule.getConf().getNetworkParams();
+            NetworkParameters params = HelixModule.getConf().getNetworkParams();
 
             if ( (outputWrappers==null || outputWrappers.isEmpty()) && (unspent==null || unspent.isEmpty()) ){
                 addressStr = edit_address.getText().toString();
-                if (!helixModule.chechAddress(addressStr))
+                if (!HelixModule.chechAddress(addressStr))
                     throw new IllegalArgumentException("Address not valid");
                 Coin feePerKb = getFee();
                 Address changeAddressTemp = null;
                 if (changeAddress!=null){
                     changeAddressTemp = changeAddress;
                 }else {
-                    changeAddressTemp = helixModule.getReceiveAddress();
+                    changeAddressTemp = HelixModule.getReceiveAddress();
                 }
-                transaction = helixModule.buildSendTx(addressStr,amount,feePerKb,memo,changeAddressTemp);
+                transaction = HelixModule.buildSendTx(addressStr,amount,feePerKb,memo,changeAddressTemp);
 
                 // check if there is a need to change the change address
                 if (changeToOrigin){
                     transaction = changeChangeAddressToOriginAddress(transaction,changeAddressTemp);
-                    transaction = helixModule.completeTx(transaction);
+                    transaction = HelixModule.completeTx(transaction);
                 }
             }else {
                 transaction = new Transaction(params);
@@ -693,9 +693,9 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     }
                 } else {
                     addressStr = edit_address.getText().toString();
-                    if (!helixModule.chechAddress(addressStr))
+                    if (!HelixModule.chechAddress(addressStr))
                         throw new IllegalArgumentException("Address not valid");
-                    transaction.addOutput(amount, Address.fromBase58(helixModule.getConf().getNetworkParams(), addressStr));
+                    transaction.addOutput(amount, Address.fromBase58(HelixModule.getConf().getNetworkParams(), addressStr));
                 }
 
                 // then check custom inputs if there is any
@@ -709,7 +709,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 Coin inputsSum = transaction.getInputSum();
 
                 if (ouputsSum.isGreaterThan(inputsSum)) {
-                    List<TransactionOutput> unspent = helixModule.getRandomUnspentNotInListToFullCoins(transaction.getInputs(), ouputsSum);
+                    List<TransactionOutput> unspent = HelixModule.getRandomUnspentNotInListToFullCoins(transaction.getInputs(), ouputsSum);
                     for (TransactionOutput transactionOutput : unspent) {
                         transaction.addInput(transactionOutput);
                     }
@@ -727,16 +727,16 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 if (changeAddress==null){
                     changeAddressTemp = changeAddress;
                 }else {
-                    changeAddressTemp = helixModule.getReceiveAddress();
+                    changeAddressTemp = HelixModule.getReceiveAddress();
                 }
 
-                transaction = helixModule.completeTx(transaction,changeAddressTemp,feePerKb);
+                transaction = HelixModule.completeTx(transaction,changeAddressTemp,feePerKb);
 
                 // check if there is a need to change the change address
                 // check if there is a need to change the change address
                 if (changeToOrigin){
                     transaction = changeChangeAddressToOriginAddress(transaction,changeAddressTemp);
-                    transaction = helixModule.completeTx(transaction);
+                    transaction = HelixModule.completeTx(transaction);
                 }
             }
 
@@ -781,7 +781,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         }
         Address originAddress = origin.getConnectedOutput().getScriptPubKey().getToAddress(params,true);
         // check if the address is mine just in case
-        if (!helixModule.isAddressUsed(originAddress)) throw new IllegalStateException("origin address is not on the wallet: "+originAddress);
+        if (!HelixModule.isAddressUsed(originAddress)) throw new IllegalStateException("origin address is not on the wallet: "+originAddress);
 
         // Now i just have to re organize the outputs.
         TransactionOutput changeOutput = null;
@@ -836,8 +836,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             showErrorDialog(R.string.commit_tx_fail);
             return;
         }
-        helixModule.commitTx(transaction);
-        Intent intent = new Intent(SendActivity.this, helixWalletService.class);
+        HelixModule.commitTx(transaction);
+        Intent intent = new Intent(SendActivity.this, HelixWalletService.class);
         intent.setAction(ACTION_BROADCAST_TRANSACTION);
         intent.putExtra(DATA_TRANSACTION_HASH,transaction.getHash().getBytes());
         startService(intent);

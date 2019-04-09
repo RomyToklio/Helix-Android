@@ -13,7 +13,7 @@ import io.helix.android.contacts.AbstractSqliteDb;
  * Created by furszy on 7/5/17.
  */
 
-public class RateDb extends AbstractSqliteDb<helixRate> {
+public class RateDb extends AbstractSqliteDb<HelixRate> {
 
 
     private static final String DATABASE_NAME = "Rates";
@@ -64,7 +64,7 @@ public class RateDb extends AbstractSqliteDb<helixRate> {
     }
 
     @Override
-    protected ContentValues buildContent(helixRate obj) {
+    protected ContentValues buildContent(HelixRate obj) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_COIN,obj.getCode());
         contentValues.put(KEY_VALUE,obj.getRate().toEngineeringString());
@@ -74,23 +74,23 @@ public class RateDb extends AbstractSqliteDb<helixRate> {
     }
 
     @Override
-    protected helixRate buildFrom(Cursor cursor) {
+    protected HelixRate buildFrom(Cursor cursor) {
         String coin = cursor.getString(KEY_POS_COIN);
         BigDecimal value = new BigDecimal(cursor.getString(KEY_POS_VALUE));
         long timestap = cursor.getLong(KEY_POS_TIMESTAMP);
-        return new helixRate(coin,value,timestap);
+        return new HelixRate(coin,value,timestap);
     }
 
-    public helixRate getRate(String coin){
+    public HelixRate getRate(String coin){
         return get(KEY_COIN,coin);
     }
 
 
-    public void insertOrUpdateIfExist(helixRate helixRate) {
-        if (getRate(helixRate.getCode())==null){
-            insert(helixRate);
+    public void insertOrUpdateIfExist(HelixRate HelixRate) {
+        if (getRate(HelixRate.getCode())==null){
+            insert(HelixRate);
         }else {
-            updateByKey(KEY_COIN,helixRate.getCode(),helixRate);
+            updateByKey(KEY_COIN,HelixRate.getCode(),HelixRate);
         }
     }
 }

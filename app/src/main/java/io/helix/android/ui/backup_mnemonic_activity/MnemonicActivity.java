@@ -60,7 +60,7 @@ public class MnemonicActivity extends BaseActivity {
             });
         }
 
-        List<String> textArray = helixModule.getMnemonic();
+        List<String> textArray = HelixModule.getMnemonic();
 
         txt_words = (FlexboxLayout) findViewById(R.id.securityWords);
 

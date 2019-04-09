@@ -22,8 +22,8 @@ import java.util.concurrent.TimeUnit;
 
 import global.WalletConfiguration;
 import helixmore.NetworkConf;
-import helixmore.helixPeer;
-import helixmore.helixPeergroup;
+import helixmore.HelixPeer;
+import helixmore.HelixPeergroup;
 import helixmore.listeners.AddressListener;
 import store.AddressStore;
 import store.CantInsertAddressException;
@@ -39,14 +39,14 @@ public class PeergroupTest {
 
 
     @Test
-    public void connecthelixPeergroupTest() throws IOException, ConnectionFailureException, InterruptedException {
+    public void connectHelixPeergroupTest() throws IOException, ConnectionFailureException, InterruptedException {
         ContextWrapperImp contextWrapperImp = new ContextWrapperImp();
         WalletConfiguration walletConfiguration = new WalletConfigurationsImp();
         NetworkConf networkConf = new NetworkConf("localhost",50001);
         WalletManager walletManager = new WalletManager(contextWrapperImp,walletConfiguration);
         walletManager.init();
         AddressStore addressStore = new AddressStoreImp();
-        helixPeergroup helixmorePeergroup = new helixPeergroup(networkConf,walletManager,addressStore);
+        HelixPeergroup helixmorePeergroup = new HelixPeergroup(networkConf,walletManager,addressStore);
         helixmorePeergroup.start();
         while (true){
             try {
@@ -55,11 +55,11 @@ public class PeergroupTest {
                 e.printStackTrace();
             }
         }
-        //assert helixmorePeergroup.isRunning():"helixPeergroup is not running..";
+        //assert helixmorePeergroup.isRunning():"HelixPeergroup is not running..";
     }
 
     @Test
-    public void pushAddresshelixPeergroupTest() throws IOException, CantInsertAddressException, ConnectionFailureException, InterruptedException {
+    public void pushAddressHelixPeergroupTest() throws IOException, CantInsertAddressException, ConnectionFailureException, InterruptedException {
         ContextWrapperImp contextWrapperImp = new ContextWrapperImp();
         WalletConfiguration walletConfiguration = new WalletConfigurationsImp();
         NetworkConf networkConf = new NetworkConf("localhost",50001);
@@ -68,7 +68,7 @@ public class PeergroupTest {
         WalletManager walletManager = new WalletManager(contextWrapperImp,walletConfiguration);
         walletManager.init();
         AddressStore addressStore = new AddressStoreImp();
-        helixPeergroup helixmorePeergroup = new helixPeergroup(networkConf,walletManager,addressStore);
+        HelixPeergroup helixmorePeergroup = new HelixPeergroup(networkConf,walletManager,addressStore);
         helixmorePeergroup.addAddressListener(new AddressListener() {
             @Override
             public void onBalanceChange(String address, long confirmed, long unconfirmed,int numConfirmations) {
@@ -86,7 +86,7 @@ public class PeergroupTest {
                 e.printStackTrace();
             }
         }
-        assert helixmorePeergroup.isRunning():"helixPeergroup is not running..";
+        assert helixmorePeergroup.isRunning():"HelixPeergroup is not running..";
         // subscribe address
         Address address = Address.fromBase58(walletConfiguration.getNetworkParams(),"yCRaSQvLd5a9VFFv9dzns2zNMJhWyymtAd");
         helixmorePeergroup.addWatchedAddress(address);

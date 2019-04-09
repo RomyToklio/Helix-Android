@@ -6,7 +6,7 @@ import org.helixj.core.TransactionOutput;
 import java.io.Serializable;
 
 import io.helix.android.contacts.AddressLabel;
-import io.helix.android.module.helixContext;
+import io.helix.android.module.HelixContext;
 
 /**
  * Created by furszy on 8/4/17.
@@ -50,7 +50,7 @@ public class InputWrapper implements Serializable{
 
 
     public String getLabel() {
-        return addressLabel !=null? addressLabel.toLabel():unspent.getScriptPubKey().getToAddress(helixContext.NETWORK_PARAMETERS,true).toBase58();
+        return addressLabel !=null? addressLabel.toLabel():unspent.getScriptPubKey().getToAddress(HelixContext.NETWORK_PARAMETERS,true).toBase58();
     }
 
     @Override

@@ -9,9 +9,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 
-import io.helix.android.helixApplication;
+import io.helix.android.HelixApplication;
 import io.helix.android.R;
-import io.helix.android.module.helixModule;
+import io.helix.android.module.HelixModule;
 import io.helix.android.service.IntentsConstants;
 import io.helix.android.ui.base.dialogs.SimpleTextDialog;
 import io.helix.android.utils.DialogBuilder;
@@ -24,10 +24,10 @@ import static io.helix.android.service.IntentsConstants.ACTION_TRUSTED_PEER_CONN
  * Created by furszy on 6/8/17.
  */
 
-public class helixActivity extends AppCompatActivity {
+public class HelixActivity extends AppCompatActivity {
 
-    protected helixApplication helixApplication;
-    protected helixModule helixModule;
+    protected HelixApplication HelixApplication;
+    protected HelixModule HelixModule;
 
     protected LocalBroadcastManager localBroadcastManager;
     private static final IntentFilter intentFilter = new IntentFilter(ACTION_TRUSTED_PEER_CONNECTION_FAIL);
@@ -50,8 +50,8 @@ public class helixActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        helixApplication = helixApplication.getInstance();
-        helixModule = helixApplication.getModule();
+        HelixApplication = HelixApplication.getInstance();
+        HelixModule = HelixApplication.getModule();
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
     }
 

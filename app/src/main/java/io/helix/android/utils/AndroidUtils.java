@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
-import io.helix.android.helixApplication;
+import io.helix.android.HelixApplication;
 import io.helix.android.R;
-import io.helix.android.module.helixContext;
+import io.helix.android.module.HelixContext;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
@@ -47,7 +47,7 @@ public class AndroidUtils {
             intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, attachments);
         }
 
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{helixContext.REPORT_EMAIL});
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{HelixContext.REPORT_EMAIL});
         if (subject != null)
             intent.putExtra(Intent.EXTRA_SUBJECT, subject);
 //		ArrayList<CharSequence> str = new ArrayList<CharSequence>();
@@ -59,7 +59,7 @@ public class AndroidUtils {
         try {
             String maiñChooser = context.getString(R.string.report_issue_dialog_mail_intent_chooser);
             if (!(context instanceof Activity)){
-                helixApplication.getInstance().getAppConf().saveShowReportScreenOnStart(true);
+                HelixApplication.getInstance().getAppConf().saveShowReportScreenOnStart(true);
                 intent.setFlags(FLAG_ACTIVITY_NEW_TASK|FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_SINGLE_TOP);
             }
             context.startActivity(Intent.createChooser(intent, maiñChooser));

@@ -11,8 +11,8 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.Random;
 
-import global.helixGlobalData;
-import helixmore.helixPeerData;
+import global.HelixGlobalData;
+import helixmore.HelixPeerData;
 import io.helix.android.R;
 import io.helix.android.ui.backup_mnemonic_activity.MnemonicActivity;
 import io.helix.android.ui.base.BaseActivity;
@@ -44,7 +44,7 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
             checkPin = true;
         }
 
-        if (helixApplication.getAppConf().getPincode()!=null && !checkPin){
+        if (HelixApplication.getAppConf().getPincode()!=null && !checkPin){
             goNext();
         }
 
@@ -63,7 +63,7 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
     }
 
     private void goNext() {
-        helixApplication.getAppConf().setAppInit(true);
+        HelixApplication.getAppConf().setAppInit(true);
 
         Intent intent = new Intent(this, MnemonicActivity.class);
         intent.putExtra(INTENT_EXTRA_INIT_VIEW, true);
@@ -82,12 +82,12 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
                     String pincode = String.valueOf(pin[0]) + String.valueOf(pin[1]) + String.valueOf(pin[2]) + String.valueOf(pin[3]);
 
                     if (!checkPin) {
-                        helixApplication.getAppConf().savePincode(pincode);
+                        HelixApplication.getAppConf().savePincode(pincode);
                         Toast.makeText(this, R.string.pincode_saved, Toast.LENGTH_SHORT).show();
                         goNext();
                     } else {
                         // check pin and return result
-                        if (helixApplication.getAppConf().getPincode().equals(pincode)){
+                        if (HelixApplication.getAppConf().getPincode().equals(pincode)){
                             setResult(Activity.RESULT_OK, new Intent());
                             finish();
                         } else {
@@ -110,7 +110,7 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (helixApplication.getAppConf().getPincode()==null){
+        if (HelixApplication.getAppConf().getPincode()==null){
             startActivity(new Intent(this, StartActivity.class));
             finish();
         }

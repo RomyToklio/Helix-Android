@@ -42,15 +42,15 @@ import global.ContextWrapper;
 import global.WalletConfiguration;
 import global.utils.Io;
 import helixmore.NetworkConf;
-import helixmore.helixPeerData;
+import helixmore.HelixPeerData;
 import io.helix.android.contacts.ContactsStore;
-import io.helix.android.module.helixContext;
-import io.helix.android.module.helixModule;
-import io.helix.android.module.helixModuleImp;
+import io.helix.android.module.HelixContext;
+import io.helix.android.module.HelixModule;
+import io.helix.android.module.HelixModuleImp;
 import io.helix.android.module.WalletConfImp;
 import io.helix.android.module.store.SnappyBlockchainStore;
 import io.helix.android.rate.db.RateDb;
-import io.helix.android.service.helixWalletService;
+import io.helix.android.service.HelixWalletService;
 import io.helix.android.utils.AppConf;
 import io.helix.android.utils.CentralFormats;
 import io.helix.android.utils.CrashReporter;
@@ -63,19 +63,19 @@ import static io.helix.android.utils.AndroidUtils.shareText;
  * Created by mati on 18/04/17.
  */
 @ReportsCrashes(
-        mailTo = helixContext.REPORT_EMAIL, // my email here
+        mailTo = HelixContext.REPORT_EMAIL, // my email here
         mode = ReportingInteractionMode.TOAST,
         resToastText = R.string.crash_toast_text)
-public class helixApplication extends Application implements ContextWrapper {
+public class HelixApplication extends Application implements ContextWrapper {
 
     private static Logger log;
 
     /** Singleton */
-    private static helixApplication instance;
+    private static HelixApplication instance;
     public static final long TIME_CREATE_APPLICATION = System.currentTimeMillis();
     private long lastTimeRequestBackup;
 
-    private helixModule helixModule;
+    private HelixModule HelixModule;
     private AppConf appConf;
     private NetworkConf networkConf;
 
@@ -84,7 +84,7 @@ public class helixApplication extends Application implements ContextWrapper {
     private ActivityManager activityManager;
     private PackageInfo info;
 
-    public static helixApplication getInstance() {
+    public static HelixApplication getInstance() {
         return instance;
     }
 
@@ -123,7 +123,7 @@ public class helixApplication extends Application implements ContextWrapper {
             } catch (final IOException x) {
                 log.info("problem writing attachment", x);
             }
-            shareText(helixApplication.this,"helix wallet crash", "Unexpected crash", attachments);
+            shareText(HelixApplication.this,"helix wallet crash", "Unexpected crash", attachments);
         }
     };
 
@@ -133,7 +133,7 @@ public class helixApplication extends Application implements ContextWrapper {
         instance = this;
         try {
             initLogging();
-            log = LoggerFactory.getLogger(helixApplication.class);
+            log = LoggerFactory.getLogger(HelixApplication.class);
             PackageManager manager = getPackageManager();
             info = manager.getPackageInfo(this.getPackageName(), 0);
             activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -152,15 +152,15 @@ public class helixApplication extends Application implements ContextWrapper {
             centralFormats = new CentralFormats(appConf);
             WalletConfiguration walletConfiguration = new WalletConfImp(getSharedPreferences("helix_wallet",MODE_PRIVATE));
             ContactsStore contactsStore = new ContactsStore(this);
-            helixModule = new helixModuleImp(this, walletConfiguration,contactsStore,new RateDb(this));
-            helixModule.start();
+            HelixModule = new HelixModuleImp(this, walletConfiguration,contactsStore,new RateDb(this));
+            HelixModule.start();
         } catch (Exception e){
             e.printStackTrace();
         }
     }
 
     public void starthelixService() {
-        Intent intent = new Intent(this,helixWalletService.class);
+        Intent intent = new Intent(this,HelixWalletService.class);
         startService(intent);
     }
 
@@ -211,8 +211,8 @@ public class helixApplication extends Application implements ContextWrapper {
         log.setLevel(Level.INFO);
     }
 
-    public helixModule getModule(){
-        return helixModule;
+    public HelixModule getModule(){
+        return HelixModule;
     }
 
     public AppConf getAppConf(){
@@ -237,7 +237,7 @@ public class helixApplication extends Application implements ContextWrapper {
     @Override
     public boolean isMemoryLow() {
         final int memoryClass = activityManager.getMemoryClass();
-        return memoryClass<=helixModule.getConf().getMinMemoryNeeded();
+        return memoryClass<=HelixModule.getConf().getMinMemoryNeeded();
     }
 
     @Override
@@ -247,7 +247,7 @@ public class helixApplication extends Application implements ContextWrapper {
 
     @Override
     public void stopBlockchain() {
-        Intent intent = new Intent(this,helixWalletService.class);
+        Intent intent = new Intent(this,HelixWalletService.class);
         intent.setAction(ACTION_RESET_BLOCKCHAIN);
         startService(intent);
     }
@@ -260,9 +260,9 @@ public class helixApplication extends Application implements ContextWrapper {
      *
      * @param trustedServer
      */
-    public void setTrustedServer(helixPeerData trustedServer) {
+    public void setTrustedServer(HelixPeerData trustedServer) {
         networkConf.setTrustedServer(trustedServer);
-        helixModule.getConf().saveTrustedNode(trustedServer.getHost(),0);
+        HelixModule.getConf().saveTrustedNode(trustedServer.getHost(),0);
         appConf.saveTrustedNode(trustedServer);
     }
 

@@ -17,7 +17,7 @@ public class NetworkConf {
     private static final String MAX_PROTOCOL_VERSION = "2.9.5";
     private static final String MIN_PROTOCOL_VERSION = "1.0";
     /** Trusted server selected on the first screen of the app */
-    private helixPeerData trustedHost;
+    private HelixPeerData trustedHost;
     /** Known servers from the network */
     private List<InetSocketAddress> networkServers;
 
@@ -25,11 +25,11 @@ public class NetworkConf {
         this.networkServers = new ArrayList<>();
     }
 
-    public helixPeerData getTrustedServer() {
+    public HelixPeerData getTrustedServer() {
         return trustedHost;
     }
 
-    public void setTrustedServer(helixPeerData helixmorePeerData) {
+    public void setTrustedServer(HelixPeerData helixmorePeerData) {
         this.trustedHost = helixmorePeerData;
 
     }

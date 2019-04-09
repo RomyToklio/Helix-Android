@@ -6,8 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
-import io.helix.android.helixApplication;
-import io.helix.android.module.helixModule;
+import io.helix.android.HelixApplication;
+import io.helix.android.module.HelixModule;
 
 /**
  * Created by furszy on 6/29/17.
@@ -15,14 +15,14 @@ import io.helix.android.module.helixModule;
 
 public class BaseFragment extends Fragment {
 
-    protected helixApplication helixApplication;
-    protected helixModule helixModule;
+    protected HelixApplication HelixApplication;
+    protected HelixModule HelixModule;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        helixApplication = helixApplication.getInstance();
-        helixModule = helixApplication.getModule();
+        HelixApplication = HelixApplication.getInstance();
+        HelixModule = HelixApplication.getModule();
     }
 
     protected boolean checkPermission(String permission) {

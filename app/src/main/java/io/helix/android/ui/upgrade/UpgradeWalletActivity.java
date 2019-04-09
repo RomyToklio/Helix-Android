@@ -73,7 +73,7 @@ public class UpgradeWalletActivity extends BaseActivity {
         root.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!helixModule.isAnyPeerConnected()){
+                if (!HelixModule.isAnyPeerConnected()){
                     if (noConnectionDialog==null)
                         noConnectionDialog = DialogsUtil.buildSimpleTextDialog(
                                 UpgradeWalletActivity.this,
@@ -93,7 +93,7 @@ public class UpgradeWalletActivity extends BaseActivity {
                             boolean succed = false;
                             String message = null;
                             try {
-                                succed = helixModule.upgradeWallet(upgradeCode);
+                                succed = HelixModule.upgradeWallet(upgradeCode);
                                 Log.i("UpgradeWallet", "wallet upgrade result: " + succed);
                             } catch (UpgradeException e) {
                                 e.printStackTrace();
@@ -108,7 +108,7 @@ public class UpgradeWalletActivity extends BaseActivity {
                                         new Handler().postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
-                                                helixApplication.starthelixService();
+                                                HelixApplication.starthelixService();
                                             }
                                         }, TimeUnit.SECONDS.toMillis(3));
                                         Toast.makeText(UpgradeWalletActivity.this,

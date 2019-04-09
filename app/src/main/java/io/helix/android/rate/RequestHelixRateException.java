@@ -3,16 +3,16 @@ package io.helix.android.rate;
 /**
  * Created by furszy on 7/5/17.
  */
-public class RequesthelixRateException extends Exception {
-    public RequesthelixRateException(String message) {
+public class RequestHelixRateException extends Exception {
+    public RequestHelixRateException(String message) {
         super(message);
     }
 
-    public RequesthelixRateException(String message, Throwable cause) {
+    public RequestHelixRateException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public RequesthelixRateException(Exception e) {
+    public RequestHelixRateException(Exception e) {
         super(e);
     }
 }

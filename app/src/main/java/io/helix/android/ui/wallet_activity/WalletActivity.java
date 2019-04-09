@@ -21,18 +21,18 @@ import android.widget.Toast;
 import org.helixj.core.Coin;
 import org.helixj.core.InsufficientMoneyException;
 import org.helixj.core.Transaction;
-import org.helixj.uri.helixURI;
+import org.helixj.uri.HelixURI;
 import org.helixj.wallet.Wallet;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.helix.android.helixApplication;
+import io.helix.android.HelixApplication;
 import io.helix.android.R;
 import io.helix.android.module.CantSweepBalanceException;
 import io.helix.android.module.NoPeerConnectedException;
-import io.helix.android.rate.db.helixRate;
+import io.helix.android.rate.db.HelixRate;
 import io.helix.android.service.IntentsConstants;
 import io.helix.android.ui.base.BaseDrawerActivity;
 import io.helix.android.ui.base.dialogs.DialogListener;
@@ -67,7 +67,7 @@ public class WalletActivity extends BaseDrawerActivity {
     private TextView txt_unnavailable;
     private TextView txt_local_currency;
     private TextView txt_watch_only;
-    private helixRate helixRate;
+    private HelixRate HelixRate;
     private TransactionsFragmentBase txsFragment;
 
     // Receiver
@@ -118,7 +118,7 @@ public class WalletActivity extends BaseDrawerActivity {
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (helixModule.isWalletWatchOnly()){
+                if (HelixModule.isWalletWatchOnly()){
                     Toast.makeText(v.getContext(),R.string.error_watch_only_mode,Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -146,8 +146,8 @@ public class WalletActivity extends BaseDrawerActivity {
 
         // check if this wallet need an update:
         try {
-            if(helixModule.isBip32Wallet() && helixModule.isSyncWithNode()){
-                if (!helixModule.isWalletWatchOnly() && helixModule.getAvailableBalanceCoin().isGreaterThan(Transaction.DEFAULT_TX_FEE)) {
+            if(HelixModule.isBip32Wallet() && HelixModule.isSyncWithNode()){
+                if (!HelixModule.isWalletWatchOnly() && HelixModule.getAvailableBalanceCoin().isGreaterThan(Transaction.DEFAULT_TX_FEE)) {
                     Intent intent = UpgradeWalletActivity.createStartIntent(
                             this,
                             getString(R.string.upgrade_wallet),
@@ -170,17 +170,17 @@ public class WalletActivity extends BaseDrawerActivity {
     }
 
     private void updateState() {
-        txt_watch_only.setVisibility(helixModule.isWalletWatchOnly()?View.VISIBLE:View.GONE);
+        txt_watch_only.setVisibility(HelixModule.isWalletWatchOnly()?View.VISIBLE:View.GONE);
     }
 
     private void init() {
         // Start service if it's not started.
-        helixApplication.starthelixService();
+        HelixApplication.starthelixService();
 
-        if (!helixApplication.getAppConf().hasBackup()){
+        if (!HelixApplication.getAppConf().hasBackup()){
             long now = System.currentTimeMillis();
-            if (helixApplication.getLastTimeRequestedBackup()+1800000L<now) {
-                helixApplication.setLastTimeBackupRequested(now);
+            if (HelixApplication.getLastTimeRequestedBackup()+1800000L<now) {
+                HelixApplication.setLastTimeBackupRequested(now);
                 SimpleTwoButtonsDialog reminderDialog = DialogsUtil.buildSimpleTwoBtnsDialog(
                         this,
                         getString(R.string.reminder_backup),
@@ -248,10 +248,10 @@ public class WalletActivity extends BaseDrawerActivity {
                 try {
                     String address = data.getStringExtra(INTENT_EXTRA_RESULT);
                     String usedAddress;
-                    if (helixModule.chechAddress(address)){
+                    if (HelixModule.chechAddress(address)){
                         usedAddress = address;
                     }else {
-                        helixURI helixUri = new helixURI(address);
+                        HelixURI helixUri = new HelixURI(address);
                         usedAddress = helixUri.getAddress().toBase58();
                     }
                     DialogsUtil.showCreateAddressLabelDialog(this,usedAddress);
@@ -274,28 +274,28 @@ public class WalletActivity extends BaseDrawerActivity {
 
 
     private void updateBalance() {
-        Coin availableBalance = helixModule.getAvailableBalanceCoin();
+        Coin availableBalance = HelixModule.getAvailableBalanceCoin();
         txt_value.setText(
             !availableBalance.isZero()
                 ? availableBalance.toFriendlyString()
                 : String.format("0 %1$s", getString(R.string.wallet_hlix)));
-        Coin unnavailableBalance = helixModule.getUnnavailableBalanceCoin();
+        Coin unnavailableBalance = HelixModule.getUnnavailableBalanceCoin();
         txt_unnavailable.setText(
             !unnavailableBalance.isZero()
                 ? unnavailableBalance.toFriendlyString()
                 : String.format("0 %1$s", getString(R.string.wallet_hlix)));
-        if (helixRate == null)
-            helixRate = helixModule.getRate(helixApplication.getAppConf().getSelectedRateCoin());
-        if (helixRate!=null) {
+        if (HelixRate == null)
+            HelixRate = HelixModule.getRate(HelixApplication.getAppConf().getSelectedRateCoin());
+        if (HelixRate!=null) {
             txt_local_currency.setText(
-                    helixApplication.getCentralFormats().format(
-                            new BigDecimal(availableBalance.getValue() * helixRate.getRate().doubleValue()).movePointLeft(8)
+                    HelixApplication.getCentralFormats().format(
+                            new BigDecimal(availableBalance.getValue() * HelixRate.getRate().doubleValue()).movePointLeft(8)
                     )
-                    + " "+helixRate.getCode()
+                    + " "+HelixRate.getCode()
             );
         }else {
-            if (helixRate != null) {
-                txt_local_currency.setText("0 " + helixRate.getCode());
+            if (HelixRate != null) {
+                txt_local_currency.setText("0 " + HelixRate.getCode());
             } else {
                 txt_local_currency.setText("");
             }

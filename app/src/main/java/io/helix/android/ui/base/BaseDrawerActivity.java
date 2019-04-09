@@ -30,14 +30,14 @@ import io.helix.android.ui.settings_activity.SettingsActivity;
 import io.helix.android.ui.transaction_send_activity.SendActivity;
 import io.helix.android.ui.wallet_activity.WalletActivity;
 
-import static io.helix.android.module.helixContext.OUT_OF_SYNC_TIME;
+import static io.helix.android.module.HelixContext.OUT_OF_SYNC_TIME;
 import static io.helix.android.service.IntentsConstants.ACTION_NOTIFICATION;
 import static io.helix.android.service.IntentsConstants.INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE;
 import static io.helix.android.service.IntentsConstants.INTENT_BROADCAST_DATA_PEER_CONNECTED;
 import static io.helix.android.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
 import static io.helix.android.service.IntentsConstants.INTENT_EXTRA_BLOCKCHAIN_STATE;
 
-public class BaseDrawerActivity extends helixActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class BaseDrawerActivity extends HelixActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private NavigationView navigationView;
     private FrameLayout frameLayout;
@@ -101,12 +101,12 @@ public class BaseDrawerActivity extends helixActivity implements NavigationView.
 
     private void checkState(){
         long now = System.currentTimeMillis();
-        long lastBlockTime = helixApplication.getAppConf().getLastBestChainBlockTime();
+        long lastBlockTime = HelixApplication.getAppConf().getLastBestChainBlockTime();
         if (lastBlockTime+OUT_OF_SYNC_TIME>now){
             // check if i'm syncing or i'm synched
-            long peerHeight = helixModule.getConnectedPeerHeight();
+            long peerHeight = HelixModule.getConnectedPeerHeight();
             if (peerHeight!=-1){
-                if (helixModule.getChainHeight()+10>peerHeight) {
+                if (HelixModule.getChainHeight()+10>peerHeight) {
                     blockchainState = BlockchainState.SYNC;
                 }else {
                     blockchainState = BlockchainState.SYNCING;
@@ -115,10 +115,10 @@ public class BaseDrawerActivity extends helixActivity implements NavigationView.
                 blockchainState = BlockchainState.NOT_CONNECTION;
             }
         }else {
-            if (helixModule.isAnyPeerConnected()) {
-                long peerHeight = helixModule.getConnectedPeerHeight();
+            if (HelixModule.isAnyPeerConnected()) {
+                long peerHeight = HelixModule.getConnectedPeerHeight();
                 if (peerHeight!=-1){
-                    if (helixModule.getChainHeight()+10>peerHeight) {
+                    if (HelixModule.getChainHeight()+10>peerHeight) {
                         blockchainState = BlockchainState.SYNC;
                     }else {
                         blockchainState = BlockchainState.SYNCING;
@@ -203,7 +203,7 @@ public class BaseDrawerActivity extends helixActivity implements NavigationView.
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_send) {
-            if (helixModule.isWalletWatchOnly()) {
+            if (HelixModule.isWalletWatchOnly()) {
                 Toast.makeText(this, R.string.error_watch_only_mode, Toast.LENGTH_SHORT).show();
             } else {
                 startActivity(new Intent(this, SendActivity.class));
@@ -258,12 +258,12 @@ public class BaseDrawerActivity extends helixActivity implements NavigationView.
     }
 
     private double calculateBlockchainSyncProgress() {
-        long nodeHeight = helixModule.getConnectedPeerHeight();
+        long nodeHeight = HelixModule.getConnectedPeerHeight();
         if (nodeHeight>0){
             // calculate the progress
             // nodeHeight -> 100 %
             // current height -> x %
-            return (helixModule.getChainHeight()*100) / nodeHeight;
+            return (HelixModule.getChainHeight()*100) / nodeHeight;
         }
         return -1;
     }

@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import org.helixj.core.Coin;
-import org.helixj.uri.helixURI;
+import org.helixj.uri.HelixURI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +117,7 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
                 });
                 if (data.getAddress()!=null){
                     holder.edit_address.setText(data.getAddress());
-                    if (!helixModule.chechAddress(data.getAddress())) {
+                    if (!HelixModule.chechAddress(data.getAddress())) {
                         holder.edit_address.setTextColor(Color.RED);
                     } else {
                         holder.edit_address.setTextColor(Color.parseColor("#4F4F4F"));
@@ -151,12 +151,12 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
                         if (s.length()>0){
                             if (holder.edit_address!=null) {
                                 String address = s.toString();
-                                if (!helixModule.chechAddress(address)) {
+                                if (!HelixModule.chechAddress(address)) {
                                     holder.edit_address.setTextColor(Color.RED);
                                 } else {
                                     holder.edit_address.setTextColor(Color.parseColor("#4F4F4F"));
                                     // check if there is a label for this address
-                                    AddressLabel addressLabel = helixModule.getAddressLabel(address);
+                                    AddressLabel addressLabel = HelixModule.getAddressLabel(address);
                                     if (addressLabel!=null){
                                         holder.edit_address_label.setText(addressLabel.getName());
                                     }
@@ -256,7 +256,7 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
         Coin amount = Coin.parseCoin(amountStr);
         String addressLabel = outputWrapper.getAddressLabel();
 
-        if (address==null || !helixModule.chechAddress(address)){
+        if (address==null || !HelixModule.chechAddress(address)){
             // todo: mejorar esto
             Toast.makeText(getActivity(),R.string.invalid_input_address,Toast.LENGTH_LONG).show();
             return;
@@ -278,10 +278,10 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
                     String address = "";
                     address = data.getStringExtra(INTENT_EXTRA_RESULT);
                     String usedAddress;
-                    if (helixModule.chechAddress(address)){
+                    if (HelixModule.chechAddress(address)){
                         usedAddress = address;
                     }else {
-                        helixURI helixUri = new helixURI(address);
+                        HelixURI helixUri = new HelixURI(address);
                         usedAddress = helixUri.getAddress().toBase58();
                     }
                     final String tempPubKey = usedAddress;
@@ -317,7 +317,7 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
                 firstCheckAmount = true;
             }else
                 amountStr = outputWrapperList.getAmount().toPlainString();
-            boolean checkAddress = address==null || !helixModule.chechAddress(address);
+            boolean checkAddress = address==null || !HelixModule.chechAddress(address);
             boolean checkAmount = firstCheckAmount || amountStr==null || amountStr.length() == 0;
             if (i!=list.size()-1) {
                 if (checkAddress)

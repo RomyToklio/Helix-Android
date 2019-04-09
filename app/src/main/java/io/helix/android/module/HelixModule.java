@@ -22,7 +22,7 @@ import java.util.Set;
 
 import global.WalletConfiguration;
 import io.helix.android.contacts.AddressLabel;
-import io.helix.android.rate.db.helixRate;
+import io.helix.android.rate.db.HelixRate;
 import io.helix.android.ui.transaction_send_activity.custom.inputs.InputWrapper;
 import io.helix.android.ui.wallet_activity.TransactionWrapper;
 import wallet.exceptions.InsufficientInputsException;
@@ -33,7 +33,7 @@ import wallet.exceptions.CantRestoreEncryptedWallet;
  * Created by mati on 18/04/17.
  */
 
-public interface helixModule {
+public interface HelixModule {
 
     /**
      * Initialize the module
@@ -114,7 +114,7 @@ public interface helixModule {
 
     int getChainHeight();
 
-    helixRate getRate(String selectedRateCoin);
+    HelixRate getRate(String selectedRateCoin);
 
     /**
      * Don't use this..
@@ -165,6 +165,6 @@ public interface helixModule {
 
     boolean upgradeWallet(String upgradeCode) throws UpgradeException;
 
-    List<helixRate> listRates();
+    List<HelixRate> listRates();
 
 }

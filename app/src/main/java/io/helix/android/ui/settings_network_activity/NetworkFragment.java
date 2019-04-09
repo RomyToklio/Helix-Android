@@ -30,7 +30,7 @@ public class NetworkFragment extends BaseRecyclerFragment<Peer> {
 
     @Override
     protected List<Peer> onLoading() {
-        return helixModule.listConnectedPeers();
+        return HelixModule.listConnectedPeers();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package helixmore.listeners;
 
-import helixmore.helixPeer;
+import helixmore.HelixPeer;
 
 /**
  * Created by furszy on 6/17/17.
@@ -8,9 +8,9 @@ import helixmore.helixPeer;
 
 public interface PeerListener {
 
-    void onConnected(helixPeer helixmorePeer);
+    void onConnected(HelixPeer helixmorePeer);
 
-    void onDisconnected(helixPeer helixmorePeer);
+    void onDisconnected(HelixPeer helixmorePeer);
 
-    void onExceptionCaught(helixPeer helixmorePeer, Exception e);
+    void onExceptionCaught(HelixPeer helixmorePeer, Exception e);
 }

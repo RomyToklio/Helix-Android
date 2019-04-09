@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import io.helix.android.helixApplication;
+import io.helix.android.HelixApplication;
 import io.helix.android.ui.start_activity.StartActivity;
 import io.helix.android.ui.wallet_activity.WalletActivity;
 import io.helix.android.utils.AppConf;
@@ -19,7 +19,7 @@ public class InitialActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        helixApplication helixApplication = helixApplication.getInstance();
+        HelixApplication helixApplication = HelixApplication.getInstance();
         AppConf appConf = helixApplication.getAppConf();
         // show report dialog if something happen with the previous process
         Intent intent;
