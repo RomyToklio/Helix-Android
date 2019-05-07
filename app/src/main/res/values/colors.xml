@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="transparent">#00000000</color>
-    <!-- Phore Green -->
-    <color name="colorPrimary">#00D188</color>
+    <!-- helix Green -->
+    <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#007F59</color>
     <color name="colorAccent">#53DAB1</color>
 
-    <!-- Phore Background Green -->
-    <color name="bgGreen">#00D188</color>
+    <!-- helix Background Green -->
+    <color name="bgGreen">#000000</color>
     <color name="green">#009688</color>
     <color name="mainGreen">#B7FFF9</color>
     <color name="lightGreen">#50e3c2</color>
@@ -22,6 +22,7 @@
     <color name="textColorPurple">#55476c</color>
     <color name="textColorWhite">#ffffff</color>
     <color name="textColorLightPurple">#ffffff</color>
+	<color name="textColorBlack">#000000</color>
     <color name="transation_title">#55476c</color>
     <color name="mainText">#4F4F4F</color>
     <color name="subtitle">#757575</color>

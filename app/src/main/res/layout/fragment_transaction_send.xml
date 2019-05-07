@@ -52,7 +52,7 @@
                     android:layout_marginBottom="10dp"
                     android:maxLines="1"
                     android:maxLength="8"
-                    android:hint="@string/set_amount_phr"
+                    android:hint="@string/set_amount_hlix"
                     android:text = ""
                     android:textColor = "#434343"
                     android:textSize = "20sp" />
@@ -110,7 +110,7 @@
                     android:id = "@+id/txt_show"
                     android:layout_width = "wrap_content"
                     android:layout_height = "wrap_content"
-                    android:text = "0 PHR"
+                    android:text = "0 HLIX"
                     android:textColor = "#858585"
                     android:textSize = "16sp" />
 
