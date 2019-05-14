@@ -31,7 +31,7 @@ public class HelixContext {
     public static final String URL_FIAT_CURRENCIES_RATE = "https://bitpay.com/rates";
 
     // report mail
-    public static final String REPORT_EMAIL = "tmhorton@gmail.com";
+    public static final String REPORT_EMAIL = "helixproject@helix-crypto.com";
     public static final String REPORT_SUBJECT_ISSUE = "Reported issue";
 
     public static final class Files{

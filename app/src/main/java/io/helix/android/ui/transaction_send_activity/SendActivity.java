@@ -173,9 +173,9 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         txtShow = (TextView) findViewById(R.id.txt_show) ;
 
         //Sending amount hlix
-        addAll =  (Button) findViewById(R.id.btn_add_all);
-        addAll.setOnClickListener(this);
-        HelixRate = HelixModule.getRate(HelixApplication.getAppConf().getSelectedRateCoin());
+//        addAll =  (Button) findViewById(R.id.btn_add_all);
+//        addAll.setOnClickListener(this);
+//        HelixRate = HelixModule.getRate(HelixApplication.getAppConf().getSelectedRateCoin());
 
         editCurrency.addTextChangedListener(new TextWatcher() {
             @Override
