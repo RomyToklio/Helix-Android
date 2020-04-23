@@ -11,8 +11,8 @@ sourceSets{
 
 dependencies {
     //compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'org.slf4j:slf4j-api:1.7.20'
-    compile 'com.google.protobuf:protobuf-java:2.6.1'
+    compile 'org.slf4j:slf4j-api:1.7.30'
+    compile 'com.google.protobuf:protobuf-java:3.9.2'
     compile 'com.google.guava:guava:20.0'
     compile 'com.squareup.okhttp:okhttp:2.7.5'
     compile 'commons-codec:commons-codec:1.10'
@@ -22,8 +22,8 @@ dependencies {
     compile 'commons-validator:commons-validator:1.6'
     compile 'org.json:json:20170516'
     compile 'com.lambdaworks:scrypt:1.4.0'
-    testCompile 'org.slf4j:slf4j-api:1.7.20'
-    testCompile 'junit:junit:4.12'
+    testCompile 'org.slf4j:slf4j-api:1.7.30'
+    testCompile 'junit:junit:4.13'
     testCompile 'org.slf4j:slf4j-simple:1.7.5'
 }
 

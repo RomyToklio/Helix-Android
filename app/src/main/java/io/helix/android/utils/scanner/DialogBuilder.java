@@ -17,10 +17,6 @@
 
 package io.helix.android.utils.scanner;
 
-import javax.annotation.Nullable;
-
-import io.helix.android.R;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface.OnClickListener;
@@ -30,6 +26,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.jetbrains.annotations.Nullable;
+
+import io.helix.android.R;
 
 /**
  * @author Andreas Schildbach

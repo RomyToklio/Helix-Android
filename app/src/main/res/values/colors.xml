@@ -3,14 +3,14 @@
     <color name="transparent">#00000000</color>
     <!-- helix Green -->
     <color name="colorPrimary">#000000</color>
-    <color name="colorPrimaryDark">#007F59</color>
-    <color name="colorAccent">#53DAB1</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#000000</color>
 
     <!-- helix Background Green -->
     <color name="bgGreen">#000000</color>
-    <color name="green">#009688</color>
-    <color name="mainGreen">#B7FFF9</color>
-    <color name="lightGreen">#50e3c2</color>
+    <color name="green">#000000</color>
+    <color name="mainGreen">#ffffff</color>
+    <color name="lightGreen">#000000</color>
     <color name="colorPurple">#55476c</color>
     <color name="bgGrey">#37404d</color>
     <color name="bgGreyTint">#4b535e</color>
@@ -38,13 +38,13 @@
     <color name="scan_laser">#cc0000</color>
     <color name="scan_dot">#ff6600</color>
     <color name="scan_result_view">#b0000000</color>
-    <color name="scan_result_dots">#c099cc00</color>
+    <color name="scan_result_dots">#ffffff</color>
 
     <!-- Tutorial -->
 
-    <color name="bg_screen1">#53DAB1</color>
-    <color name="bg_screen2">#2AD29F</color>
-    <color name="bg_screen3">#00A573</color>
+    <color name="bg_screen1">#000000</color>
+    <color name="bg_screen2">#000000</color>
+    <color name="bg_screen3">#000000</color>
 
 
     <!-- dots active colors -->
