@@ -73,6 +73,7 @@ public class BlockchainManager {
         this.context = contextWrapper;
         this.USER_AGENT = context.getPackageName()+"_AGENT";
         this.blockchainManagerListeners = new ArrayList<>();
+
     }
 
     public void init(BlockStore blockStore,File blockStoreDir,String blockStoreFilename,boolean blockStoreFileExists){
@@ -93,6 +94,7 @@ public class BlockchainManager {
                 blockStore.getChainHead(); // detect corruptions as early as possible
 
                 final long earliestKeyCreationTime = walletManager.getEarliestKeyCreationTime();
+                LOG.info("Check blockStoreFileExists : "+blockStoreFileExists);
 
                 if (!blockStoreFileExists && earliestKeyCreationTime > 0 && !(conf.getNetworkParams() instanceof RegTestParams)) {
                     try {
@@ -101,6 +103,8 @@ public class BlockchainManager {
                         final Stopwatch watch = Stopwatch.createStarted();
                         final InputStream checkpointsInputStream =  context.openAssestsStream(filename+suffix);
                         CheckpointManager.checkpoint(conf.getNetworkParams(), checkpointsInputStream, blockStore, earliestKeyCreationTime);
+                        LOG.info("Starting loading checkpoints");
+
                         watch.stop();
                         LOG.info("checkpoints loaded from '{}', took {}", conf.getCheckpointFilename(), watch);
                     }catch (final IOException x) {

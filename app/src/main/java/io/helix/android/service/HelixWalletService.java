@@ -369,7 +369,6 @@ public class HelixWalletService extends Service{
             HelixApplication = HelixApplication.getInstance();
             module = (HelixModuleImp) HelixApplication.getModule();
             blockchainManager = module.getBlockchainManager();
-
             // Schedule service
             tryScheduleService();
             // Request rate
@@ -382,6 +381,11 @@ public class HelixWalletService extends Service{
             boolean fileExists = new File(file,filename).exists();
 
             org.helixj.core.Context.propagate(HelixContext.CONTEXT);
+           /* log.info("helixj starting");
+
+            HelixContext.CONTEXT.initHelix(true,false);
+            log.info("helixj started");*/
+
             blockchainStore = new SnappyBlockchainStore(HelixContext.CONTEXT,file,filename);
             blockchainManager.init(
                     blockchainStore,
