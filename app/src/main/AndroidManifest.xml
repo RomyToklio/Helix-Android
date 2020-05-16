@@ -27,55 +27,55 @@
         </activity>
         <activity
             android:name=".ui.wallet_activity.WalletActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:launchMode="singleInstance" />
-        <activity android:name=".ui.start_activity.StartActivity"  android:screenOrientation="portrait" />
-        <activity android:name=".ui.backup_mnemonic_activity.MnemonicActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.words_restore_activity.RestoreWordsActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.contacts_activity.ContactsActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.settings_activity.SettingsActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.settings_backup_activity.SettingsBackupActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.settings_restore_activity.SettingsRestoreActivity"  android:screenOrientation="portrait" />
-        <activity android:name=".ui.settings_pincode_activity.SettingsPincodeActivity"  android:screenOrientation="portrait">
+        <activity android:name=".ui.start_activity.StartActivity"  android:screenOrientation="fullSensor" />
+        <activity android:name=".ui.backup_mnemonic_activity.MnemonicActivity" android:screenOrientation="fullSensor"/>
+        <activity android:name=".ui.words_restore_activity.RestoreWordsActivity" android:screenOrientation="fullSensor"/>
+        <activity android:name=".ui.contacts_activity.ContactsActivity"  android:screenOrientation="fullSensor"/>
+        <activity android:name=".ui.settings_activity.SettingsActivity" android:screenOrientation="fullSensor"/>
+        <activity android:name=".ui.settings_backup_activity.SettingsBackupActivity"  android:screenOrientation="fullSensor"/>
+        <activity android:name=".ui.settings_restore_activity.SettingsRestoreActivity"  android:screenOrientation="fullSensor" />
+        <activity android:name=".ui.settings_pincode_activity.SettingsPincodeActivity"  android:screenOrientation="fullSensor">
 
         </activity>
 
-        <activity android:name=".ui.address_add_activity.AddContactActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.settings_network_activity.SettingsNetworkActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.settings_node_activity.SettingsNodeActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.start_node_activity.StartNodeActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.restore_activity.RestoreActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.pincode_activity.PincodeActivity"  android:screenOrientation="portrait">
+        <activity android:name=".ui.address_add_activity.AddContactActivity"  android:screenOrientation="fullSensor"/>
+        <activity android:name=".ui.settings_network_activity.SettingsNetworkActivity"  android:screenOrientation="fullSensor"/>
+        <activity android:name=".ui.settings_node_activity.SettingsNodeActivity"  android:screenOrientation="fullSensor"/>
+        <activity android:name=".ui.start_node_activity.StartNodeActivity"  android:screenOrientation="fullSensor"/>
+        <activity android:name=".ui.restore_activity.RestoreActivity"  android:screenOrientation="fullSensor"/>
+        <activity android:name=".ui.pincode_activity.PincodeActivity"  android:screenOrientation="fullSensor">
 
         </activity>
 
         <activity android:name=".ui.transaction_detail_activity.TransactionDetailActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:parentActivityName=".ui.wallet_activity.WalletActivity"
             />
-        <activity android:name=".ui.transaction_detail_activity.InputsDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.transaction_detail_activity.InputsDetailActivity" android:screenOrientation="fullSensor"/>
 
         <activity android:name=".ui.transaction_send_activity.SendActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:windowSoftInputMode="adjustPan"
             android:parentActivityName=".ui.wallet_activity.WalletActivity"
             ></activity>
-        <activity android:name=".ui.upgrade.UpgradeWalletActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.transaction_send_activity.custom.CustomFeeActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.transaction_send_activity.custom.ChangeAddressActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.transaction_send_activity.custom.outputs.OutputsActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.transaction_send_activity.custom.inputs.InputsActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.transaction_send_activity.SendTxDetailActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.transaction_request_activity.RequestActivity"  android:screenOrientation="portrait"></activity>
+        <activity android:name=".ui.upgrade.UpgradeWalletActivity" android:screenOrientation="fullSensor"/>
+        <activity android:name=".ui.transaction_send_activity.custom.CustomFeeActivity" android:screenOrientation="fullSensor"/>
+        <activity android:name=".ui.transaction_send_activity.custom.ChangeAddressActivity" android:screenOrientation="fullSensor"/>
+        <activity android:name=".ui.transaction_send_activity.custom.outputs.OutputsActivity" android:screenOrientation="fullSensor"/>
+        <activity android:name=".ui.transaction_send_activity.custom.inputs.InputsActivity" android:screenOrientation="fullSensor"/>
+        <activity android:name=".ui.transaction_send_activity.SendTxDetailActivity" android:screenOrientation="fullSensor"/>
+        <activity android:name=".ui.transaction_request_activity.RequestActivity"  android:screenOrientation="fullSensor"></activity>
         <activity android:name=".ui.qr_activity.QrActivity"/>
         <activity 
             android:name=".utils.scanner.ScanActivity"
             android:configChanges="orientation|keyboard|keyboardHidden"
-            android:screenOrientation="landscape"
+            android:screenOrientation="fullSensor"
             android:stateNotNeeded="true"
             android:theme="@style/FullscreenTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
-            />
+
         <activity android:name=".ui.export_account.ExportKeyActivity"/>
         <activity android:name=".ui.import_watch_only.SettingsWatchOnly"/>
         <activity android:name=".ui.settings_rates.SettingsRatesActivity"/>

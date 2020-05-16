@@ -9,7 +9,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 3
-        versionName '1.0.1'
+        versionName '1.0.2'
         // testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
@@ -48,6 +48,7 @@ android {
     packagingOptions {
         exclude 'META-INF/INDEX.LIST'
         exclude 'lib/x86_64/darwin/libscrypt.dylib'
+        exclude 'META-INF/DEPENDENCIES'
     }
 
 
@@ -83,7 +84,7 @@ dependencies {
     compile files('lib/helixj-core.jar')
     compile project(':helixmore')
     compile 'org.slf4j:slf4j-api:1.7.30'
-    compile 'org.slf4j:slf4j-simple:1.7.5'
+    //compile 'org.slf4j:slf4j-simple:1.7.5'
     compile 'junit:junit:4.13'
     compile 'org.json:json:20170516'
     compile 'org.apache.httpcomponents:httpclient:4.5.5'
